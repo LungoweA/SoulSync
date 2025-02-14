@@ -1,10 +1,5 @@
 import sys
 import os
-
-# Add the parent directory to the system path to allow module imports
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
 from PyQt5 import uic
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLineEdit, QLabel
@@ -12,6 +7,10 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLineEdit, Q
 from controller.AccountLogic import AccountCreation
 from view.sign_up import SignUp
 from view.Main_window import Window
+
+# Add the parent directory to the system path to allow module imports
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 class LogIn(QMainWindow):
@@ -47,8 +46,6 @@ class LogIn(QMainWindow):
         self.sign_up_btn.mousePressEvent = self.signup
         self.show()
         
-        
-        
     def login(self):
         """Attempts to authenticate the user with provided credentials."""
         
@@ -59,15 +56,13 @@ class LogIn(QMainWindow):
         else:
             self.error_label.setStyleSheet('color: red;')
             self.error_label.setText(message)
-            
-            
+             
     def clear_window(self):
         """Clears all input fields and error messages."""
         
         self.email.clear()
         self.password.clear()
         self.error_label.setText("")
-        
         
     def signup(self, event=None):
         """Opens the sign-up window and closes the login window."""
@@ -78,7 +73,6 @@ class LogIn(QMainWindow):
         self.close()
         self.sign_up.show()
         
-    
     def window(self):
         """Opens the main application window upon successful login."""
         

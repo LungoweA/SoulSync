@@ -1,13 +1,13 @@
 import sys
 import os
+import pyrebase
+import json
+from datetime import datetime
 
 # Add the parent directory to the system path to allow module imports
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-import pyrebase
-import json
-from datetime import datetime
 
 class Write_db:
     """
@@ -40,7 +40,6 @@ class Write_db:
         
         self.database = self.firebase.database()
         
-    
     def create_account(self, name, email, password, confirm_password):
         """
         Creates a new user account and stores user details in the Firebase Realtime Database.
@@ -60,7 +59,6 @@ class Write_db:
         if password != confirm_password:
             return False, "Passwords don't match, please try again!"
         
-    
         user = self.auth.create_user_with_email_and_password(email, password)
         user_id = user['localId']
         id_token = user['idToken']
@@ -75,11 +73,8 @@ class Write_db:
                         
         return True, 'Account Created'
         
-        
-        #    return False, 'Account already exists!'
+        # return False, 'Account already exists!'
             
-        
-        
     def validate_password(self, password):
         """
         Validates the strength of the password based on the following criteria:
@@ -113,7 +108,6 @@ class Write_db:
                     
         return correct_length and is_upper and is_digit and is_lower and is_not_alphanum
             
-        
     def login(self, email, password):
         """
         Logs in a user by verifying credentials with Firebase Authentication.
