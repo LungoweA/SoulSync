@@ -1,10 +1,9 @@
 import sys
 import os
+from model.write_db import Write_db
 
 # Add the parent directory to the system path to allow module imports
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-from model.write_db import Write_db
 
 
 class AccountCreation:
@@ -20,8 +19,6 @@ class AccountCreation:
         
         self.db_handler = Write_db()
         
-    
-    
     def create_account(self, fullname, email, password, confirm_password):
         """
         Creates a new user account by storing user details in the database.
@@ -36,8 +33,6 @@ class AccountCreation:
     
         return self.db_handler.create_account(fullname, email, password, confirm_password)
     
-    
-    
     def login(self, email, password):
         """
         Authenticates a user by verifying their email and password.
@@ -49,8 +44,6 @@ class AccountCreation:
         """
         
         return self.db_handler.login(email, password)
-    
-    
     
     def reset_password(self):
         pass
