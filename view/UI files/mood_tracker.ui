@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>MoodTrackerWindow</class>
+ <widget class="QMainWindow" name="MoodTrackerWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,14 +14,15 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+   <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
+background-color: rgb(85, 255, 127);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QFrame" name="mood_question1_frame">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>60</y>
+      <x>220</x>
+      <y>30</y>
       <width>421</width>
       <height>361</height>
      </rect>
@@ -232,8 +233,8 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
     <widget class="QFrame" name="mood_question1_frame_2">
      <property name="geometry">
       <rect>
-       <x>-150</x>
-       <y>230</y>
+       <x>-60</x>
+       <y>210</y>
        <width>541</width>
        <height>141</height>
       </rect>
@@ -262,8 +263,8 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
    <widget class="QFrame" name="mood_question3_frame">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>440</y>
+      <x>190</x>
+      <y>400</y>
       <width>411</width>
       <height>101</height>
      </rect>
@@ -277,8 +278,8 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
     <widget class="QLabel" name="label_10">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>10</y>
+       <x>10</x>
+       <y>30</y>
        <width>411</width>
        <height>61</height>
       </rect>
