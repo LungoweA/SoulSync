@@ -3,6 +3,7 @@ import os
 from PyQt5 import uic
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLineEdit, QLabel
+from view.menu import MenuWindow  # Importing Menu
 
 from controller.AccountLogic import AccountCreation
 from view.sign_up import SignUp
@@ -76,7 +77,7 @@ class LogIn(QMainWindow):
     def window(self):
         """Opens the main application window upon successful login."""
         
-        self.home = Window()
+        self.home = MenuWindow()  # Opening Menu after
         self.clear_window()
         self.close()
         self.home.show()
