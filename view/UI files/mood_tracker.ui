@@ -21,7 +21,7 @@ background-color: rgb(85, 255, 127);</string>
    <widget class="QFrame" name="mood_question1_frame">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>180</x>
       <y>30</y>
       <width>421</width>
       <height>361</height>
@@ -36,8 +36,8 @@ background-color: rgb(85, 255, 127);</string>
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>10</y>
+       <x>100</x>
+       <y>50</y>
        <width>281</width>
        <height>41</height>
       </rect>
@@ -50,7 +50,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
       <string>How are you feeling today?</string>
      </property>
     </widget>
-    <widget class="QRadioButton" name="radioButton">
+    <widget class="QRadioButton" name="mood_rate1">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -66,7 +66,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
       <string/>
      </property>
     </widget>
-    <widget class="QRadioButton" name="radioButton_2">
+    <widget class="QRadioButton" name="mood_rate2">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -79,7 +79,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
       <string/>
      </property>
     </widget>
-    <widget class="QRadioButton" name="radioButton_3">
+    <widget class="QRadioButton" name="mood_rate3">
      <property name="geometry">
       <rect>
        <x>190</x>
@@ -92,7 +92,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
       <string/>
      </property>
     </widget>
-    <widget class="QRadioButton" name="radioButton_4">
+    <widget class="QRadioButton" name="mood_rate4">
      <property name="geometry">
       <rect>
        <x>240</x>
@@ -105,7 +105,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
       <string/>
      </property>
     </widget>
-    <widget class="QRadioButton" name="radioButton_5">
+    <widget class="QRadioButton" name="mood_rate5">
      <property name="geometry">
       <rect>
        <x>290</x>
@@ -248,8 +248,8 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
      <widget class="QLabel" name="label_9">
       <property name="geometry">
        <rect>
-        <x>80</x>
-        <y>20</y>
+        <x>90</x>
+        <y>10</y>
         <width>401</width>
         <height>31</height>
        </rect>
@@ -258,6 +258,32 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
        <string>What influenced your mood the most today?</string>
       </property>
      </widget>
+    </widget>
+    <widget class="QPushButton" name="mood_back_question1">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>190</y>
+       <width>56</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Back</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="mood_next_question1">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>190</y>
+       <width>56</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Next</string>
+     </property>
     </widget>
    </widget>
    <widget class="QFrame" name="mood_question3_frame">
@@ -296,7 +322,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>30</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
