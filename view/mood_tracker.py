@@ -10,13 +10,13 @@ class MoodTrackerWindow(QMainWindow):
         super().__init__()
         uic.loadUi(os.path.join(os.path.dirname(__file__), "UI files", "mood_tracker.ui"), self)
 
-        self.mood_next_question1 = self.findChild(QtWidgets.QPushButton, "mood_next_question1")
-        self.mood_back_question1 = self.findChild(QtWidgets.QPushButton, "mood_back_question1")
-        self.mood_next_question2 = self.findChild(QtWidgets.QPushButton, "mood_next_question2")
+        # self.mood_next_question1 = self.findChild(QtWidgets.QPushButton, "mood_next_question1")
+        # self.mood_back_question1 = self.findChild(QtWidgets.QPushButton, "mood_back_question1")
+        # self.mood_next_question2 = self.findChild(QtWidgets.QPushButton, "mood_next_question2")
 
-        self.mood_question1 = self.findChild(QtWidgets.QFrame, "mood_question1")
-        self.mood_question2 = self.findChild(QtWidgets.QFrame, "mood_question2")
-        self.mood_question3 = self.findChild(QtWidgets.QFrame, "mood_question3")
+        # self.mood_question1 = self.findChild(QtWidgets.QFrame, "mood_question1")
+        # self.mood_question2 = self.findChild(QtWidgets.QFrame, "mood_question2")
+        # self.mood_question3 = self.findChild(QtWidgets.QFrame, "mood_question3")
 
         # self.mood_question1.show()
         # self.mood_question2.hide()
@@ -38,7 +38,7 @@ class MoodTrackerWindow(QMainWindow):
         # self.mood_rate4.clicked.connect(lambda: self.rate_mood(4))
         # self.mood_rate5.clicked.connect(lambda: self.rate_mood(5))
 
-        self.quote_label1 = self.findChild(QtWidgets.QLabel, "quote_label1")
+        # self.quote_label1 = self.findChild(QtWidgets.QLabel, "quote_label1")
 
         self.quotes1 = {
             1: "It's okay to have bad days. Tomorrow is a new start.",
@@ -48,7 +48,7 @@ class MoodTrackerWindow(QMainWindow):
             5: "Amazing! Celebrate the little victories."
         }
 
-        self.db = Write_db()
+        # self.db = Write_db()
 
     def rate_mood(self, rating):
         if self.quote_label1:
