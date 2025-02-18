@@ -12,20 +12,20 @@ class MoodTrackerWindow(QMainWindow):
 
         self.mood_next_question1 = self.findChild(QtWidgets.QPushButton, "mood_next_question1")
         self.mood_back_question1 = self.findChild(QtWidgets.QPushButton, "mood_back_question1")
-        # self.mood_next_question2 = self.findChild(QtWidgets.QPushButton, "mood_next_question2")
 
         self.mood_question1 = self.findChild(QtWidgets.QFrame, "mood_question1_frame")
-        # self.mood_question2 = self.findChild(QtWidgets.QFrame, "mood_question2")
-        # self.mood_question3 = self.findChild(QtWidgets.QFrame, "mood_question3")
+        self.mood_question2 = self.findChild(QtWidgets.QFrame, "mood_question2_frame")
+        # self.mood_question3 = self.findChild(QtWidgets.QFrame, "mood_question3_frame")
 
         self.mood_question1.show()
-        # self.mood_question2.hide()
+        self.mood_question2.hide()
         # self.mood_question3.hide()
 
         self.mood_next_question1.clicked.connect(self.show_question2)
         # self.mood_next_question2.clicked.connect(self.show_question3)
         self.mood_back_question1.clicked.connect(self.go_back_to_menu)
 
+        # QUESTION 1
         self.mood_rate1 = self.findChild(QtWidgets.QRadioButton, "mood_rate1")
         self.mood_rate2 = self.findChild(QtWidgets.QRadioButton, "mood_rate2")
         self.mood_rate3 = self.findChild(QtWidgets.QRadioButton, "mood_rate3")
@@ -48,6 +48,25 @@ class MoodTrackerWindow(QMainWindow):
             5: "Amazing! Celebrate the little victories."
         }
 
+        # QUESTION 2
+        self.mood_school = self.findChild(QtWidgets.QPushButton, "mood_school")
+        self.mood_work = self.findChild(QtWidgets.QPushButton, "mood_work")
+        self.mood_relationship = self.findChild(QtWidgets.QPushButton, "mood_relationship")
+        self.mood_weather = self.findChild(QtWidgets.QPushButton, "mood_weather")
+        self.mood_health = self.findChild(QtWidgets.QPushButton, "mood_health")
+
+        self.mood_back_question2 = self.findChild(QtWidgets.QPushButton, "mood_back_question2")
+        self.mood_next_question2 = self.findChild(QtWidgets.QPushButton, "mood_next_question2")
+
+        self.mood_school.clicked.connect(lambda: self.answer_question2("School"))
+        self.mood_work.clicked.connect(lambda: self.answer_question2("Work"))
+        self.mood_relationship.clicked.connect(lambda: self.answer_question2("Relationship"))
+        self.mood_weather.clicked.connect(lambda: self.answer_question2("Weather"))
+        self.mood_health.clicked.connect(lambda: self.answer_question2("Health"))
+
+        self.mood_back_question2.clicked.connect(self.show_question1)
+        self.mood_next_question2.clicked.connect(self.show_question3)
+
         # self.db = Write_db()
 
     def rate_mood(self, rating):
@@ -62,16 +81,23 @@ class MoodTrackerWindow(QMainWindow):
         #})
 
     def show_question2(self):
-        print("Moving to the question 2, not implemented yet")
-        #self.mood_question1.hide()
-        #self.mood_question2.show()
+        self.mood_question1.hide()
+        self.mood_question2.show()
 
     def go_back_to_menu(self):
         from view.menu import MenuWindow
         self.menu_window = MenuWindow()
         self.menu_window.show()
         self.close()  # Closes Mood tracker window
-    
+
     #def show_question3(self):
         #self.mood_question2.hide()
         #self.mood_question3.show()
+
+    def answer_question2(self, answer):
+        print(f"User selected: {answer} for question 2")
+        # Saving to Firebase will come later...
+
+    def show_question1(self):
+        self.mood_question2.hide()
+        self.mood_question1.show()
