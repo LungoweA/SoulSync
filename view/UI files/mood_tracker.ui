@@ -233,8 +233,8 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
     <widget class="QFrame" name="mood_question1_frame_2">
      <property name="geometry">
       <rect>
-       <x>-60</x>
-       <y>210</y>
+       <x>-50</x>
+       <y>230</y>
        <width>541</width>
        <height>141</height>
       </rect>
@@ -248,8 +248,8 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
      <widget class="QLabel" name="label_9">
       <property name="geometry">
        <rect>
-        <x>90</x>
-        <y>10</y>
+        <x>80</x>
+        <y>30</y>
         <width>401</width>
         <height>31</height>
        </rect>
@@ -283,6 +283,19 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
      </property>
      <property name="text">
       <string>Next</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="quote_label1">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>100</y>
+       <width>91</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
      </property>
     </widget>
    </widget>
