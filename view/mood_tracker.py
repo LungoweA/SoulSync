@@ -1,14 +1,22 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import QtWidgets
-# from model.write_db import Write_db
+from model.write_db import Write_db
 import os
 
 
 class MoodTrackerWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, id_token):
         super().__init__()
+        self.id_token = id_token
         uic.loadUi(os.path.join(os.path.dirname(__file__), "UI files", "mood_tracker.ui"), self)
+
+        # Saving data to Firebase
+        self.user_data = {
+            "mood_rating": None,
+            "mood_reason": None,
+            "mood_improvement": None
+        }
 
         self.mood_next_question1 = self.findChild(QtWidgets.QPushButton, "mood_next_question1")
         self.mood_back_question1 = self.findChild(QtWidgets.QPushButton, "mood_back_question1")
@@ -115,23 +123,19 @@ class MoodTrackerWindow(QMainWindow):
         self.mood_tip_label = self.findChild(QtWidgets.QLabel, "mood_tip_label")
         self.mood_quote_label = self.findChild(QtWidgets.QLabel, "mood_quote_label")
 
-        # self.db = Write_db()
+        self.db = Write_db()
+        self.id_token = id_token  # Saving the token for this user
 
     def rate_mood(self, rating):
         if self.quote_label1:
             self.quote_label1.setText(self.quotes1[rating])
         print(f"User rated: {rating}")
-
-        # Saving to Firebase
-        #self.db.database.child("MoodTrackerAnswers").push({
-        #    "question": "How are you feeling today?",
-        #    "answer": rating
-        #})
+        self.user_data["mood_rating"] = rating  # Saving rating locally
 
         # In the question 1
     def go_back_to_menu(self):
         from view.menu import MenuWindow
-        self.menu_window = MenuWindow()
+        self.menu_window = MenuWindow(self.id_token)
         self.menu_window.show()
         self.close()  # Closes Mood tracker window
 
@@ -152,9 +156,11 @@ class MoodTrackerWindow(QMainWindow):
 
     def answer_question2(self, answer):
         print(f"User selected: {answer} for question 2")
+        self.user_data["mood_reason"] = answer  # Saving reason locally
 
     def answer_question3(self, answer):
         print(f"User selected: {answer} for question 3")
+        self.user_data["mood_improvement"] = answer  # Saving improvement locally
 
         if answer in self.tips_and_quotes:
             self.mood_tip_label.setText(self.tips_and_quotes[answer]["tip"])
@@ -162,7 +168,12 @@ class MoodTrackerWindow(QMainWindow):
 
         # After question 3
     def finish_mood_tracker(self):
+        # Saving data to Firebase
+        user_id = self.db.auth.get_account_info(self.id_token)['users'][0]['localId']
+        self.db.database.child("MoodTrackerAnswers").child(user_id).push(self.user_data, self.id_token)
+
+        # Going back to Menu window
         from view.menu import MenuWindow
-        self.menu_window = MenuWindow()
+        self.menu_window = MenuWindow(self.id_token)
         self.menu_window.show()
         self.close()  # Closes Mood tracker window

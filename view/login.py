@@ -50,10 +50,11 @@ class LogIn(QMainWindow):
     def login(self):
         """Attempts to authenticate the user with provided credentials."""
         
-        success, message = self.account.login(self.email.text(), self.password.text())
+        success, message, user = self.account.login(self.email.text(), self.password.text())
         
         if success:
-            self.window()
+            id_token = user["idToken"]
+            self.window(id_token)
         else:
             self.error_label.setStyleSheet('color: red;')
             self.error_label.setText(message)
@@ -74,10 +75,10 @@ class LogIn(QMainWindow):
         self.close()
         self.sign_up.show()
         
-    def window(self):
+    def window(self, id_token):
         """Opens the main application window upon successful login."""
         
-        self.home = MenuWindow()  # Opening Menu window after log in
+        self.home = MenuWindow(id_token)  # Opening Menu window after log in
         self.clear_window()
         self.close()
         self.home.show()
