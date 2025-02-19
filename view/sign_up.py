@@ -1,16 +1,14 @@
 import sys
 import os
-
-# Add the parent directory to the system path to allow module imports
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
 from PyQt5 import uic
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (QMainWindow, QApplication, QPushButton, QLineEdit, QCheckBox, QLabel)
 from PyQt5.QtCore import *
 from controller.AccountLogic import AccountCreation
 
+# Add the parent directory to the system path to allow module imports
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 class SignUp(QMainWindow):
@@ -20,7 +18,6 @@ class SignUp(QMainWindow):
     """
     
     signal = pyqtSignal()
-    
     
     def __init__(self, parent=None):
         """
@@ -51,19 +48,13 @@ class SignUp(QMainWindow):
         self.cancel_btn = self.findChild(QPushButton, "cancel_btn")
         
         self.password.textChanged.connect(self.tick_checkbox)
-
-        
+   
         self.register_btn.clicked.connect(self.create_account)
         
         self.cancel_btn.clicked.connect(self.cancel)
         
-        
-        
         self.show()
         
-        
-    
-
     def create_account(self):
         """
         Attempts to create a new user account using the provided input.
@@ -104,8 +95,7 @@ class SignUp(QMainWindow):
                 self.lowercase_checkbox.setChecked(True)
             if (not char.isalnum()):
                 self.special_char_checkbox.setChecked(True)
-            
-            
+               
     def cancel(self):
         """
         Clears input fields, emits a signal, and closes the window.

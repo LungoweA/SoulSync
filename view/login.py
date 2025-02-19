@@ -77,7 +77,7 @@ class LogIn(QMainWindow):
     def window(self):
         """Opens the main application window upon successful login."""
         
-        self.home = MenuWindow()  # Opening Menu after
+        self.home = MenuWindow()  # Opening Menu window after log in
         self.clear_window()
         self.close()
         self.home.show()

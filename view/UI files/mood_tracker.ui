@@ -6,24 +6,23 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1306</width>
+    <height>832</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
-background-color: rgb(85, 255, 127);</string>
+   <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QFrame" name="mood_question1_frame">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>140</x>
       <y>-20</y>
-      <width>411</width>
+      <width>881</width>
       <height>257</height>
      </rect>
     </property>
@@ -39,7 +38,7 @@ background-color: rgb(85, 255, 127);</string>
        <x>100</x>
        <y>50</y>
        <width>281</width>
-       <height>41</height>
+       <height>31</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -234,49 +233,49 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>190</y>
-       <width>56</width>
-       <height>17</height>
+       <y>200</y>
+       <width>91</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
       <string>Back</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="mood_next_question1">
-     <property name="geometry">
-      <rect>
-       <x>280</x>
-       <y>190</y>
-       <width>56</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Next</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="quote_label1">
      <property name="geometry">
       <rect>
-       <x>160</x>
-       <y>80</y>
-       <width>91</width>
-       <height>16</height>
+       <x>30</x>
+       <y>90</y>
+       <width>381</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
       <string/>
      </property>
     </widget>
+    <widget class="QPushButton" name="mood_next_question1">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>190</y>
+       <width>91</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Next</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QFrame" name="mood_question3_frame">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>130</x>
       <y>420</y>
-      <width>501</width>
-      <height>141</height>
+      <width>941</width>
+      <height>301</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -288,10 +287,10 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
     <widget class="QLabel" name="label_10">
      <property name="geometry">
       <rect>
-       <x>130</x>
+       <x>70</x>
        <y>20</y>
-       <width>221</width>
-       <height>16</height>
+       <width>371</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
@@ -355,8 +354,8 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
       <rect>
        <x>50</x>
        <y>50</y>
-       <width>41</width>
-       <height>16</height>
+       <width>81</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
@@ -433,8 +432,8 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
       <rect>
        <x>40</x>
        <y>120</y>
-       <width>56</width>
-       <height>17</height>
+       <width>91</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -446,21 +445,47 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
       <rect>
        <x>410</x>
        <y>120</y>
-       <width>56</width>
-       <height>17</height>
+       <width>91</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
       <string>Next</string>
      </property>
     </widget>
+    <widget class="QLabel" name="mood_tip_label">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>160</y>
+       <width>891</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Tip:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="mood_quote_label">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>220</y>
+       <width>911</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Quote: </string>
+     </property>
+    </widget>
    </widget>
    <widget class="QFrame" name="mood_question2_frame">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>130</x>
       <y>230</y>
-      <width>541</width>
+      <width>941</width>
       <height>181</height>
      </rect>
     </property>
@@ -473,7 +498,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
     <widget class="QLabel" name="label_9">
      <property name="geometry">
       <rect>
-       <x>130</x>
+       <x>70</x>
        <y>30</y>
        <width>401</width>
        <height>31</height>
@@ -616,10 +641,10 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
     <widget class="QPushButton" name="mood_back_question2">
      <property name="geometry">
       <rect>
-       <x>70</x>
+       <x>50</x>
        <y>140</y>
-       <width>56</width>
-       <height>16</height>
+       <width>91</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -629,14 +654,40 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
     <widget class="QPushButton" name="mood_next_question2">
      <property name="geometry">
       <rect>
-       <x>370</x>
-       <y>140</y>
-       <width>56</width>
-       <height>17</height>
+       <x>400</x>
+       <y>130</y>
+       <width>91</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
       <string>Next</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_21">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>100</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Sleep</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="mood_sleep">
+     <property name="geometry">
+      <rect>
+       <x>490</x>
+       <y>80</y>
+       <width>86</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </widget>
@@ -646,8 +697,8 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>21</height>
+     <width>1306</width>
+     <height>30</height>
     </rect>
    </property>
   </widget>
