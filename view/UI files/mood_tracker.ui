@@ -21,10 +21,10 @@ background-color: rgb(85, 255, 127);</string>
    <widget class="QFrame" name="mood_question1_frame">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>50</y>
-      <width>421</width>
-      <height>271</height>
+      <x>170</x>
+      <y>-20</y>
+      <width>411</width>
+      <height>257</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -260,7 +260,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
      <property name="geometry">
       <rect>
        <x>160</x>
-       <y>100</y>
+       <y>80</y>
        <width>91</width>
        <height>16</height>
       </rect>
@@ -270,11 +270,196 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="mood_question1_frame_2">
+   <widget class="QFrame" name="mood_question3_frame">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>330</y>
+      <x>110</x>
+      <y>420</y>
+      <width>501</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>20</y>
+       <width>221</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>What could make your day better today?</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="mood_rest">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>50</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="mood_talk">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>90</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="mood_walk">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>50</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="mood_enjoy">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>90</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_16">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>50</y>
+       <width>41</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Resting</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_17">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>90</y>
+       <width>101</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Talking to someone</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_18">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>50</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Taking a walk</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_19">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>90</y>
+       <width>281</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Doing something enjoyable (Hobby, movie, music )</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="mood_music">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>50</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_20">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>50</y>
+       <width>101</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Listening to music</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="mood_back_question3">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>120</y>
+       <width>56</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Back</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="mood_next_question3">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>120</y>
+       <width>56</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Next</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="mood_question2_frame">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>230</y>
       <width>541</width>
       <height>181</height>
      </rect>
