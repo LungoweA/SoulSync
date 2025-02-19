@@ -42,8 +42,13 @@ class AccountCreation:
         Returns:
             tuple: (bool, str) where bool indicates success or failure, and str contains a message.
         """
+        success, message = self.db_handler.login(email, password)
+        if success:
+            user = self.db_handler.auth.sign_in_with_email_and_password(email, password)
+            return True, message, user
+        return False, message, None
         
-        return self.db_handler.login(email, password)
+        #return self.db_handler.login(email, password)
     
     def reset_password(self):
         pass

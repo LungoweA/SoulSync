@@ -97,7 +97,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>_c5dca270-092d-4483-b12e-a031080d7df9.jpeg</pixmap>
+     <pixmap>../../../../Downloads/Soul_Sync_picture.webp</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -304,7 +304,7 @@
      <x>0</x>
      <y>0</y>
      <width>1300</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

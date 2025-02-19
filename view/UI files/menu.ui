@@ -48,7 +48,7 @@ background-color: rgb(255, 255, 255);</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>_c5dca270-092d-4483-b12e-a031080d7df9.jpeg</pixmap>
+     <pixmap>../../../../Downloads/Soul_Sync_picture.webp</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
