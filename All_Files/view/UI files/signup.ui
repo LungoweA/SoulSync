@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1300</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="palette">
+   <palette>
+    <active>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>170</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </active>
+    <inactive>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>170</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </inactive>
+    <disabled>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>170</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>170</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </disabled>
+   </palette>
+  </property>
+  <property name="windowTitle">
+   <string>Soul Sync</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../model/_c5dca270-092d-4483-b12e-a031080d7df9.jpeg</normaloff>
+    <normalon>../model/_c5dca270-092d-4483-b12e-a031080d7df9.jpeg</normalon>../model/_c5dca270-092d-4483-b12e-a031080d7df9.jpeg</iconset>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>24</width>
+    <height>24</height>
+   </size>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>594</x>
+      <y>0</y>
+      <width>111</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../Soul_Sync_picture.webp</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>569</x>
+      <y>110</y>
+      <width>161</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>MS Serif</family>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Soul Sync</string>
+    </property>
+    <property name="scaledContents">
+     <bool>false</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="wordWrap">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>160</y>
+      <width>200</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft Uighur</family>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Create Account</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="fullname">
+    <property name="geometry">
+     <rect>
+      <x>593</x>
+      <y>250</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string extracomment="Enter Your Name">Enter Your Fullname</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="email">
+    <property name="geometry">
+     <rect>
+      <x>593</x>
+      <y>310</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>Enter Your Email</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="password">
+    <property name="geometry">
+     <rect>
+      <x>593</x>
+      <y>370</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>Create New Password</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="confirm_password_btn">
+    <property name="geometry">
+     <rect>
+      <x>593</x>
+      <y>560</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>Confirm Password</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="register_btn">
+    <property name="geometry">
+     <rect>
+      <x>612</x>
+      <y>650</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>6</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Register</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="char_length_checkbox">
+    <property name="geometry">
+     <rect>
+      <x>603</x>
+      <y>430</y>
+      <width>200</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>At least 7 characters in length</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>593</x>
+      <y>400</y>
+      <width>150</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>6</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Password Requirements</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="uppercase_checkbox">
+    <property name="geometry">
+     <rect>
+      <x>603</x>
+      <y>450</y>
+      <width>200</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>At least one uppercase letter</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="lowercase_checkbox">
+    <property name="geometry">
+     <rect>
+      <x>603</x>
+      <y>470</y>
+      <width>200</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>At least one lowercase letter</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="digit_checkbox">
+    <property name="geometry">
+     <rect>
+      <x>603</x>
+      <y>490</y>
+      <width>130</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>At least one digit</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="special_char_checkbox">
+    <property name="geometry">
+     <rect>
+      <x>603</x>
+      <y>510</y>
+      <width>210</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>At least one special character</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="error_label">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>600</y>
+      <width>361</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>7</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>593</x>
+      <y>230</y>
+      <width>70</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>MS Gothic</family>
+      <pointsize>7</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Fullname</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>593</x>
+      <y>290</y>
+      <width>50</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>MS Gothic</family>
+      <pointsize>7</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Email</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>593</x>
+      <y>350</y>
+      <width>70</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>MS Gothic</family>
+      <pointsize>7</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Password</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>593</x>
+      <y>540</y>
+      <width>170</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>MS Gothic</family>
+      <pointsize>7</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Confirm Password</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cancel_btn">
+    <property name="geometry">
+     <rect>
+      <x>612</x>
+      <y>700</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Cancel</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1300</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
