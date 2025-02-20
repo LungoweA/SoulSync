@@ -170,8 +170,12 @@ class MoodTrackerWindow(QMainWindow):
     def finish_mood_tracker(self):
         # Saving data to Firebase
         user_id = self.db.auth.get_account_info(self.id_token)['users'][0]['localId']
-        self.db.database.child("MoodTrackerAnswers").child(user_id).push(self.user_data, self.id_token)
-
+        if None in self.user_data.values():
+            print("Error: Some fields are missing!", self.user_data)
+        else:
+            self.db.database.child("Users").child(user_id).child("MoodTrackerAnswers").push(self.user_data, self.id_token)
+            print("Data saved to Firebase")
+        
         # Going back to Menu window
         from view.menu import MenuWindow
         self.menu_window = MenuWindow(self.id_token)
