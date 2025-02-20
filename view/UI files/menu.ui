@@ -83,7 +83,7 @@ background-color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>560</x>
-      <y>170</y>
+      <y>180</y>
       <width>200</width>
       <height>50</height>
      </rect>
@@ -101,7 +101,7 @@ background-color: rgb(255, 255, 255);</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="mood_tracker_pushbutton_4">
+   <widget class="QPushButton" name="stress_tracker_pushbutton">
     <property name="geometry">
      <rect>
       <x>570</x>
@@ -118,7 +118,7 @@ background-color: rgb(255, 255, 255);</string>
      <string>STRESS TRACKER</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="mood_tracker_pushbutton_5">
+   <widget class="QPushButton" name="diary_pushbutton">
     <property name="geometry">
      <rect>
       <x>570</x>
