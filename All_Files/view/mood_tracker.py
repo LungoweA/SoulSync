@@ -1,7 +1,12 @@
+import sys
+import os
+
+# Add the absolute path of the SoulSync directory to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import QtWidgets
-from model.write_db import Write_db
+from All_Files.model.write_db import Write_db
 from controller.MoodLogic import Mood
 import os
 

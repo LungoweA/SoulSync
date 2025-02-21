@@ -1,7 +1,8 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QPushButton
 import os
-from view.mood_tracker import MoodTrackerWindow  # Importing mood tracker window
+from .mood_tracker import MoodTrackerWindow
+
 
 
 class MenuWindow(QMainWindow):

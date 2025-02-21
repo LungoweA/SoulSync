@@ -4,7 +4,9 @@ from PyQt5 import uic
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (QMainWindow, QApplication, QPushButton, QLineEdit, QCheckBox, QLabel)
 from PyQt5.QtCore import *
-from controller.AccountLogic import AccountCreation
+from All_Files.controller.AccountLogic import AccountCreation
+
+
 
 # Add the parent directory to the system path to allow module imports
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))

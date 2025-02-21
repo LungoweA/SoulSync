@@ -3,7 +3,9 @@ import os
 from PyQt5 import uic
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QCheckBox, QPushButton, QLineEdit, QLabel
-from view.menu import MenuWindow  # Importing Menu
+from .menu import MenuWindow
+
+
 
 from controller.AccountLogic import AccountCreation
 from view.sign_up import SignUp
