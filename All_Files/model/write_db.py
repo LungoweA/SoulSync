@@ -59,21 +59,22 @@ class Write_db:
         if password != confirm_password:
             return False, "Passwords don't match, please try again!"
         
-        user = self.auth.create_user_with_email_and_password(email, password)
-        user_id = user['localId']
-        id_token = user['idToken']
-        user_data = {
-                'Name': name,
-                'Email': email,
-                'Password': password,
-                'Created_at': datetime.now().isoformat()
-        }
-                        
-        self.database.child('Users').child(user_id).set(user_data, id_token)
-                        
-        return True, 'Account Created'
-        
-        # return False, 'Account already exists!'
+        try:
+            user = self.auth.create_user_with_email_and_password(email, password)
+            user_id = user['localId']
+            id_token = user['idToken']
+            user_data = {
+                    'Name': name,
+                    'Email': email,
+                    'Password': password,
+                    'Created_at': datetime.now().isoformat()
+            }
+                            
+            self.database.child('Users').child(user_id).set(user_data, id_token)
+                            
+            return True, 'Account Created'
+        except:
+            return False, 'Account already exists!'
             
     def validate_password(self, password):
         """
