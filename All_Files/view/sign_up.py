@@ -43,12 +43,16 @@ class SignUp(QMainWindow):
         self.digit_checkbox = self.findChild(QCheckBox, 'digit_checkbox')
         self.special_char_checkbox = self.findChild(QCheckBox, 'special_char_checkbox')
         
+        self.show_password_checkbox = self.findChild(QCheckBox, 'show_password_checkbox')
+        
         self.error_label = self.findChild(QLabel, "error_label")
         self.register_btn = self.findChild(QPushButton, "register_btn")
         self.cancel_btn = self.findChild(QPushButton, "cancel_btn")
         
+        self.show_password_checkbox.toggled.connect(self.show_password)
+        
         self.password.textChanged.connect(self.tick_checkbox)
-   
+        
         self.register_btn.clicked.connect(self.create_account)
         
         self.cancel_btn.clicked.connect(self.cancel)
@@ -72,6 +76,15 @@ class SignUp(QMainWindow):
         else:
             self.error_label.setStyleSheet('color: red;')
             self.error_label.setText(message)
+            
+    def show_password(self):
+        checked = self.show_password_checkbox.isChecked()
+        if checked:
+            self.password.setEchoMode(QtWidgets.QLineEdit.Normal)
+            self.confirm_password.setEchoMode(QtWidgets.QLineEdit.Normal)
+        else:
+            self.password.setEchoMode(QtWidgets.QLineEdit.Password)
+            self.confirm_password.setEchoMode(QtWidgets.QLineEdit.Password)
         
     def tick_checkbox(self):
         """

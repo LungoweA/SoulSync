@@ -2,12 +2,15 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>1300</width>
-    <height>800</height>
+    <height>900</height>
    </rect>
   </property>
   <property name="palette">
@@ -73,6 +76,11 @@
      </colorrole>
     </disabled>
    </palette>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>9</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Soul Sync</string>
@@ -155,12 +163,17 @@
      <rect>
       <x>593</x>
       <y>250</y>
-      <width>113</width>
+      <width>141</width>
       <height>20</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>7</pointsize>
+     </font>
+    </property>
     <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
     <property name="placeholderText">
      <string>Enter Your Email</string>
@@ -171,12 +184,17 @@
      <rect>
       <x>593</x>
       <y>320</y>
-      <width>113</width>
+      <width>141</width>
       <height>20</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>7</pointsize>
+     </font>
+    </property>
     <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
     <property name="placeholderText">
      <string>Enter Your Password</string>
@@ -185,14 +203,15 @@
    <widget class="QPushButton" name="login_btn">
     <property name="geometry">
      <rect>
-      <x>612</x>
-      <y>400</y>
+      <x>620</x>
+      <y>430</y>
       <width>75</width>
-      <height>23</height>
+      <height>27</height>
      </rect>
     </property>
     <property name="font">
      <font>
+      <pointsize>7</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -204,8 +223,8 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>510</y>
+      <x>460</x>
+      <y>550</y>
       <width>151</width>
       <height>20</height>
      </rect>
@@ -222,14 +241,15 @@
    <widget class="QPushButton" name="sign_up_btn">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>510</y>
+      <x>620</x>
+      <y>550</y>
       <width>75</width>
-      <height>21</height>
+      <height>26</height>
      </rect>
     </property>
     <property name="font">
      <font>
+      <pointsize>7</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -241,8 +261,8 @@
    <widget class="QLabel" name="error_label">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>460</y>
+      <x>570</x>
+      <y>490</y>
       <width>180</width>
       <height>20</height>
      </rect>
@@ -297,6 +317,24 @@
      <string>Password</string>
     </property>
    </widget>
+   <widget class="QCheckBox" name="show_password_checkbox">
+    <property name="geometry">
+     <rect>
+      <x>593</x>
+      <y>370</y>
+      <width>141</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>7</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Show password</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -304,7 +342,7 @@
      <x>0</x>
      <y>0</y>
      <width>1300</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

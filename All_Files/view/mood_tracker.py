@@ -2,6 +2,7 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import QtWidgets
 from model.write_db import Write_db
+from controller.MoodLogic import Mood
 import os
 
 
@@ -10,13 +11,10 @@ class MoodTrackerWindow(QMainWindow):
         super().__init__()
         self.id_token = id_token
         uic.loadUi(os.path.join(os.path.dirname(__file__), "UI files", "mood_tracker.ui"), self)
+        
+        self.mood = Mood()
 
-        # Saving data to Firebase
-        self.user_data = {
-            "mood_rating": None,
-            "mood_reason": None,
-            "mood_improvement": None
-        }
+       
 
         self.mood_next_question1 = self.findChild(QtWidgets.QPushButton, "mood_next_question1")
         self.mood_back_question1 = self.findChild(QtWidgets.QPushButton, "mood_back_question1")
@@ -48,13 +46,7 @@ class MoodTrackerWindow(QMainWindow):
 
         self.quote_label1 = self.findChild(QtWidgets.QLabel, "quote_label1")
 
-        self.quotes1 = {
-            1: "It's okay to have bad days. Tomorrow is a new start.",
-            2: "Take a deep breath. You are doing your best.",
-            3: "Keep going, one step at a time.",
-            4: "Good job! You are making progress.",
-            5: "Amazing! Celebrate the little victories."
-        }
+        
 
         # QUESTION 2
         self.mood_school = self.findChild(QtWidgets.QRadioButton, "mood_school")
@@ -96,29 +88,7 @@ class MoodTrackerWindow(QMainWindow):
         self.mood_back_question3.clicked.connect(self.show_question2)
         self.mood_next_question3.clicked.connect(self.finish_mood_tracker)
 
-        # TIPS AND QUOTES
-        self.tips_and_quotes = {
-            "Music": {
-                "tip": "Listening to your favorite songs can relax your mind and improve your mood.",
-                "quote": "Where words fail, music speaks."
-            },
-            "Enjoy": {
-                "tip": "Do something you enjoy today, like watching a movie or reading a book.",
-                "quote": "Happiness is not something ready-made. It comes from your own actions."
-            },
-            "Rest": {
-                "tip": "Take some time to rest. A short nap or just relaxing can help you recharge.",
-                "quote": "Resting is not laziness, it is medicine for the soul."
-            },
-            "Talk": {
-                "tip": "Reach out to a friend or family member. Talking about your feelings can help a lot.",
-                "quote": "A burden shared is a burden halved."
-            },
-            "Walk": {
-                "tip": "Go for a short walk outside. Fresh air and movement can clear your mind.",
-                "quote": "Every step you take is a step closer to a better mood."
-            }
-        }
+        
 
         self.mood_tip_label = self.findChild(QtWidgets.QLabel, "mood_tip_label")
         self.mood_quote_label = self.findChild(QtWidgets.QLabel, "mood_quote_label")
@@ -128,9 +98,10 @@ class MoodTrackerWindow(QMainWindow):
 
     def rate_mood(self, rating):
         if self.quote_label1:
-            self.quote_label1.setText(self.quotes1[rating])
-        print(f"User rated: {rating}")
-        self.user_data["mood_rating"] = rating  # Saving rating locally
+            self.quote_label1.setText(self.mood.quotes()[rating])
+            self.mood.mood_rating(rating) # Saving rating locally
+        
+    
 
         # In the question 1
     def go_back_to_menu(self):
@@ -155,26 +126,20 @@ class MoodTrackerWindow(QMainWindow):
         self.mood_question3.show()
 
     def answer_question2(self, answer):
-        print(f"User selected: {answer} for question 2")
-        self.user_data["mood_reason"] = answer  # Saving reason locally
+        
+        self.mood.mood_reason(answer)  # Saving reason locally
 
     def answer_question3(self, answer):
-        print(f"User selected: {answer} for question 3")
-        self.user_data["mood_improvement"] = answer  # Saving improvement locally
+        
+        self.mood.mood_improvement(answer)   # Saving improvement locally
 
-        if answer in self.tips_and_quotes:
-            self.mood_tip_label.setText(self.tips_and_quotes[answer]["tip"])
-            self.mood_quote_label.setText(self.tips_and_quotes[answer]["quote"])
+        if answer in self.mood.tips_and_quotes():
+            self.mood_tip_label.setText(self.mood.tips_and_quotes()[answer]["tip"])
+            self.mood_quote_label.setText(self.mood.tips_and_quotes()[answer]["quote"])
 
         # After question 3
     def finish_mood_tracker(self):
-        # Saving data to Firebase
-        user_id = self.db.auth.get_account_info(self.id_token)['users'][0]['localId']
-        if None in self.user_data.values():
-            print("Error: Some fields are missing!", self.user_data)
-        else:
-            self.db.database.child("Users").child(user_id).child("MoodTrackerAnswers").push(self.user_data, self.id_token)
-            print("Data saved to Firebase")
+        self.mood.save_data(self.id_token)
         
         # Going back to Menu window
         from view.menu import MenuWindow
