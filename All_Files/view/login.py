@@ -2,7 +2,7 @@ import sys
 import os
 from PyQt5 import uic
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLineEdit, QLabel
+from PyQt5.QtWidgets import QMainWindow, QCheckBox, QPushButton, QLineEdit, QLabel
 from view.menu import MenuWindow  # Importing Menu
 
 from controller.AccountLogic import AccountCreation
@@ -40,8 +40,10 @@ class LogIn(QMainWindow):
         self.error_label = self.findChild(QLabel, "error_label")
         self.email = self.findChild(QLineEdit, 'email')
         self.password = self.findChild(QLineEdit, 'password')
-        
+        self.show_password_checkbox = self.findChild(QCheckBox, 'show_password_checkbox')
         self.password.setEchoMode(QtWidgets.QLineEdit.Password)
+        
+        self.show_password_checkbox.toggled.connect(self.show_password)
         self.login_btn.clicked.connect(self.login)
         
         self.sign_up_btn.mousePressEvent = self.signup
@@ -58,7 +60,16 @@ class LogIn(QMainWindow):
         else:
             self.error_label.setStyleSheet('color: red;')
             self.error_label.setText(message)
-             
+    
+    
+    def show_password(self):
+        checked = self.show_password_checkbox.isChecked()
+        if checked:
+            self.password.setEchoMode(QtWidgets.QLineEdit.Normal)
+        else:
+            self.password.setEchoMode(QtWidgets.QLineEdit.Password)
+        
+    
     def clear_window(self):
         """Clears all input fields and error messages."""
         

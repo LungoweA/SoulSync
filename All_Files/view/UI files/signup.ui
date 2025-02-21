@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1300</width>
-    <height>800</height>
+    <height>900</height>
    </rect>
   </property>
   <property name="palette">
@@ -163,9 +163,14 @@
      <rect>
       <x>593</x>
       <y>250</y>
-      <width>113</width>
+      <width>141</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>6</pointsize>
+     </font>
     </property>
     <property name="placeholderText">
      <string extracomment="Enter Your Name">Enter Your Fullname</string>
@@ -176,9 +181,14 @@
      <rect>
       <x>593</x>
       <y>310</y>
-      <width>113</width>
+      <width>141</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>6</pointsize>
+     </font>
     </property>
     <property name="placeholderText">
      <string>Enter Your Email</string>
@@ -189,9 +199,14 @@
      <rect>
       <x>593</x>
       <y>370</y>
-      <width>113</width>
+      <width>141</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>6</pointsize>
+     </font>
     </property>
     <property name="placeholderText">
      <string>Create New Password</string>
@@ -201,10 +216,15 @@
     <property name="geometry">
      <rect>
       <x>593</x>
-      <y>560</y>
-      <width>113</width>
+      <y>570</y>
+      <width>141</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>6</pointsize>
+     </font>
     </property>
     <property name="placeholderText">
      <string>Confirm Password</string>
@@ -213,8 +233,8 @@
    <widget class="QPushButton" name="register_btn">
     <property name="geometry">
      <rect>
-      <x>612</x>
-      <y>650</y>
+      <x>620</x>
+      <y>700</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -236,8 +256,13 @@
       <x>603</x>
       <y>430</y>
       <width>200</width>
-      <height>13</height>
+      <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>6</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>At least 7 characters in length</string>
@@ -267,8 +292,13 @@
       <x>603</x>
       <y>450</y>
       <width>200</width>
-      <height>13</height>
+      <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>6</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>At least one uppercase letter</string>
@@ -280,8 +310,13 @@
       <x>603</x>
       <y>470</y>
       <width>200</width>
-      <height>13</height>
+      <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>6</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>At least one lowercase letter</string>
@@ -293,8 +328,13 @@
       <x>603</x>
       <y>490</y>
       <width>130</width>
-      <height>13</height>
+      <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>6</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>At least one digit</string>
@@ -306,8 +346,13 @@
       <x>603</x>
       <y>510</y>
       <width>210</width>
-      <height>13</height>
+      <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>6</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>At least one special character</string>
@@ -317,7 +362,7 @@
     <property name="geometry">
      <rect>
       <x>480</x>
-      <y>600</y>
+      <y>650</y>
       <width>361</width>
       <height>20</height>
      </rect>
@@ -395,7 +440,7 @@
     <property name="geometry">
      <rect>
       <x>593</x>
-      <y>540</y>
+      <y>550</y>
       <width>170</width>
       <height>12</height>
      </rect>
@@ -413,20 +458,39 @@
    <widget class="QPushButton" name="cancel_btn">
     <property name="geometry">
      <rect>
-      <x>612</x>
-      <y>700</y>
+      <x>620</x>
+      <y>760</y>
       <width>75</width>
       <height>23</height>
      </rect>
     </property>
     <property name="font">
      <font>
+      <pointsize>6</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
     <property name="text">
      <string>Cancel</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="show_password_checkbox">
+    <property name="geometry">
+     <rect>
+      <x>593</x>
+      <y>610</y>
+      <width>151</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>7</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Show password</string>
     </property>
    </widget>
   </widget>
@@ -436,7 +500,7 @@
      <x>0</x>
      <y>0</y>
      <width>1300</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
