@@ -8,7 +8,7 @@ from All_Files.controller.AccountLogic import AccountCreation
 
 
 
-# Add the parent directory to the system path to allow module imports
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
