@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..',
 import unittest
 from unittest.mock import patch, MagicMock
 from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QCheckBox
-from All_Files.view.sign_up import SignUp  
+from All_Files.view.sign_up import SignUp
 
 
 
