@@ -2,7 +2,7 @@ import sys
 import os
 from PyQt5 import uic
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import (QMainWindow, QApplication, QPushButton, QLineEdit, QCheckBox, QLabel)
+from PyQt5.QtWidgets import (QMainWindow, QPushButton, QLineEdit, QCheckBox, QLabel, QGroupBox)
 from PyQt5.QtCore import *
 from All_Files.controller.AccountLogic import AccountCreation
 
@@ -47,9 +47,13 @@ class SignUp(QMainWindow):
         
         self.show_password_checkbox = self.findChild(QCheckBox, 'show_password_checkbox')
         
+        self.group_box = self.findChild(QGroupBox, 'groupBox')
+        
         self.error_label = self.findChild(QLabel, "error_label")
         self.register_btn = self.findChild(QPushButton, "register_btn")
         self.cancel_btn = self.findChild(QPushButton, "cancel_btn")
+        
+        self.group_box.hide()
         
         self.show_password_checkbox.toggled.connect(self.show_password)
         
@@ -71,13 +75,34 @@ class SignUp(QMainWindow):
                                                         self.password.text(), self.confirm_password.text())
         
         if success:
+            self.group_box.show()
+            self.group_box.setStyleSheet(
+                """
+                background-color: #B3FFB3; 
+                border: 2px solid #4DCC4D; 
+                border-radius: 8px; 
+                padding: 10px;
+                font-weight: bold;
+                """
+            )
+
             self.error_label.setStyleSheet('color: Black;'
                                             'font-family: MS Gothic')
             self.error_label.setText(message)
             
         else:
-            self.error_label.setStyleSheet('color: red;')
-            self.error_label.setText(message)
+            self.group_box.show()
+            self.group_box.setStyleSheet(
+                "background-color: #FFB3B3;"
+                "border: 2px solid #FF4D4D;"
+                "border-radius: 8px;"
+                "padding: 10px;"
+                "font-weight: bold;"
+                "color: #990000;"
+            )
+            self.error_label.setStyleSheet('color: Black;')
+            self.error_label.setText(f"⚠️ {message}")
+            
             
     def show_password(self):
         checked = self.show_password_checkbox.isChecked()
@@ -110,7 +135,7 @@ class SignUp(QMainWindow):
                 self.lowercase_checkbox.setChecked(True)
             if (not char.isalnum()):
                 self.special_char_checkbox.setChecked(True)
-               
+        
     def cancel(self):
         """
         Clears input fields, emits a signal, and closes the window.
@@ -130,3 +155,4 @@ class SignUp(QMainWindow):
         self.password.clear()
         self.confirm_password.clear()
         self.error_label.setText("")
+        self.group_box.hide()

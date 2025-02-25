@@ -32,7 +32,7 @@ class Write_db:
                     "appId": "1:365391145029:web:d5b3e7bfbc4e74a7b55b2c",
                     "measurementId": "G-N3ZX4ZTR50"
                 }
-            
+        
         
         # Intializing firebase
         self.firebase = pyrebase.initialize_app(config)
@@ -59,6 +59,9 @@ class Write_db:
         if password != confirm_password:
             return False, "Passwords don't match, please try again!"
         
+        if self.validate_email(email):
+            return False, "Email is not allowed!"
+        
         try:
             user = self.auth.create_user_with_email_and_password(email, password)
             user_id = user['localId']
@@ -67,7 +70,7 @@ class Write_db:
                     'Name': name,
                     'Email': email,
                     'Password': password,
-                    'Created_at': datetime.now().isoformat()
+                    'Created_at': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
                             
             self.database.child('Users').child(user_id).set(user_data, id_token)
@@ -95,6 +98,7 @@ class Write_db:
         is_digit = False
         is_lower = False
         is_not_alphanum = False
+        
         if len(password) >= 7:
             correct_length = True
             for char in password:
@@ -106,9 +110,18 @@ class Write_db:
                     is_lower = True
                 if (not char.isalnum()):
                     is_not_alphanum = True
+                
                     
         return correct_length and is_upper and is_digit and is_lower and is_not_alphanum
             
+    def validate_email(self, email):
+        forbidden_characters = [':', ';', '"', '<', '>', '/']
+        for char in email:
+            if char in forbidden_characters:
+                return True
+                
+        
+    
     def login(self, email, password):
         """
         Logs in a user by verifying credentials with Firebase Authentication.
@@ -119,10 +132,10 @@ class Write_db:
             tuple: (bool, str) - True if login is successful, False with error message otherwise.
         """
         
+                
         try:
-            self.auth.sign_in_with_email_and_password(email, password)
-            return True, ''
+            user = self.auth.sign_in_with_email_and_password(email, password)
+            return True, '', user
         except:
-            return False, 'Invalid email or password!'
-    
-    
+            return False, 'Invalid email or Incorrect password!', None
+

@@ -2,14 +2,14 @@ import sys
 import os
 from PyQt5 import uic
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QCheckBox, QPushButton, QLineEdit, QLabel
+from PyQt5.QtWidgets import QMainWindow, QCheckBox, QPushButton, QLineEdit, QLabel, QGroupBox
 from .menu import MenuWindow
 
 
 
 from controller.AccountLogic import AccountCreation
 from view.sign_up import SignUp
-from view.Main_window import Window
+
 
 # Add the parent directory to the system path to allow module imports
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
@@ -45,6 +45,9 @@ class LogIn(QMainWindow):
         self.show_password_checkbox = self.findChild(QCheckBox, 'show_password_checkbox')
         self.password.setEchoMode(QtWidgets.QLineEdit.Password)
         
+        self.group_box = self.findChild(QGroupBox, 'groupBox')
+        
+        self.group_box.hide()
         self.show_password_checkbox.toggled.connect(self.show_password)
         self.login_btn.clicked.connect(self.login)
         
@@ -60,8 +63,18 @@ class LogIn(QMainWindow):
             id_token = user["idToken"]
             self.window(id_token)
         else:
-            self.error_label.setStyleSheet('color: red;')
-            self.error_label.setText(message)
+            self.group_box.show()
+            self.group_box.setStyleSheet(
+                "background-color: #FFB3B3;"
+                "border: 2px solid #FF4D4D;"
+                "border-radius: 8px;"
+                "padding: 10px;"
+                "font-weight: bold;"
+                "color: #990000;"
+            )
+            self.error_label.setStyleSheet('color: Black;')
+            self.error_label.setText(f"⚠️ {message}")
+            
     
     
     def show_password(self):
@@ -78,6 +91,7 @@ class LogIn(QMainWindow):
         self.email.clear()
         self.password.clear()
         self.error_label.setText("")
+        self.group_box.hide()
         
     def signup(self, event=None):
         """Opens the sign-up window and closes the login window."""

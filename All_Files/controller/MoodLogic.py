@@ -15,17 +15,20 @@ class Mood:
     def quotes(self):
         return self.mood_db.quotes()
     
-    def tips_and_quotes(self):
-        return self.mood_db.tips_and_quotes()
+    def tips(self):
+        return self.mood_db.tips()
     
-    def mood_rating(self, rating):
-        return self.mood_db.mood_rating(rating)
+    def mood_score(self, rating, description, influence):
+        return self.mood_db.mood_score(rating, description, influence)
     
-    def mood_reason(self, reason):
-        return self.mood_db.mood_reason(reason)
+    def mood_question(self):
+        return self.mood_db.mood_question()
     
-    def mood_improvement(self, improvement):
-        return self.mood_db.mood_improvement(improvement)
+    def options(self):
+        return self.mood_db.options()
+    
+    def supportive_messages(self):
+        return self.mood_db.supportive_messages()
     
     def save_data(self, id_token):
         return self.mood_db.save_data(id_token)
