@@ -68,13 +68,8 @@ class TestSignUpUI(unittest.TestCase):
         self.window.account.create_account.return_value = (False, "Email already in use")
         
         self.window.create_account()
-<<<<<<< HEAD
-        self.window.error_label.setText.assert_called_once_with("Email already in use")
-        self.window.error_label.setStyleSheet.assert_called_once_with('color: red;')
-=======
         self.window.error_label.setText.assert_called_once_with("⚠️ Email already in use")
         self.window.error_label.setStyleSheet.assert_called_once_with('color: Black;')
->>>>>>> Michael2024-coder
 
     def test_cancel_function(self):
         with patch.object(self.window, "close") as mock_close:
