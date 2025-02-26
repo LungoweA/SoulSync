@@ -19,7 +19,7 @@ class AccountCreation:
         """
         
         self.db_handler = Write_db()
-        
+
     def create_account(self, fullname, email, password, confirm_password):
         """
         Creates a new user account by storing user details in the database.
@@ -31,7 +31,7 @@ class AccountCreation:
         Returns:
             tuple: (bool, str) where bool indicates success or failure, and str contains a message.
         """
-    
+
         return self.db_handler.create_account(fullname, email, password, confirm_password)
     
     def login(self, email, password):

@@ -33,14 +33,13 @@ class Mood_db:
     def mood_question(self):
         question = ['How are you feeling today?', 'Which of the following best describes your mood right now?', 'What influenced your mood the most today?']
         return question
-    
-    
+
     def options(self):
         option_dict = {'0': ['Very Bad', 'Bad', 'Normal', 'Good', 'Very Good'],
                         '1': ['Very Happy', 'Calm & Relaxed', 'Neutral', 'Stressed', 'Angry'],
                         '2': ['School', 'Work', 'Health', 'Weather', 'Sleep']}
         return option_dict
-    
+
     def tips(self):
         tip = {"School": ['Prioritize tasks', 'Schedule your programs', 'Practice self-care', 'Avoid negative comparisons', 'Avoid procrastination'], 
                     "Work": ['Take Short Breaks', 'Declutter Your Space', 'Personalize Your Workspace', 'Communicate Openly', 'Unplug After Hours '], 

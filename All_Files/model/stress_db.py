@@ -14,11 +14,10 @@ class Stress_db:
                     "I get abnormally tired from daily chores and socializing with others."]
         
         return questions
-    
-    
+
     def result(self, sum):
         score = (sum/self.total) * 100
-        
+
         if 80 <= score <= 100:
             return "Low"
         elif 40 < score < 80:
