@@ -62,8 +62,7 @@ class Mood_db:
 
         question = ['How are you feeling today?', 'Which of the following best describes your mood right now?', 'What influenced your mood the most today?']
         return question
-    
-    
+
     def options(self):
         """
         Retrieves a dictionary of options for mood-related questions.
@@ -77,7 +76,7 @@ class Mood_db:
                         '1': ['Very Happy', 'Calm & Relaxed', 'Neutral', 'Stressed', 'Angry'],
                         '2': ['School', 'Work', 'Health', 'Weather', 'Sleep']}
         return option_dict
-    
+
     def tips(self):
         """
         Retrieves a dictionary of tips categorized by mood influence.
