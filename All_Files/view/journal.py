@@ -37,13 +37,9 @@ class Journal(QMainWindow):
         
         
     def clear_journal(self):
-<<<<<<< HEAD
-        self.journal_text.clear()
-=======
         journal_text = self.findChild(QTextEdit)
         if journal_text:
             journal_text.clear()
->>>>>>> Michael2024-coder
         
     def save_journal(self):
         entry = self.journal_text.toPlainText()
@@ -65,11 +61,7 @@ class Journal(QMainWindow):
             
     
     def menu(self):
-<<<<<<< HEAD
-        from view.menu import MenuWindow
-=======
         from .menu import MenuWindow
->>>>>>> Michael2024-coder
         self.menu_window = MenuWindow(self.id_token)
         self.clear_journal()
         self.menu_window.show()

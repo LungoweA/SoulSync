@@ -5,7 +5,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from PyQt5 import uic
 from PyQt5.QtWidgets import (QMainWindow, QLabel, QRadioButton, QPushButton, QGroupBox)
-from controller.MoodLogic import Mood
+from All_Files.controller.MoodLogic import Mood
 from .tips import Tips
 import os
 
