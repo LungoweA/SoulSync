@@ -13,8 +13,32 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 class Result(QMainWindow):
-    
+    """
+    A class representing the Results window in the application. This window displays the user's stress level,
+    along with tips, exercises, and motivational quotes tailored to their stress level.
+
+    Attributes:
+        id_token (str): The ID token associated with the user's session.
+        stress (Stress): An instance of the `Stress` class for handling stress-related logic.
+        sums (int): The sum of the user's stress test responses.
+        result_label (QLabel): Label to display the stress level result.
+        exercise_label (QLabel): Label to display recommended exercises.
+        tips_label (QLabel): Label to display stress management tips.
+        quote_label (QLabel): Label to display a motivational quote.
+        owner_label (QLabel): Label to display the author of the motivational quote.
+        menu_btn (QPushButton): Button to return to the main menu.
+    """
+
     def __init__(self, id_token, sums, parent=None):
+        """
+        Initializes the Results window and sets up the UI elements and event handlers.
+
+        Args:
+            id_token (str): The ID token associated with the user's session.
+            sums (int): The sum of the user's stress test responses.
+            parent (QWidget, optional): The parent widget. Defaults to None.
+        """
+
         super(Result, self).__init__(parent)
         uic.loadUi(os.path.join(os.path.dirname(__file__), "UI files", "results.ui"), self)
         
@@ -37,6 +61,10 @@ class Result(QMainWindow):
         
     
     def show_result(self):
+        """
+        Displays the user's stress level result and saves it to the database.
+        """
+
         self.result = self.stress.result(self.sums)
         if self.result == "Low":
             self.result_label.setText(f"Your Stress Level: {self.result}\nYou're doing great! Keep up the healthy habits to maintain balance.\nThere are tips and recommended exercises below to help keep you on track.")
@@ -49,6 +77,10 @@ class Result(QMainWindow):
             
             
     def show_tips(self):
+        """
+        Displays stress management tips tailored to the user's stress level.
+        """
+
         tips = self.stress.tips()
         if self.result == "Low":
             self.tips_label.setText(f" \n {1}. {tips['Low'][0]}\n\n {2}. {tips['Low'][1]}\n\n {3}. {tips['Low'][2]}\n\n {4}. {tips['Low'][3]}\n\n {5}. {tips['Low'][4]}")
@@ -59,6 +91,10 @@ class Result(QMainWindow):
                 
             
     def show_exercises(self):
+        """
+        Displays recommended exercises tailored to the user's stress level.
+        """
+
         exercises = self.stress.exercises()
         if self.result == "Low":
             self.exercise_label.setText(f"\n {1}. {exercises['Low'][0]}\n\n {2}. {exercises['Low'][1]}\n\n {3}. {exercises['Low'][2]}\n\n {4}. {exercises['Low'][3]}\n\n {5}. {exercises['Low'][4]}")
@@ -69,6 +105,10 @@ class Result(QMainWindow):
                 
         
     def show_quotes(self):
+        """
+        Displays a random motivational quote tailored to the user's stress level.
+        """
+
         import random
         
         quotes = self.stress.quotes()
@@ -86,6 +126,10 @@ class Result(QMainWindow):
             self.owner_label.setText(f'{owner3}')
             
     def clear(self):
+        """
+        Clears all labels in the window.
+        """
+
         self.result_label.setText("")
         self.exercise_label.setText("")
         self.tips_label.setText("")
@@ -94,6 +138,10 @@ class Result(QMainWindow):
         
         
     def menu(self):
+        """
+        Returns to the main menu and closes the current Results window.
+        """
+        
         from view.menu import MenuWindow
         self.menu_window = MenuWindow(self.id_token)
         self.clear()
