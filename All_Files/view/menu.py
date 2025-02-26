@@ -3,7 +3,11 @@ from PyQt5.QtWidgets import QMainWindow, QPushButton
 import os
 from .mood_tracker import MoodTrackerWindow
 from .stress_tracker import StressTracker
+<<<<<<< HEAD
 from .journal import Journal
+=======
+
+>>>>>>> Michael2024-coder
 
 
 
@@ -38,6 +42,10 @@ class MenuWindow(QMainWindow):
         
     
     def open_journal(self):
+<<<<<<< HEAD
+=======
+        from All_Files.view.journal import Journal
+>>>>>>> Michael2024-coder
         self.journal_window = Journal(self.id_token)
         self.journal_window.resize(self.size())
         self.journal_window.show()

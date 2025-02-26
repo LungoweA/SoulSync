@@ -2,8 +2,13 @@ import sys
 import os
 
 
+<<<<<<< HEAD
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+=======
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "All_Files")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+>>>>>>> Michael2024-coder
 import unittest
 from unittest.mock import patch, MagicMock
 from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton
@@ -62,8 +67,13 @@ class TestUILogicwindow(unittest.TestCase):
         self.window.account.login.return_value = (False, "Invalid credentials", None)
 
         self.window.login()
+<<<<<<< HEAD
         self.window.error_label.setText.assert_called_once_with("Invalid credentials")
         self.window.error_label.setStyleSheet.assert_called_once_with('color: red;')
+=======
+        self.window.error_label.setText.assert_called_once_with("⚠️ Invalid credentials")
+        self.window.error_label.setStyleSheet.assert_called_once_with('color: Black;')
+>>>>>>> Michael2024-coder
 
     def test_signup_function(self):
         """Check if signup window is opened correctly."""
