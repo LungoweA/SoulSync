@@ -14,8 +14,30 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 class Journal(QMainWindow):
-    
+    """
+    A class representing the Journal window in the application. This window allows users to write,
+    save, and clear journal entries. It also provides navigation back to the main menu.
+
+    Attributes:
+        id_token (str): The ID token associated with the user's session.
+        diary (Diary): An instance of the `Diary` class for saving journal entries.
+        clear_btn (QPushButton): Button to clear the journal text.
+        save_btn (QPushButton): Button to save the journal entry.
+        menu_btn (QPushButton): Button to navigate back to the main menu.
+        journal_text (QTextEdit): Text area for writing journal entries.
+        error_label (QLabel): Label to display error messages.
+        group_box (QGroupBox): Group box to display error messages.
+    """
+
     def __init__(self, id_token,parent=None):
+        """
+        Initializes the Journal window.
+
+        Args:
+            id_token (str): The ID token associated with the user's session.
+            parent (QWidget, optional): The parent widget. Defaults to None.
+        """
+
         super(Journal, self).__init__(parent)
         uic.loadUi(os.path.join(os.path.dirname(__file__), "UI files", "journal.ui"), self)
         
@@ -37,11 +59,20 @@ class Journal(QMainWindow):
         
         
     def clear_journal(self):
+        """
+        Clears the text in the journal text area.
+        """
+
         journal_text = self.findChild(QTextEdit)
         if journal_text:
             journal_text.clear()
         
     def save_journal(self):
+        """
+        Saves the journal entry to the database if it is not empty. Displays an error message
+        if the journal entry is empty.
+        """
+
         entry = self.journal_text.toPlainText()
         if entry != "":
             self.diary.save(self.id_token, entry)
@@ -61,6 +92,10 @@ class Journal(QMainWindow):
             
     
     def menu(self):
+        """
+        Navigates back to the main menu window. Clears the journal text and closes the current window.
+        """
+        
         from .menu import MenuWindow
         self.menu_window = MenuWindow(self.id_token)
         self.clear_journal()
