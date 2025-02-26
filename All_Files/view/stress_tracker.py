@@ -14,8 +14,40 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 class StressTracker(QMainWindow):
+    """
+    A class representing the Stress Tracker window in the application. This window allows users to
+    answer stress-related questions, track their stress level, and view results.
+
+    Attributes:
+        stress (Stress): An instance of the `Stress` class for handling stress-related logic.
+        id_token (str): The ID token associated with the user's session.
+        questions (list): A list of stress-related questions.
+        num (int): The current question number.
+        dict (dict): A dictionary to store user responses.
+        question_no_label (QLabel): Label to display the question number.
+        question_label (QLabel): Label to display the question.
+        error_label (QLabel): Label to display error messages.
+        radio_btn1 (QRadioButton): Radio button for the first option.
+        radio_btn2 (QRadioButton): Radio button for the second option.
+        radio_btn3 (QRadioButton): Radio button for the third option.
+        radio_btn4 (QRadioButton): Radio button for the fourth option.
+        radio_btn5 (QRadioButton): Radio button for the fifth option.
+        back_btn (QPushButton): Button to navigate to the previous question.
+        next_btn (QPushButton): Button to navigate to the next question.
+        main_btn (QPushButton): Button to return to the main menu.
+        results_btn (QPushButton): Button to display the stress results.
+        group_box (QGroupBox): Group box to display error messages.
+    """
     
     def __init__(self, id_token,parent=None):
+        """
+        Initializes the StressTracker window and sets up the UI elements and event handlers.
+
+        Args:
+            id_token (str): The ID token associated with the user's session.
+            parent (QWidget, optional): The parent widget. Defaults to None.
+        """
+
         super(StressTracker, self).__init__(parent)
         uic.loadUi(os.path.join(os.path.dirname(__file__), "UI files", "stress_tracker.ui"), self)
         
@@ -58,6 +90,10 @@ class StressTracker(QMainWindow):
         
     
     def initial_question(self):
+        """
+        Sets up the initial question and connects radio buttons to their respective methods.
+        """
+
         self.question_no_label.setText(f"Question {self.num}")
         self.question_label.setText(self.questions[self.num-1])
         
@@ -72,6 +108,10 @@ class StressTracker(QMainWindow):
         
         
     def back(self):
+        """
+        Navigates to the previous question and updates the UI.
+        """
+
         if self.num > 1:
             self.num -= 1
             self.question_label.setText(self.questions[self.num-1])
@@ -89,6 +129,10 @@ class StressTracker(QMainWindow):
         
     
     def next(self):
+        """
+        Navigates to the next question and updates the UI. Displays an error message if no option is selected.
+        """
+
         if self.num < 5 and self.check_button():
             self.num += 1
             self.question_label.setText(self.questions[self.num-1])
@@ -116,15 +160,30 @@ class StressTracker(QMainWindow):
             
         
     def finish(self):
+        """
+        Finalizes the stress tracking process and prepares the UI for displaying results.
+        """
+
         if self.num == 5 and self.check_button():
             self.next_btn.hide()
             self.results_btn.show()
             
     def result(self):
+        """
+        Calculates the total stress score based on user responses.
+
+        Returns:
+            int: The total stress score.
+        """
+
         value = list(self.dict.values())
         return sum(value)
             
     def set_checked(self):
+        """
+        Sets the radio button to the user's previously selected option for the current question.
+        """
+
         if self.dict[str(self.num)] == 5:
             self.radio_btn1.setChecked(True)
         elif self.dict[str(self.num)] == 4:
@@ -137,21 +196,45 @@ class StressTracker(QMainWindow):
             self.radio_btn5.setChecked(True)
     
     def no1(self):
+        """
+        Records the user's selection of the first option for the current question.
+        """
+
         self.dict[str(self.num)] = 5
     
     def no2(self):
+        """
+        Records the user's selection of the second option for the current question.
+        """
+
         self.dict[str(self.num)] = 4
         
     def no3(self):
+        """
+        Records the user's selection of the third option for the current question.
+        """
+
         self.dict[str(self.num)] = 3
         
     def no4(self):
+        """
+        Records the user's selection of the fourth option for the current question.
+        """
+
         self.dict[str(self.num)] = 2
         
     def no5(self):
+        """
+        Records the user's selection of the fifth option for the current question.
+        """
+
         self.dict[str(self.num)] = 1
             
     def reset_checked(self):
+        """
+        Resets all radio buttons to an unchecked state.
+        """
+
         self.radio_btn1.setAutoExclusive(False)
         self.radio_btn1.setChecked(False)
         self.radio_btn1.setAutoExclusive(True)
@@ -173,9 +256,20 @@ class StressTracker(QMainWindow):
         self.radio_btn5.setAutoExclusive(True)
         
     def check_button(self):
+        """
+        Checks if any radio button is selected for the current question.
+
+        Returns:
+            bool: True if any radio button is selected, False otherwise.
+        """
+
         return self.radio_btn1.isChecked() or self.radio_btn2.isChecked() or self.radio_btn3.isChecked() or self.radio_btn4.isChecked() or self.radio_btn5.isChecked()
     
     def display_result(self):
+        """
+        Opens the results window and closes the current stress tracker window.
+        """
+
         sums = self.result()
         self.result_window = Result(self.id_token, sums)
         self.clear_window()
@@ -184,12 +278,20 @@ class StressTracker(QMainWindow):
         self.close()
     
     def clear_window(self):
+        """
+        Clears all labels and hides the error group box.
+        """
+
         self.question_label.setText("")
         self.question_no_label.setText("")
         self.error_label.setText("")
         self.group_box.hide()
     
     def main(self):
+        """
+        Returns to the main menu and closes the current stress tracker window.
+        """
+        
         from view.menu import MenuWindow
         self.menu_window = MenuWindow(self.id_token)
         self.clear_window()

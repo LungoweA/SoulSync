@@ -8,8 +8,22 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 class Mood_db:
-    
+    """
+    A class to manage mood-related data and operations, including retrieving quotes, mood questions,
+    options, tips, supportive messages, calculating mood scores, and saving mood data to a database.
+
+    Attributes:
+        user_data (dict): A dictionary to store user mood data, including mood rating, description,
+                          influence, and creation timestamp.
+        db (Write_db): An instance of the `Write_db` class to interact with the database.
+    """
+
     def __init__(self):
+        """
+        Initializes the Mood_db class by setting up the `user_data` dictionary and creating an instance
+        of the `Write_db` class for database interactions.
+        """
+
         # Saving data to Firebase
         self.user_data = {
             "Mood rating": None,
@@ -21,6 +35,14 @@ class Mood_db:
         self.db = Write_db()
     
     def quotes(self):
+        """
+        Retrieves a dictionary of quotes categorized by mood.
+
+        Returns:
+            dict: A dictionary where keys are mood categories (e.g., "Very Happy", "Calm & Relaxed")
+                  and values are lists of tuples containing quotes and their authors.
+        """
+
         quote = {"Very Happy": [('Dalai Lama', 'Happiness is not something ready-made. It comes from your own actions.'), ('Oprah Winfrey', "The more you praise and celebrate your life, the more there is in life to celebrate.")], 
                 "Calm & Relaxed": [('Buddha', 'Peace comes from within. Do not seek it without.'), ('Anne Lamott', 'Almost everything will work again if you unplug it for a few minutes… including you.')], 
                 "Neutral": [('Alice Morse Earle', 'Every day may not be good, but there is something good in every day.'), ('William James', 'Act as if what you do makes a difference. It does.')], 
@@ -31,16 +53,39 @@ class Mood_db:
         return quote
     
     def mood_question(self):
+        """
+        Retrieves a list of mood-related questions.
+
+        Returns:
+            list: A list of strings containing mood-related questions.
+        """
+
         question = ['How are you feeling today?', 'Which of the following best describes your mood right now?', 'What influenced your mood the most today?']
         return question
 
     def options(self):
+        """
+        Retrieves a dictionary of options for mood-related questions.
+
+        Returns:
+            dict: A dictionary where keys are question identifiers (e.g., '0', '1', '2') and values
+                  are lists of options for each question.
+        """
+
         option_dict = {'0': ['Very Bad', 'Bad', 'Normal', 'Good', 'Very Good'],
                         '1': ['Very Happy', 'Calm & Relaxed', 'Neutral', 'Stressed', 'Angry'],
                         '2': ['School', 'Work', 'Health', 'Weather', 'Sleep']}
         return option_dict
 
     def tips(self):
+        """
+        Retrieves a dictionary of tips categorized by mood influence.
+
+        Returns:
+            dict: A dictionary where keys are mood influences (e.g., "School", "Work") and values
+                  are lists of tips for managing stress or improving mood.
+        """
+
         tip = {"School": ['Prioritize tasks', 'Schedule your programs', 'Practice self-care', 'Avoid negative comparisons', 'Avoid procrastination'], 
                     "Work": ['Take Short Breaks', 'Declutter Your Space', 'Personalize Your Workspace', 'Communicate Openly', 'Unplug After Hours '], 
                     "Health": ['Prioritize Rest & Sleep', 'Stay Physically Active', 'Nourish Your Body with Healthy Foods', 'Manage Stress & Anxiety', 'Seek Medical Support When Needed'], 
@@ -51,6 +96,14 @@ class Mood_db:
         return tip
     
     def supportive_messages(self):
+        """
+        Retrieves a dictionary of supportive messages categorized by mood.
+
+        Returns:
+            dict: A dictionary where keys are mood categories (e.g., "Very Happy", "Stressed") and
+                  values are supportive messages tailored to each mood.
+        """
+
         message =  {"Very Happy": "It's great to feel at peace. Take a deep breath and enjoy the moment. Keep nurturing this calm energy!",
                     "Calm & Relaxed": "It's okay to feel neutral. Every day is a new opportunity to find joy and meaning. Keep going!",
                     "Neutral": "You're not alone. Take a deep breath and give yourself a moment of kindness. \nYou've handled tough days before—you'll get through this too!",
@@ -60,6 +113,15 @@ class Mood_db:
         return message
     
     def mood_score(self, rating, description, influence):
+        """
+        Updates the user's mood data with the provided rating, description, and influence.
+
+        Args:
+            rating (str): The user's mood rating.
+            description (str): A description of the user's mood.
+            influence (str): The factor influencing the user's mood.
+        """
+
         self.user_data["Mood rating"] = rating
         
         self.user_data["Mood description"] = description
@@ -67,6 +129,16 @@ class Mood_db:
         self.user_data["Mood influenced by"] = influence
 
     def save_data(self, id_token):
+        """
+        Saves the user's mood data to the database.
+
+        Args:
+            id_token (str): The ID token associated with the user's session.
+
+        Returns:
+            str: A message indicating whether the data was successfully saved or if there was an error.
+        """
+        
         # Saving data to Firebase
         user_id = self.db.auth.get_account_info(id_token)['users'][0]['localId']
         if None in self.user_data.values():

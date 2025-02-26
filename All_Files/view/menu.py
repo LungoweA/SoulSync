@@ -1,10 +1,6 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QPushButton
 import os
-from .mood_tracker import MoodTrackerWindow
-from .stress_tracker import StressTracker
-from .journal import Journal
-
 
 
 class MenuWindow(QMainWindow):
@@ -25,12 +21,14 @@ class MenuWindow(QMainWindow):
         self.diary_pushbutton.clicked.connect(self.open_journal)
 
     def open_mood_tracker(self):
+        from All_Files.view.mood_tracker import MoodTrackerWindow
         self.mood_window = MoodTrackerWindow(self.id_token)
         self.mood_window.resize(self.size())
         self.mood_window.show()
         self.close()
 
     def open_stress_tracker(self):
+        from All_Files.view.stress_tracker import StressTracker
         self.stress_window = StressTracker(self.id_token)
         self.stress_window.resize(self.size())
         self.stress_window.show()
