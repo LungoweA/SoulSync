@@ -213,7 +213,7 @@ QPushButton:pressed {
 </string>
     </property>
     <property name="text">
-     <string>Prev.</string>
+     <string>Back</string>
     </property>
    </widget>
    <zorder>label_3</zorder>
