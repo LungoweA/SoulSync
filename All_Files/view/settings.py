@@ -30,6 +30,7 @@ class SettingsWindow(QMainWindow):
         self.new_password.textChanged.connect(self.check_password_strength)
 
         self.stackedWidget = self.findChild(QStackedWidget, "stackedWidget")
+        self.stackedWidget.setCurrentIndex(0)
 
         self.new_password_btn.clicked.connect(self.show_change_password)
         #self.delete_account_btn_2.clicked.connect(self.show_delete_account)
