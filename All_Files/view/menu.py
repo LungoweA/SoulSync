@@ -18,12 +18,14 @@ class MenuWindow(QMainWindow):
         self.settings_btn = self.findChild(QPushButton, "settings_btn")
         self.logout_btn = self.findChild(QPushButton, "logout_btn")
         self.journal_history_btn = self.findChild(QPushButton, "journal_history_btn")
+        self.settings_btn = self.findChild(QPushButton, "settings_btn")
 
         self.mood_tracker_pushbutton.clicked.connect(self.open_mood_tracker)
         self.stress_tracker_pushbutton.clicked.connect(self.open_stress_tracker)
         self.diary_pushbutton.clicked.connect(self.open_journal)
         self.logout_btn.clicked.connect(self.handle_logout)
         self.journal_history_btn.clicked.connect(self.open_journal_history)
+        self.settings_btn.clicked.connect(self.open_settings)
 
     def handle_logout(self):
         """Handles the logout process and redirects the user to the login screen."""
@@ -65,4 +67,11 @@ class MenuWindow(QMainWindow):
         from view.journal_history import JournalHistory
         self.journal_history_window = JournalHistory(self.id_token)
         self.journal_history_window.show()
+        self.close()
+
+    def open_settings(self):
+        """Open the Settings window and pass the id_token"""
+        from view.settings import SettingsWindow
+        self.settings_window = SettingsWindow(self.id_token)
+        self.settings_window.show()
         self.close()

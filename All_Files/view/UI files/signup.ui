@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -561,6 +564,9 @@ QPushButton:pressed {
      <set>Qt::AlignCenter</set>
     </property>
     <widget class="QLabel" name="error_label">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>0</x>
@@ -590,7 +596,7 @@ QPushButton:pressed {
      <x>0</x>
      <y>0</y>
      <width>1300</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
