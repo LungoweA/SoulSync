@@ -136,10 +136,10 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>364</x>
-      <y>360</y>
+      <x>360</x>
+      <y>310</y>
       <width>561</width>
-      <height>531</height>
+      <height>581</height>
      </rect>
     </property>
     <property name="font">
@@ -281,7 +281,6 @@ QPushButton:pressed {
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
        <pointsize>-1</pointsize>
        <weight>75</weight>
        <bold>true</bold>
@@ -325,7 +324,6 @@ QPushButton:pressed {
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
        <pointsize>-1</pointsize>
        <weight>75</weight>
        <bold>true</bold>
@@ -369,7 +367,6 @@ QPushButton:pressed {
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
        <pointsize>-1</pointsize>
        <weight>75</weight>
        <bold>true</bold>
@@ -431,6 +428,49 @@ QPushButton:pressed {
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
+    <widget class="QPushButton" name="logout_btn">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>530</y>
+       <width>231</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>-1</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #4682B4;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px; 
+    padding: 10px 20px;
+    min-width: 100px;
+    transition: background-color 0.3s ease-in-out, transform 0.1s;
+}
+
+
+QPushButton:hover {
+    background-color: #5A9BD6;
+}
+
+QPushButton:pressed {
+    background-color: #36648B;
+   transform: scale(0.98); 
+}</string>
+     </property>
+     <property name="text">
+      <string>LOG OUT</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -439,7 +479,7 @@ QPushButton:pressed {
      <x>0</x>
      <y>0</y>
      <width>1300</width>
-     <height>8</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
