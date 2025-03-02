@@ -155,7 +155,6 @@ class MoodTrackerWindow(QMainWindow):
             self.mood_description()
             self.mood_influence()
             
-            
     def set_checked(self):
         if self.dict[str(self.num)] == 1:
             self.radio_btn1.setChecked(True)
@@ -232,5 +231,3 @@ class MoodTrackerWindow(QMainWindow):
         self.reset_checked()
         self.menu_window.show()
         self.close()  # Closes Mood tracker window
-        
-        

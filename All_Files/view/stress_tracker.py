@@ -196,4 +196,3 @@ class StressTracker(QMainWindow):
         self.reset_checked()
         self.menu_window.show()
         self.close()  # Closes Stress tracker window
-    
