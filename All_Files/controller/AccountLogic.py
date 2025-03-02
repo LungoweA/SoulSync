@@ -5,20 +5,21 @@ import firebase_admin
 from firebase_admin import auth, credentials, db
 import json
 import requests
+from dotenv import load_dotenv
 
 
-SERVICE_ACCOUNT_PATH = os.path.abspath(os.path.join("model", r"User db", "firebase_config.json"))
+load_dotenv()
 
-# Read the databse URL from firebase_config.json
-with open(SERVICE_ACCOUNT_PATH) as f:
-    config = json.load(f)
+firebase_config = json.loads(os.getenv("FIREBASE_CONFIG", "{}"))
 
-FIREBASE_WEB_API_KEY = config.get("apiKey")  # Get API Key
-DATABASE_URL = config.get("databaseURL")  # Get databse URL
+if not firebase_config:
+    raise ValueError("❌ Firebase configuration is missing!")
 
-# Initialize Firebase if it's not already initialized
+FIREBASE_WEB_API_KEY = firebase_config.get("apiKey")
+DATABASE_URL = firebase_config.get("databaseURL")
+
 if not firebase_admin._apps:
-    cred = credentials.Certificate(SERVICE_ACCOUNT_PATH)
+    cred = credentials.Certificate(firebase_config)
     firebase_admin.initialize_app(cred, {"databaseURL": DATABASE_URL})
 
 db = db.reference()
