@@ -19,6 +19,7 @@ class MenuWindow(QMainWindow):
         self.mood_tracker_pushbutton.clicked.connect(self.open_mood_tracker)
         self.stress_tracker_pushbutton.clicked.connect(self.open_stress_tracker)
         self.diary_pushbutton.clicked.connect(self.open_journal)
+        self.stress_history_btn.clicked.connect(self.open_mood_stress_history)
 
     def open_mood_tracker(self):
         from All_Files.view.mood_tracker import MoodTrackerWindow
@@ -41,3 +42,11 @@ class MenuWindow(QMainWindow):
         self.journal_window.resize(self.size())
         self.journal_window.show()
         self.close()
+
+
+    def open_mood_stress_history(self):
+        from All_Files.view.mood_stress_history import MoodStressHistory
+        self.mood_stress_history_window = MoodStressHistory(self.id_token)
+        self.mood_stress_history_window.resize(self.size())
+        self.mood_stress_history_window.show()
+        self.close()      
