@@ -133,6 +133,30 @@ class Stress_db:
         except Exception as err:
             return err
         
+    def fetch_stress_history(self, id_token):
+        """
+    Fetches the user's stress history from Firebase.
+
+    Args:
+        id_token (str): The Firebase authentication token of the user.
+
+    Returns:
+        list: A list of dictionaries containing stress history data.
+    """
+        try:
+            user_id = self.db.auth.get_account_info(id_token)['users'][0]['localId']
+            stress_data = self.db.database.child("Users").child(user_id).child("Stress").get(id_token).val()
+
+            if stress_data:
+                return [
+                    {"Created_at": entry["Created_at"], "Stress Level": entry["Stress level"]}
+                    for entry in stress_data.values()
+                ]
+            else:
+                return []
+        except Exception as e:
+            print(f"Error fetching stress history: {e}")
+            return []
     
     
 class Journal_db:
