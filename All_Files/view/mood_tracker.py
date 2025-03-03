@@ -224,7 +224,6 @@ class MoodTrackerWindow(QMainWindow):
             self.mood_description()
             self.mood_influence()
             
-            
     def set_checked(self):
         """
         Sets the radio button to the user's previously selected option for the current question.
@@ -348,5 +347,3 @@ class MoodTrackerWindow(QMainWindow):
         self.reset_checked()
         self.menu_window.show()
         self.close()  # Closes Mood tracker window
-        
-        
