@@ -101,3 +101,15 @@ class Mood:
         """
         
         return self.mood_db.save_data(id_token)
+    
+    def fetch_mood_history(self, id_token):
+        """
+        Fetches the user's mood history from the database.
+
+        Args:
+        id_token (str): The Firebase authentication token of the user.
+
+        Returns:
+        list: A list of mood history records.
+        """
+        return self.mood_db.fetch_mood_history(id_token)

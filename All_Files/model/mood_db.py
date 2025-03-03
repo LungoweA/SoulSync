@@ -146,3 +146,30 @@ class Mood_db:
         else:
             self.db.database.child("Users").child(user_id).child("Mood").push(self.user_data, id_token)
             return "Your results have been saved"
+        
+
+
+    def fetch_mood_history(self, id_token):
+        try:
+            user_id = self.db.auth.get_account_info(id_token)['users'][0]['localId']
+            mood_data = self.db.database.child("Users").child(user_id).child("Mood").get(id_token).val()
+
+            if mood_data:
+                return [
+                    {
+                        "Created_at": entry["Created_at"],
+                        "Mood Rating": entry["Mood rating"],
+                        "Description": entry["Mood description"],
+                        "Influence": entry["Mood influenced by"]
+                    }
+                    for entry in mood_data.values()
+                ]
+            else:
+                return []
+        except Exception as e:
+            print(f"Error fetching mood history: {e}")
+            return []
+        
+
+
+
