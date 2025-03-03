@@ -2,7 +2,7 @@ import sys
 import os
 from PyQt5 import uic
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QCheckBox, QPushButton, QLineEdit, QLabel, QGroupBox
+from PyQt5.QtWidgets import QMainWindow, QCheckBox, QPushButton, QLineEdit, QLabel, QGroupBox, QMessageBox
 from .menu import MenuWindow
 
 
@@ -61,6 +61,18 @@ class LogIn(QMainWindow):
         
         if success:
             id_token = user["idToken"]
+            uid = user["localId"]  # ✅ Extract UID from Firebase Authentication
+
+            # ✅ Step 1: Check if the user exists in Firebase Database
+            from firebase_admin import db  # Import here to avoid circular imports
+            user_data_path = f"Users/{uid}"  # ✅ Match Firebase database structure
+            user_data = db.reference(user_data_path).get()
+
+            if not user_data:  # ✅ If user data is missing, deny login
+                QMessageBox.warning(self, "Login Failed", "❌ Your account does not exist in the database. It may have been deleted.")
+                print("❌ User authenticated but missing from Database. Blocking login.")
+                return
+
             self.window(id_token)
         else:
             self.group_box.show()
