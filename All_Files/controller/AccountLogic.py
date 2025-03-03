@@ -100,7 +100,7 @@ class AccountCreation:
                 error_message = data["error"]["message"]
                 
                 # **Debugging print statement**
-                print(f"🔴 Firebase Error: {error_message}")
+                print(f"Firebase Error: {error_message}")
 
                 # **Fix: Change generic "Credentials are incorrect" to a specific message**
                 if error_message in ["INVALID_PASSWORD", "INVALID_LOGIN_CREDENTIALS"]:
@@ -172,11 +172,42 @@ class AccountCreation:
             decoded_token = auth.verify_id_token(id_token)
             uid = decoded_token["uid"]
             auth.revoke_refresh_tokens(uid)
-            print("User logged out sucessfully")
+            print("User logged out successfully")
             return True
         except Exception as e:
             print("error logging out:", e)
             return False
 
-    def delete_account(self):
-        pass
+    def delete_account(self, id_token):
+        """Deletes the user account from Firebase Authentication and Database."""
+        try:
+            user = auth.verify_id_token(id_token)
+            uid = user["uid"]
+
+            # ✅ Step 1: Ensure we're checking the correct path
+            user_data_path = f"Users/{uid}"  # ✅ Match Firebase structure
+            user_data = db.child(user_data_path).get()
+
+            if isinstance(user_data, dict):  # ✅ Handle dictionary response
+                print(f"✅ Found user data in Database: {user_data}")
+                db.child(user_data_path).delete()  # ✅ Delete using correct method
+                print(f"✅ Deleted user data from Firebase Database for UID: {uid}")
+            else:
+                print("⚠️ No user data found in Database! Skipping database deletion.")
+
+            # ✅ Step 2: Ensure user exists before deleting from Authentication
+            try:
+                auth.get_user(uid)  # Will raise an error if user does not exist
+            except firebase_admin.auth.UserNotFoundError:
+                return False, "❌ User not found in Firebase Authentication!"
+
+            # ✅ Step 3: Delete the user from Firebase Authentication
+            auth.delete_user(uid)
+            print(f"✅ Deleted user from Firebase Authentication: {uid}")
+
+            return True, "✅ Account deleted successfully!"
+        except firebase_admin.auth.UserNotFoundError:
+            return False, "❌ User does not exist or has already been deleted!"
+        except Exception as e:
+            print(f"❌ Error deleting account: {e}")
+            return False, f"❌ Error deleting account: {str(e)}"
