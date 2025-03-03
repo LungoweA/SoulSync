@@ -2,7 +2,7 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QLineEdit, QStackedWidget
 import os
 from controller.AccountLogic import AccountCreation  # Import authentication logic
-from PyQt5.QtWidgets import QCheckBox, QLabel
+from PyQt5.QtWidgets import QCheckBox, QLabel, QMessageBox
 
 
 class SettingsWindow(QMainWindow):
@@ -10,6 +10,7 @@ class SettingsWindow(QMainWindow):
         super().__init__()
         self.id_token = id_token  # Store user session token
         uic.loadUi(os.path.join(os.path.dirname(__file__), "UI files", "settings.ui"), self)
+        self.account_logic = AccountCreation()
 
         self.new_password_btn = self.findChild(QPushButton, "new_password_btn")
         self.delete_account_btn_2 = self.findChild(QPushButton, "delete_account_btn_2")
@@ -33,11 +34,11 @@ class SettingsWindow(QMainWindow):
         self.stackedWidget.setCurrentIndex(0)
 
         self.new_password_btn.clicked.connect(self.show_change_password)
-        #self.delete_account_btn_2.clicked.connect(self.show_delete_account)
+        self.delete_account_btn_2.clicked.connect(self.show_delete_account)
 
         self.confirm_change_btn.clicked.connect(self.change_password)
         self.cancel_password_btn.clicked.connect(self.show_main_menu)
-        #self.delete_account_btn.clicked.connect(self.confirm_delete_account)
+        self.delete_account_btn.clicked.connect(self.confirm_delete_account)
         self.cancel_delete_btn.clicked.connect(self.show_main_menu)
         self.back_menu_btn.clicked.connect(self.go_back_to_menu)
 
@@ -137,6 +138,53 @@ class SettingsWindow(QMainWindow):
         self.lowercase_checkbox.setChecked(strength["lowercase"])
         self.digit_checkbox.setChecked(strength["digit"])
         self.special_char_checkbox.setChecked(strength["special_char"])
+
+    def confirm_delete_account(self):
+        """Ask the user for confirmation before deleting the account."""
+        reply = QMessageBox.question(
+            self, "Delete Account",
+            "Are you sure you want to delete your account?",
+            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+        )
+
+        if reply == QMessageBox.Yes:
+            self.delete_account()
+
+    def delete_account(self):
+        """Deletes account and redirects to login screen."""
+        success, message = self.account_logic.delete_account(self.id_token)
+
+        if success:
+            QMessageBox.information(self, "Account Deleted", message)
+
+            # ✅ Instead of logging out, switch directly to the login screen
+            self.switch_to_login()
+        else:
+            QMessageBox.warning(self, "Error", f"❌ Failed to delete account!\n{message}")
+
+    def log_out_user(self):
+        """Logs out user and redirects to the login screen."""
+        print("✅ Redirecting user to login screen...")
+
+        # Import LoginWindow inside function to avoid circular import
+        try:
+            from view.login import LoginWindow
+            self.login_window = LoginWindow()
+            self.login_window.show()
+            self.close()
+        except ImportError as e:
+            print(f"❌ Error importing LoginWindow: {e}")
+
+    def switch_to_login(self):
+        """Force close settings window and open the login window."""
+        print("✅ Redirecting user to login screen...")
+
+        # Import inside function to avoid circular import issues
+        from view.login import LogIn
+
+        self.login_window = LogIn()
+        self.login_window.show()
+        self.close()
 
     def go_back_to_menu(self):
         from view.menu import MenuWindow
