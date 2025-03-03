@@ -26,6 +26,7 @@ class MenuWindow(QMainWindow):
         self.logout_btn.clicked.connect(self.handle_logout)
         self.journal_history_btn.clicked.connect(self.open_journal_history)
         self.settings_btn.clicked.connect(self.open_settings)
+        self.stress_history_btn.clicked.connect(self.open_mood_stress_history)
 
     def handle_logout(self):
         """Handles the logout process and redirects the user to the login screen."""
@@ -74,4 +75,11 @@ class MenuWindow(QMainWindow):
         from view.settings import SettingsWindow
         self.settings_window = SettingsWindow(self.id_token)
         self.settings_window.show()
+        self.close()
+
+    def open_mood_stress_history(self):
+        from All_Files.view.mood_stress_history import MoodStressHistory
+        self.mood_stress_history_window = MoodStressHistory(self.id_token)
+        self.mood_stress_history_window.resize(self.size())
+        self.mood_stress_history_window.show()
         self.close()
