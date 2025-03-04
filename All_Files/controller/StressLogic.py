@@ -5,7 +5,6 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from model.stress_db import Stress_db
-from model.stress_db import Journal_db
 
 class Stress:
     """
@@ -103,34 +102,4 @@ class Stress:
     """
         return self.stress_db.fetch_stress_history(id_token)
 
-
-class Diary:
-    """
-    A class to manage journal or diary-related operations, such as saving journal entries.
-    It acts as an interface to interact with the `Journal_db` class.
-
-    Attributes:
-        journal_db (Journal_db): An instance of the `Journal_db` class to interact with the journal-related database.
-    """
-
-    def __init__(self):
-        """
-        Initializes the Diary class by creating an instance of the `Journal_db` class.
-        """
-
-        self.journal_db = Journal_db()
-        
-    def save(self, id_token, journal):
-        """
-        Saves the user's journal entry to the database.
-
-        Args:
-            id_token (str): The ID token associated with the user's session.
-            journal (str): The journal entry to be saved.
-
-        Returns:
-            bool: True if the journal entry was successfully saved, False otherwise.
-        """
-
-        self.journal_db.save(id_token, journal)
 
