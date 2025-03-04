@@ -4,7 +4,7 @@ from PyQt5 import uic
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (QMainWindow, QPushButton, QLabel, QTextEdit, QGroupBox)
 from PyQt5.QtCore import *
-from All_Files.controller.StressLogic import Diary
+from All_Files.controller.JournalLogic import Diary
 
 
 # Add the parent directory to the system path to allow module imports
