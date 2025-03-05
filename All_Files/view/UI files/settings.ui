@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1300</width>
-    <height>950</height>
+    <height>960</height>
    </rect>
   </property>
   <property name="palette">
@@ -173,47 +173,6 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>310</y>
-      <width>500</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="title">
-     <string/>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-    <widget class="QLabel" name="error_label">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>500</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>MS Shell Dlg 2</family>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </widget>
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="enabled">
      <bool>true</bool>
@@ -227,14 +186,14 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page_3">
      <widget class="QPushButton" name="new_password_btn">
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>60</y>
+        <y>80</y>
         <width>151</width>
         <height>35</height>
        </rect>
@@ -276,7 +235,7 @@ QPushButton:pressed {
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>140</y>
+        <y>160</y>
         <width>151</width>
         <height>35</height>
        </rect>
@@ -318,7 +277,7 @@ QPushButton:pressed {
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>250</y>
+        <y>240</y>
         <width>151</width>
         <height>35</height>
        </rect>
@@ -839,6 +798,31 @@ QPushButton:pressed {
       </property>
      </widget>
     </widget>
+   </widget>
+   <widget class="QLabel" name="error_label">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>310</y>
+      <width>500</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>8</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

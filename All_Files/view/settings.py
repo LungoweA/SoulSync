@@ -186,6 +186,33 @@ class SettingsWindow(QMainWindow):
         self.login_window.show()
         self.close()
 
+    def show_message(self, message, success=False):
+        """
+        Displays a styled message.
+        - If success=True -> Green background (success)
+        - If success=False -> Red background (error)
+        """
+        if self.error_label:
+            if success:
+                # Green background for success
+                self.error_label.setStyleSheet(
+                    "background-color: #B3FFB3; border: 2px solid #4DCC4D; "
+                    "border-radius: 8px; padding: 10px; font-weight: bold; color: black;"
+                )
+            else:
+                # Red background for error
+                self.error_label.setStyleSheet(
+                    "background-color: #FFB3B3; border: 2px solid #FF4D4D; "
+                    "border-radius: 8px; padding: 10px; font-weight: bold; color: #990000;"
+                )
+
+            self.error_label.setText(message)
+            self.error_label.show()
+
+            # Auto-hide after 3 seconds
+            from PyQt5.QtCore import QTimer
+            QTimer.singleShot(3000, lambda: self.error_label.hide())
+
     def go_back_to_menu(self):
         from view.menu import MenuWindow
         self.menu_window = MenuWindow(self.id_token)

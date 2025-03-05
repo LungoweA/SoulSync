@@ -7,11 +7,10 @@ __pycache__/
 .venv/
 venv/
 
-# Ignore Environment Variables
-.env
-
 # Ignore IDE Configs
 .idea/
 .vscode/
 
 All_Files/model/User db/firebase_config.json
+
+.env
