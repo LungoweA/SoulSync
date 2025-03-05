@@ -79,7 +79,6 @@ class MenuWindow(QMainWindow):
 
     def open_mood_stress_history(self):
         from view.mood_stress_history import MoodStressHistory
-      #  from All_Files.view.mood_stress_history import MoodStressHistory
         self.mood_stress_history_window = MoodStressHistory(self.id_token)
         self.mood_stress_history_window.resize(self.size())
         self.mood_stress_history_window.show()

@@ -3,7 +3,6 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from PyQt5 import uic
 from PyQt5.QtWidgets import *
-#QMainWindow, QPushButton, QTableWidget
 from PyQt5.QtCore import *
 
 class MoodStressHistory(QMainWindow):
@@ -22,6 +21,10 @@ class MoodStressHistory(QMainWindow):
         self.btn_menu.clicked.connect(self.menu)
         self.load_history()
         
+        # Ensure the table fills the available space in the widget
+        self.MoodStressHistory.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+        self.MoodStressHistory.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)  
+        self.MoodStressHistory.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)  
     
     def menu(self):
         """
@@ -51,7 +54,7 @@ class MoodStressHistory(QMainWindow):
         combined_data = []
         for item in mood_data:
             combined_data.append({
-                "Created_at": item["Created_at"],
+                "Created on": item["Created_at"],
                 "Type": "Mood",
                 "Rating": item["Mood Rating"],
                 "Description": item["Description"],
@@ -86,3 +89,7 @@ class MoodStressHistory(QMainWindow):
         for row, record in enumerate(data):
             for col, (key, value) in enumerate(record.items()):
                 table_widget.setItem(row, col, QTableWidgetItem(str(value)))
+
+        # Automatically resize columns and rows to fit content
+        table_widget.resizeColumnsToContents()
+        table_widget.resizeRowsToContents()
