@@ -1,4 +1,4 @@
-from model.write_db import Write_db
+from All_Files.model.write_db import Write_db
 from datetime import datetime
 
 class Stress_db:
