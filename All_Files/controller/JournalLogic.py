@@ -1,7 +1,5 @@
 import sys
 import os
-
-# Add the parent directory to the system path to allow module imports
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from model.Journal_db import Journal_db
 

@@ -39,87 +39,11 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_prev">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>820</y>
-      <width>140</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
-    background-color: #4682B4;
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    border: none;
-    border-radius: 12px; 
-    padding: 10px 20px;
-    min-width: 100px;
-    transition: background-color 0.3s ease-in-out, transform 0.1s;
-}
-
-
-QPushButton:hover {
-    background-color: #5A9BD6;
-}
-
-
-QPushButton:pressed {
-    background-color: #36648B;
-    transform: scale(0.98); 
-}
-</string>
-    </property>
-    <property name="text">
-     <string>Prev.</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_next">
-    <property name="geometry">
-     <rect>
-      <x>490</x>
-      <y>820</y>
-      <width>140</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
-    background-color: #4682B4;
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    border: none;
-    border-radius: 12px; 
-    padding: 10px 20px;
-    min-width: 100px;
-    transition: background-color 0.3s ease-in-out, transform 0.1s;
-}
-
-
-QPushButton:hover {
-    background-color: #5A9BD6;
-}
-
-
-QPushButton:pressed {
-    background-color: #36648B;
-    transform: scale(0.98); 
-}
-</string>
-    </property>
-    <property name="text">
-     <string>Next</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btn_menu">
     <property name="geometry">
      <rect>
-      <x>830</x>
-      <y>820</y>
+      <x>850</x>
+      <y>830</y>
       <width>140</width>
       <height>31</height>
      </rect>
@@ -156,9 +80,9 @@ QPushButton:pressed {
    <widget class="QTableWidget" name="history_tableWidget">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>224</x>
       <y>280</y>
-      <width>731</width>
+      <width>861</width>
       <height>511</height>
      </rect>
     </property>
@@ -168,23 +92,35 @@ QPushButton:pressed {
     <property name="styleSheet">
      <string notr="true">background-color: rgb(207, 225, 240);</string>
     </property>
+    <attribute name="horizontalHeaderVisible">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="horizontalHeaderHighlightSections">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderVisible">
+     <bool>false</bool>
+    </attribute>
    </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>140</x>
       <y>230</y>
-      <width>731</width>
+      <width>1031</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>7</pointsize>
+      <pointsize>9</pointsize>
      </font>
     </property>
     <property name="text">
      <string>Being aware of your emotions and stress levels is the first step towards taking control of your mental health</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="label_23">
