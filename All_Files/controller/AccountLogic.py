@@ -1,6 +1,6 @@
 import sys
 import os
-from model.write_db import Write_db
+from All_Files.model.write_db import Write_db
 import firebase_admin
 from firebase_admin import auth, credentials, db
 import json

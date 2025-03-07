@@ -1,6 +1,6 @@
 import sys
 import os
-from model.write_db import Write_db
+from All_Files.model.write_db import Write_db
 from datetime import datetime
 
 # Add the parent directory to the system path to allow module imports

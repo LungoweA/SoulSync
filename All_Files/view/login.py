@@ -1,19 +1,18 @@
 import sys
 import os
-from PyQt5 import uic
-from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QCheckBox, QPushButton, QLineEdit, QLabel, QGroupBox, QMessageBox
-from .menu import MenuWindow
-
-
-
-from controller.AccountLogic import AccountCreation
-from view.sign_up import SignUp
-
 
 # Add the parent directory to the system path to allow module imports
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from PyQt5 import uic
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QMainWindow, QCheckBox, QPushButton, QLineEdit, QLabel, QGroupBox, QMessageBox
+from All_Files.view.menu import MenuWindow
+
+
+from All_Files.controller.AccountLogic import AccountCreation
+from All_Files.view.sign_up import SignUp
 
 
 class LogIn(QMainWindow):
