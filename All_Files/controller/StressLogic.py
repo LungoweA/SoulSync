@@ -6,6 +6,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from model.stress_db import Stress_db
 
+
 class Stress:
     """
     A class to manage stress-related operations, including stress tests, results, tips, exercises,
