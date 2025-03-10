@@ -2,9 +2,9 @@ import sys
 import os
 from PyQt5 import uic
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import (QMainWindow, QPushButton, QLineEdit, QCheckBox, QLabel, QGroupBox)
+from PyQt5.QtWidgets import (QMainWindow, QPushButton, QLineEdit, QCheckBox, QLabel, QGroupBox, QMessageBox)
 from PyQt5.QtCore import *
-from All_Files.controller.AccountLogic import AccountCreation
+from controller.AccountLogic import AccountCreation
 
 
 
@@ -51,7 +51,7 @@ class SignUp(QMainWindow):
         
         self.error_label = self.findChild(QLabel, "error_label")
         self.register_btn = self.findChild(QPushButton, "register_btn")
-        self.cancel_btn = self.findChild(QPushButton, "cancel_btn")
+        self.login_btn = self.findChild(QPushButton, "cancel_btn")
         
         self.group_box.hide()
         
@@ -61,7 +61,7 @@ class SignUp(QMainWindow):
         
         self.register_btn.clicked.connect(self.create_account)
         
-        self.cancel_btn.clicked.connect(self.cancel)
+        self.cancel_btn.clicked.connect(self.show_login)
         
         self.show()
         
@@ -75,21 +75,10 @@ class SignUp(QMainWindow):
                                                         self.password.text(), self.confirm_password.text())
         
         if success:
-            self.group_box.show()
-            self.group_box.setStyleSheet(
-                """
-                background-color: #B3FFB3; 
-                border: 2px solid #4DCC4D; 
-                border-radius: 8px; 
-                padding: 10px;
-                font-weight: bold;
-                """
-            )
-
-            self.error_label.setStyleSheet('color: Black;'
-                                            'font-family: MS Gothic')
-            self.error_label.setText(message)
+            result = QMessageBox.information(self, "Account Creation", message, QMessageBox.Ok)
             
+            if result == QMessageBox.Ok:
+                self.show_login()
         else:
             self.group_box.show()
             self.group_box.setStyleSheet(
@@ -136,7 +125,8 @@ class SignUp(QMainWindow):
             if (not char.isalnum()):
                 self.special_char_checkbox.setChecked(True)
         
-    def cancel(self):
+        
+    def show_login(self):
         """
         Clears input fields, emits a signal, and closes the window.
         """
@@ -144,6 +134,7 @@ class SignUp(QMainWindow):
         self.clear_window()
         self.signal.emit()
         self.close()
+        
         
     def clear_window(self):
         """

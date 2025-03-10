@@ -366,9 +366,9 @@ QGroupBox:focus {
    <widget class="QLabel" name="message_label">
     <property name="geometry">
      <rect>
-      <x>59</x>
+      <x>50</x>
       <y>320</y>
-      <width>1191</width>
+      <width>1200</width>
       <height>81</height>
      </rect>
     </property>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1298</width>
-    <height>924</height>
+    <width>1300</width>
+    <height>950</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,10 +23,10 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>30</y>
-      <width>211</width>
-      <height>111</height>
+      <x>554</x>
+      <y>50</y>
+      <width>191</width>
+      <height>181</height>
      </rect>
     </property>
     <property name="text">
@@ -42,9 +42,9 @@
    <widget class="QPushButton" name="btn_menu">
     <property name="geometry">
      <rect>
-      <x>850</x>
-      <y>830</y>
-      <width>140</width>
+      <x>1130</x>
+      <y>80</y>
+      <width>141</width>
       <height>31</height>
      </rect>
     </property>
@@ -77,36 +77,11 @@ QPushButton:pressed {
      <string>Menu</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="history_tableWidget">
-    <property name="geometry">
-     <rect>
-      <x>224</x>
-      <y>280</y>
-      <width>861</width>
-      <height>511</height>
-     </rect>
-    </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(207, 225, 240);</string>
-    </property>
-    <attribute name="horizontalHeaderVisible">
-     <bool>true</bool>
-    </attribute>
-    <attribute name="horizontalHeaderHighlightSections">
-     <bool>false</bool>
-    </attribute>
-    <attribute name="verticalHeaderVisible">
-     <bool>false</bool>
-    </attribute>
-   </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>230</y>
+      <x>134</x>
+      <y>320</y>
       <width>1031</width>
       <height>41</height>
      </rect>
@@ -126,8 +101,8 @@ QPushButton:pressed {
    <widget class="QLabel" name="label_23">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>150</y>
+      <x>554</x>
+      <y>250</y>
       <width>191</width>
       <height>41</height>
      </rect>
@@ -153,14 +128,413 @@ QPushButton:pressed {
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="geometry">
+     <rect>
+      <x>374</x>
+      <y>380</y>
+      <width>561</width>
+      <height>521</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="page">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>20</y>
+        <width>461</width>
+        <height>441</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QGroupBox {
+    background-color: #F5F7FA; 
+    color: #333333;
+    font-size: 16px;
+    font-family: &quot;Arial&quot;, sans-serif;
+    border: 2px solid #4682B4; 
+    border-radius: 8px; 
+    padding: 10px;
+}
+
+
+QGroupBox:focus {
+    border: 2px solid #5A9BD6; 
+    background-color: rgba(214, 230, 242, 0.85);
+}
+</string>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QLabel" name="title_label">
+       <property name="geometry">
+        <rect>
+         <x>2</x>
+         <y>2</y>
+         <width>457</width>
+         <height>88</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel{
+    font-size: 22px;
+    font-weight: bold;
+    color: #011f4b;
+ background-color:#f0f8ff;
+ border-radius: 4px;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="geometry">
+        <rect>
+         <x>2</x>
+         <y>90</y>
+         <width>457</width>
+         <height>349</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QGroupBox{
+    font-size: 12px;
+    font-style: italic;
+    color: #03396c;
+    background-color: #e6f2ff;  
+    padding: 4px; 
+    border-radius: 4px;
+    border: 1px solid #e6f2ff; 
+   
+}
+</string>
+       </property>
+       <property name="title">
+        <string/>
+       </property>
+       <widget class="QLabel" name="label_3">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>171</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel{
+    color: #03396c;
+    background-color: #e6f2ff;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Mood Description:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_5">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>100</y>
+          <width>171</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel{
+    color: #03396c;
+    background-color: #e6f2ff;
+}</string>
+        </property>
+        <property name="text">
+         <string>Mood Influenced By:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_6">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>170</y>
+          <width>171</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel{
+    color: #03396c;
+    background-color: #e6f2ff;
+}</string>
+        </property>
+        <property name="text">
+         <string>Mood Rating: </string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_7">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>250</y>
+          <width>171</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel{
+    color: #03396c;
+    background-color: #e6f2ff;
+}</string>
+        </property>
+        <property name="text">
+         <string>Stress Level:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="description_label">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>30</y>
+          <width>251</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel{
+    color: #03396c;
+    background-color: #e6f2ff;
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="influence_label">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>100</y>
+          <width>251</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel{
+    color: #03396c;
+    background-color: #e6f2ff;
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="rate_label">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>170</y>
+          <width>251</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel{
+    color: #03396c;
+    background-color: #e6f2ff;
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="stress_label">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>250</y>
+          <width>251</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel{
+    color: #03396c;
+    background-color: #e6f2ff;
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="back_btn">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>480</y>
+        <width>140</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: #4682B4;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px; 
+    padding: 10px 20px;
+    min-width: 100px;
+    transition: background-color 0.3s ease-in-out, transform 0.1s;
+}
+
+
+QPushButton:hover {
+    background-color: #5A9BD6;
+}
+
+
+QPushButton:pressed {
+    background-color: #36648B;
+    transform: scale(0.98); 
+}
+</string>
+      </property>
+      <property name="text">
+       <string>Back</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_2">
+     <widget class="QListWidget" name="listWidget">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>70</y>
+        <width>461</width>
+        <height>441</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QListWidget {
+    background-color: #ffffff;
+    border: 1px solid #888;
+    border-radius: 5px;
+    padding: 5px;
+}
+QListWidget::item {
+   padding: 8px;
+   border-bottom: 1px solid #ccc;
+}
+QListWidget::item:selected {
+    background-color: #6497b1;
+    color: white;
+    border-radius: 3px;
+}QFrame {
+    background-color: #f0f8ff;
+    border: 1px solid #6497b1;
+    border-radius: 6px;
+    padding: 10px;
+}
+ 
+QScrollBar:vertical {
+    border: none;
+    background: #ddd;
+    width: 8px;
+    margin: 2px 2px 2px 2px;
+}
+
+QScrollBar::handle:vertical {
+    background: #6497b1;
+    min-height: 20px;
+    border-radius: 4px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #005b96;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    background: none;
+}</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>20</y>
+        <width>501</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>18</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel{color: #2C3E50;
+}
+</string>
+      </property>
+      <property name="text">
+       <string>Stress and Mood History</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1298</width>
-     <height>18</height>
+     <width>1300</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>

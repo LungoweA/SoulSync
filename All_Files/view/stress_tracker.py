@@ -1,10 +1,13 @@
 import sys
 import os
 from PyQt5 import uic
-from PyQt5.QtWidgets import (QMainWindow, QPushButton, QRadioButton, QLabel, QGroupBox)
+from PyQt5.QtWidgets import (QMainWindow, QPushButton, QRadioButton, QLabel, QGroupBox, QStackedWidget)
 from PyQt5.QtCore import *
-from All_Files.controller.StressLogic import Stress
-from .results import Result
+from controller.StressLogic import Stress
+from controller.AccountLogic import AccountDetails
+
+from view.results import Result
+from datetime import date
 
 
 # Add the parent directory to the system path to allow module imports
@@ -39,7 +42,7 @@ class StressTracker(QMainWindow):
         group_box (QGroupBox): Group box to display error messages.
     """
     
-    def __init__(self, id_token,parent=None):
+    def __init__(self, uid, id_token,parent=None):
         """
         Initializes the StressTracker window and sets up the UI elements and event handlers.
 
@@ -52,8 +55,13 @@ class StressTracker(QMainWindow):
         uic.loadUi(os.path.join(os.path.dirname(__file__), "UI files", "stress_tracker.ui"), self)
         
         
-        self.stress = Stress()
+        
         self.id_token = id_token
+        self.uid = uid
+        
+        self.stress = Stress()
+        self.user_details = AccountDetails(self.uid, self.id_token)
+        
         self.questions = self.stress.stress_test()  # stress tracker questions
         self.num = 1                                # stress tracker question number
         self.dict = {"1":0, "2":0, "3":0, "4":0, "5":0}
@@ -61,6 +69,7 @@ class StressTracker(QMainWindow):
         self.question_no_label = self.findChild(QLabel, "question_no_label")
         self.question_label = self.findChild(QLabel, "question_label")
         self.error_label = self.findChild(QLabel, "error_label")
+        self.message_label = self.findChild(QLabel, "message_label")
         
         self.radio_btn1 = self.findChild(QRadioButton, "radio_btn1")
         self.radio_btn2 = self.findChild(QRadioButton, "radio_btn2")
@@ -68,12 +77,16 @@ class StressTracker(QMainWindow):
         self.radio_btn4 = self.findChild(QRadioButton, "radio_btn4")
         self.radio_btn5 = self.findChild(QRadioButton, "radio_btn5")
         
+        # The line `self.back_btn = self.findChild(QPushButton, "back_btn")` is finding and assigning a reference to a QPushButton widget with the object name "back_btn" in the UI file loaded by `uic.loadUi()` method.
         self.back_btn = self.findChild(QPushButton, "back_btn")
         self.next_btn = self.findChild(QPushButton, "next_btn")
         self.main_btn = self.findChild(QPushButton, "main_btn")
         self.results_btn = self.findChild(QPushButton, "results_btn")
         
         self.group_box = self.findChild(QGroupBox, 'groupBox_2')
+        
+        self.stackedWidget = self.findChild(QStackedWidget, "stackedWidget")
+        self.check_date()
         
         
         self.initial_question()
@@ -89,6 +102,46 @@ class StressTracker(QMainWindow):
         self.results_btn.clicked.connect(self.display_result)
         
     
+    def show_stress_tracker(self):
+        """
+        Displays the mood tracker interface by setting the stacked widget's current index to 0.
+
+        This function updates the stacked widget to display the mood tracker screen. It assumes 
+        that the mood tracker interface is positioned at index 0 within the QStackedWidget.
+        """
+        
+        self.stackedWidget.setCurrentIndex(0)
+        
+
+    def show_message(self):
+        """
+        Displays a confirmation message after logging a mood entry.
+
+        This function updates the user interface to show a message screen by setting the 
+        stacked widget's current index to 1. It also updates the `message_label` to display 
+        a motivational message encouraging the user to continue their self-awareness journey.
+        """
+        
+        self.stackedWidget.setCurrentIndex(1)
+        self.message_label.setText("Great job! You've checked your stress level for today. \nTake a deep breath and unwind. Come back tomorrow for another insightful review! 😊🌿")
+        
+    def check_date(self):
+        """
+        Checks if the user has logged their mood today and updates the UI accordingly.
+
+        If today's date is in the stored mood log, it shows a confirmation message; 
+        otherwise, it opens the mood tracker.
+        """
+        
+        today = str(date.today())
+        dates = self.user_details.get_mood_stress_dates()
+        
+        if today in dates:
+            self.show_message()
+        else:
+            self.show_stress_tracker()
+        
+        
     def initial_question(self):
         """
         Sets up the initial question and connects radio buttons to their respective methods.
@@ -271,7 +324,7 @@ class StressTracker(QMainWindow):
         """
 
         sums = self.result()
-        self.result_window = Result(self.id_token, sums)
+        self.result_window = Result(self.uid, self.id_token, sums)
         self.clear_window()
         self.reset_checked()
         self.result_window.show()
@@ -292,8 +345,8 @@ class StressTracker(QMainWindow):
         Returns to the main menu and closes the current stress tracker window.
         """
         
-        from view.menu import MenuWindow
-        self.menu_window = MenuWindow(self.id_token)
+        from All_Files.view.menu import MenuWindow
+        self.menu_window = MenuWindow(self.uid, self.id_token)
         self.clear_window()
         self.reset_checked()
         self.menu_window.show()

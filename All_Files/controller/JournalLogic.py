@@ -32,15 +32,3 @@ class Diary:
         """
 
         return self.Journal_db.save(id_token, journal)
-
-    def fetch_journal_history(self, id_token):
-        """
-        Fetches the user's journal history using the Journal_db class.
-
-        Args:
-            id_token (str): The Firebase authentication token of the user.
-
-        Returns:
-            list: A list of dictionaries containing journal entries.
-        """
-        return self.Journal_db.fetch_journal_history(id_token)

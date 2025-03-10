@@ -3,7 +3,7 @@ import os
 from PyQt5 import uic
 from PyQt5.QtWidgets import (QMainWindow, QPushButton, QLabel)
 from PyQt5.QtCore import *
-from All_Files.controller.StressLogic import Stress
+from controller.StressLogic import Stress
 
 
 # Add the parent directory to the system path to allow module imports
@@ -29,7 +29,7 @@ class Result(QMainWindow):
         menu_btn (QPushButton): Button to return to the main menu.
     """
 
-    def __init__(self, id_token, sums, parent=None):
+    def __init__(self, uid, id_token, sums, parent=None):
         """
         Initializes the Results window and sets up the UI elements and event handlers.
 
@@ -43,6 +43,7 @@ class Result(QMainWindow):
         uic.loadUi(os.path.join(os.path.dirname(__file__), "UI files", "results.ui"), self)
         
         self.id_token = id_token
+        self.uid = uid
         self.stress = Stress()
         self.sums = sums
         
@@ -143,7 +144,7 @@ class Result(QMainWindow):
         """
         
         from view.menu import MenuWindow
-        self.menu_window = MenuWindow(self.id_token)
+        self.menu_window = MenuWindow(self.uid, self.id_token)
         self.clear()
         self.menu_window.show()
         self.close()  # Closes Result window

@@ -4,10 +4,11 @@ import os
 # Add the absolute path of the SoulSync directory to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from PyQt5 import uic
-from PyQt5.QtWidgets import (QMainWindow, QLabel, QRadioButton, QPushButton, QGroupBox)
-from All_Files.controller.MoodLogic import Mood
+from PyQt5.QtWidgets import (QMainWindow, QLabel, QRadioButton, QPushButton, QGroupBox, QStackedWidget)
+from controller.MoodLogic import Mood
+from controller.AccountLogic import AccountDetails
 from .tips import Tips
-import os
+from datetime import date
 
 
 class MoodTrackerWindow(QMainWindow):
@@ -45,7 +46,7 @@ class MoodTrackerWindow(QMainWindow):
         group_box (QGroupBox): Group box to display error messages.
     """
 
-    def __init__(self, id_token):
+    def __init__(self, uid, id_token):
         """
         Initializes the MoodTrackerWindow and sets up the UI elements and event handlers.
 
@@ -55,10 +56,11 @@ class MoodTrackerWindow(QMainWindow):
 
         super().__init__()
         self.id_token = id_token
+        self.uid = uid
         uic.loadUi(os.path.join(os.path.dirname(__file__), "UI files", "mood_tracker.ui"), self)
         
         self.mood = Mood()
-
+        self.user_details = AccountDetails(self.uid, self.id_token)
         self.num = 1
         self.questions = self.mood.mood_question()
         self.option = self.mood.options()
@@ -73,6 +75,7 @@ class MoodTrackerWindow(QMainWindow):
         self.question_no_label = self.findChild(QLabel, "question_no_label")
         self.question_label = self.findChild(QLabel, "question_label")
         self.error_label = self.findChild(QLabel, "error_label")
+        self.message_label = self.findChild(QLabel, "message_label")
         
         self.option1_label = self.findChild(QLabel, "option1_label")
         self.option2_label = self.findChild(QLabel, "option2_label")
@@ -93,6 +96,9 @@ class MoodTrackerWindow(QMainWindow):
         
         self.group_box = self.findChild(QGroupBox, 'groupBox_2')
         
+        self.stackedWidget = self.findChild(QStackedWidget, "stackedWidget")
+        self.check_date()
+        
         self.group_box.hide()
         
         
@@ -103,6 +109,50 @@ class MoodTrackerWindow(QMainWindow):
         self.next_btn.clicked.connect(self.finish)
         self.menu_btn.clicked.connect(self.main)
         self.tips_btn.clicked.connect(self.show_tips)
+        
+        
+        
+        
+    def show_mood_tracker(self):
+        """
+        Displays the mood tracker interface by setting the stacked widget's current index to 0.
+
+        This function updates the stacked widget to display the mood tracker screen. It assumes 
+        that the mood tracker interface is positioned at index 0 within the QStackedWidget.
+        """
+        
+        self.stackedWidget.setCurrentIndex(0)
+        
+
+    def show_message(self):
+        """
+        Displays a confirmation message after logging a mood entry.
+
+        This function updates the user interface to show a message screen by setting the 
+        stacked widget's current index to 1. It also updates the `message_label` to display 
+        a motivational message encouraging the user to continue their self-awareness journey.
+        """
+        
+        self.stackedWidget.setCurrentIndex(1)
+        self.message_label.setText("You've logged your mood for today! Keep reflecting and growing.\nCome back tomorrow for a new check-in and continue your journey of self-awareness! 😊✨")
+        
+        
+    def check_date(self):
+        """
+        Checks if the user has logged their mood today and updates the UI accordingly.
+
+        If today's date is in the stored mood log, it shows a confirmation message; 
+        otherwise, it opens the mood tracker.
+        """
+        
+        today = str(date.today())
+        dates = self.user_details.get_mood_stress_dates()
+        
+        if today in dates:
+            self.show_message()
+        else:
+            self.show_mood_tracker()
+            
         
     def initial_question(self):
         """
@@ -330,7 +380,7 @@ class MoodTrackerWindow(QMainWindow):
         Opens the tips window and closes the current mood tracker window.
         """
 
-        self.tips_window = Tips(self.id_token, self.rate, self.description, self.influence)
+        self.tips_window = Tips(self.uid, self.id_token, self.rate, self.description, self.influence)
         self.clear_window()
         self.reset_checked()
         self.tips_window.show()
@@ -342,7 +392,7 @@ class MoodTrackerWindow(QMainWindow):
         """
         
         from view.menu import MenuWindow
-        self.menu_window = MenuWindow(self.id_token)
+        self.menu_window = MenuWindow(self.uid, self.id_token)
         self.clear_window()
         self.reset_checked()
         self.menu_window.show()
