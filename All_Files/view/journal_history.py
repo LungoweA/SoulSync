@@ -89,9 +89,12 @@ class JournalHistory(QMainWindow):
         """
         
         self.dates = self.user_details.get_journal_dates()
+        if self.dates != []:
+            for i in self.dates:
+                self.journal_list.addItem(f'•  {i}')
+        else:
+            self.journal_list.addItem('No journal history available')
         
-        for i in self.dates:
-            self.journal_list.addItem(f'•  {i}')
             
     
     def display_history(self, clicked_item):

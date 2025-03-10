@@ -77,9 +77,12 @@ class MoodStressHistory(QMainWindow):
         """Displays all available mood and stress dates in the list."""
         
         self.dates = self.user_details.get_mood_stress_dates()
+        if self.dates != []:
+            for i in self.dates:
+                self.mood_stress_list.addItem(f'•  {i}')
+        else:
+            self.mood_stress_list.addItem('No mood and stress history available')
         
-        for i in self.dates:
-            self.mood_stress_list.addItem(f'•  {i}')
             
     def display_history(self, clicked_item):
         """Displays detailed history for the selected date."""

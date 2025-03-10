@@ -213,4 +213,25 @@ class AccountDetails:
         """
         
         return self.read_db.get_journal_dates()
+    
+    
+    def get_mood_dates(self):
+        """
+        Retrieves all dates from the user's mood tracker, sorted.
 
+        Returns:
+            list: A sorted list of dates from the user's mood tracker.
+        """
+        
+        return self.read_db.get_mood_dates()
+    
+    
+    def get_stress_dates(self):
+        """
+        Retrieves all dates from the user's stress tracker, sorted.
+
+        Returns:
+            list: A sorted list of dates from the user's stress tracker.
+        """
+        
+        return self.read_db.get_stress_dates()
