@@ -90,16 +90,3 @@ class Stress:
         return self.stress_db.save_data(id_token, result)
 
 
-    def fetch_stress_history(self, id_token):
-        """
-    Fetches the user's stress history from the database.
-
-    Args:
-        id_token (str): The Firebase authentication token of the user.
-
-    Returns:
-        list: A list of stress history records.
-    """
-        return self.stress_db.fetch_stress_history(id_token)
-
-

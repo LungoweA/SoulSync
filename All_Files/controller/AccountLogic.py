@@ -1,28 +1,8 @@
 import sys
 import os
 from model.write_db import Write_db
-import firebase_admin
-from firebase_admin import auth, credentials, db
-import json
-import requests
-from dotenv import load_dotenv
+from model.read_db import Read_db
 
-
-load_dotenv()
-
-firebase_config = json.loads(os.getenv("FIREBASE_CONFIG", "{}"))
-
-if not firebase_config:
-    raise ValueError("❌ Firebase configuration is missing!")
-
-FIREBASE_WEB_API_KEY = firebase_config.get("apiKey")
-DATABASE_URL = firebase_config.get("databaseURL")
-
-if not firebase_admin._apps:
-    cred = credentials.Certificate(firebase_config)
-    firebase_admin.initialize_app(cred, {"databaseURL": DATABASE_URL})
-
-db = db.reference()
 
 # Add the parent directory to the system path to allow module imports
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -67,147 +47,170 @@ class AccountCreation:
 
         return self.db_handler.login(email, password)
 
-    def change_password(self, id_token, old_password, new_password):
+    def change_password(self, uid, id_token, new_password, confirm_password):
         """
-        Changes the user's password in Firebase Authentication after verifying the old password.
+        Changes the password for the user with the given UID.
+
+        This method validates the new password and confirm password inputs, then calls the 
+        `change_password` method from the database handler to perform the password update.
+
         Args:
-            id_token (str): The Firebase authentication token of the user.
-            old_password (str): The user's current password.
-            new_password (str): The new password the user wants to set.
+            uid (str): The unique user ID.
+            id_token (str): The authentication token for the user.
+            new_password (str): The new password to be set.
+            confirm_password (str): The confirmation of the new password.
+
         Returns:
-            tuple: (bool, str) where bool indicates success, and str contains a message.
+            tuple: A tuple containing:
+                - A boolean indicating whether the password change was successful (True if successful, False if not).
+                - A message providing feedback about the password change process. The message can be a success or error message.
         """
-        try:
-            # Verify the user's ID token
-            user = auth.verify_id_token(id_token)
-            uid = user["uid"]
-            user_email = user["email"]  # Get user's email from token
-
-            # Verify old password using Firebase Authentication REST API
-            url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={FIREBASE_WEB_API_KEY}"
-
-            payload = {
-                "email": user_email,
-                "password": old_password,
-                "returnSecureToken": True,
-            }
-
-            response = requests.post(url, json=payload)
-            data = response.json()
-
-            # If Firebase returns an error, the password is incorrect
-            if "error" in data:
-                error_message = data["error"]["message"]
-                
-                # **Debugging print statement**
-                print(f"Firebase Error: {error_message}")
-
-                # **Fix: Change generic "Credentials are incorrect" to a specific message**
-                if error_message in ["INVALID_PASSWORD", "INVALID_LOGIN_CREDENTIALS"]:
-                    return False, "❌ Current password is incorrect!"
-                elif error_message == "EMAIL_NOT_FOUND":
-                    return False, "❌ No user found with this email!"
-                elif error_message == "USER_DISABLED":
-                    return False, "❌ This account has been disabled!"
-                else:
-                    return False, f"❌ {error_message}"
-
-
-            # **New Fix: Prevent changing to the same password AFTER verifying the old one**
-            if old_password == new_password:
-                return False, "❌ New password cannot be the same as the current password!"
-
-            # Check password length
-            if len(new_password) < 6:
-                return False, "❌ Password must be at least 6 characters long!"
-
-            # Check password strength (Uppercase, Lowercase, Number, Special Char)
-            has_upper = any(char.isupper() for char in new_password)
-            has_lower = any(char.islower() for char in new_password)
-            has_digit = any(char.isdigit() for char in new_password)
-            has_special = any(not char.isalnum() for char in new_password)
-
-            if not (has_upper and has_lower and has_digit and has_special):
-                return False, "❌ Password does not meet all the requirements!"
-
-            # If old password is correct and new password is valid, update the password
-            auth.update_user(uid, password=new_password)
-
-            print("✅ Password changed successfully in Firebase!")
-            return True, "✅ Password changed successfully!"
-        except Exception as e:
-            print(f"❌ Error changing password: {e}")
-            return False, str(e)
-
-    def check_password_strength(self, password):
+        
+        return self.db_handler.change_password(uid, id_token, new_password, confirm_password)
+    
+    
+    def log_out(self):
         """
-        Checks the strength of a given password based on the following criteria:
-        - At least 7 characters long
-        - Contains at least one uppercase letter
-        - Contains at least one lowercase letter
-        - Contains at least one digit
-        - Contains at least one special character
+        Logs out the current user by clearing the user's authentication token.
+
+        This method calls the `log_out` method from the database handler to perform the logout operation.
+
+        Returns:
+            bool: `True` if the logout was successful, `False` if there was an error.
+        """
+        
+        return self.db_handler.log_out()
+    
+    
+    def delete_account(self, uid, id_token):
+        """
+        Deletes the user's account permanently from the database.
+
+        This method calls the `delete_account` method from the database handler to delete the user's
+        data from the database and remove the user from the authentication system.
+
         Args:
-            password (str): The password to check.
-        Returns:
-            dict: A dictionary containing which strength criteria are met.
-        """
-        return {
-            "char_length": len(password) >= 7,
-            "uppercase": any(char.isupper() for char in password),
-            "lowercase": any(char.islower() for char in password),
-            "digit": any(char.isdigit() for char in password),
-            "special_char": any(not char.isalnum() for char in password)
-        }
+            uid (str): The unique user ID of the account to be deleted.
+            id_token (str): The authentication token for the user to authorize the account deletion.
 
-    def log_out(self, id_token):
+        Returns:
+            tuple: A tuple containing:
+                - A boolean indicating whether the account deletion was successful (True if successful, False if not).
+                - A message providing feedback about the account deletion process. The message can be a success or error message.
         """
-        Logs out the user by revoking their session.
+    
+        return self.db_handler.delete_account(uid, id_token)
+    
+    
+    
+    
+class AccountDetails:
+    """
+    This class provides access to user details, journal entries, mood levels, and stress levels 
+    from the database, encapsulating the methods from the Read_db class.
+
+    Attributes:
+        uid (str): The unique user ID for the account.
+        id_token (str): The authentication token for the user.
+        read_db (Read_db): An instance of the Read_db class used to fetch data from the database.
+
+    Methods:
+        read_user_details():
+            Fetches the user's basic details (name, password, and email) from the database.
+        
+        read_journal():
+            Retrieves the user's journal entries from the database.
+        
+        read_stress_level():
+            Retrieves the user's stress level history from the database.
+        
+        read_mood_level():
+            Retrieves the user's mood level history from the database.
+        
+        get_mood_stress_dates():
+            Retrieves all unique dates from the user's mood and stress history, sorted.
+        
+        get_journal_dates():
+            Retrieves all dates from the user's journal entries, sorted.
+    """
+    
+    def __init__(self, uid, id_token):
+        """
+        Initializes the AccountDetails class with the user ID and authentication token.
+
         Args:
-            id_token (str): The Firebase authentication token of the user.
-        Returns:
-            bool: True if logout is successful, False otherwise.
+            uid (str): The unique user ID.
+            id_token (str): The authentication token for the user.
         """
-        try:
-            decoded_token = auth.verify_id_token(id_token)
-            uid = decoded_token["uid"]
-            auth.revoke_refresh_tokens(uid)
-            print("User logged out successfully")
-            return True
-        except Exception as e:
-            print("error logging out:", e)
-            return False
+        
+        self.uid = uid
+        self.id_token = id_token
+        self.read_db = Read_db(self.uid, self.id_token)
+        
+        
+    def read_user_details(self):
+        """
+        Fetches the user's details (name, password, and email) from the database.
 
-    def delete_account(self, id_token):
-        """Deletes the user account from Firebase Authentication and Database."""
-        try:
-            user = auth.verify_id_token(id_token)
-            uid = user["uid"]
+        Returns:
+            tuple: A tuple containing the user's name, password, and email.
+        """
+        
+        return self.read_db.read_user_details()
+        
+        
+    def read_journal(self):
+        """
+        Retrieves the user's journal entries from the database.
 
-            # ✅ Step 1: Ensure we're checking the correct path
-            user_data_path = f"Users/{uid}"  # ✅ Match Firebase structure
-            user_data = db.child(user_data_path).get()
+        Returns:
+            dict: A dictionary containing journal entries with date as the key.
+                If no entries are found, returns a message indicating no journal entries are available.
+        """
+        
+        return self.read_db.read_journal()
+        
+        
+    def read_stress_level(self):
+        """
+        Retrieves the user's stress level history from the database.
 
-            if isinstance(user_data, dict):  # ✅ Handle dictionary response
-                print(f"✅ Found user data in Database: {user_data}")
-                db.child(user_data_path).delete()  # ✅ Delete using correct method
-                print(f"✅ Deleted user data from Firebase Database for UID: {uid}")
-            else:
-                print("⚠️ No user data found in Database! Skipping database deletion.")
+        Returns:
+            dict: A dictionary containing stress levels with date as the key.
+                If no entries are found, returns an error message.
+        """
+        
+        return self.read_db.read_stress_level()
+            
+    def read_mood_level(self):
+        """
+        Retrieves the user's mood level history from the database.
 
-            # ✅ Step 2: Ensure user exists before deleting from Authentication
-            try:
-                auth.get_user(uid)  # Will raise an error if user does not exist
-            except firebase_admin.auth.UserNotFoundError:
-                return False, "❌ User not found in Firebase Authentication!"
+        Returns:
+            dict: A dictionary containing mood levels with date as the key.
+                If no entries are found, returns an error message.
+        """
+        
+        return self.read_db.read_mood_level()
+    
+    def get_mood_stress_dates(self):
+        """
+        Retrieves all unique dates from the user's mood and stress history, sorted.
 
-            # ✅ Step 3: Delete the user from Firebase Authentication
-            auth.delete_user(uid)
-            print(f"✅ Deleted user from Firebase Authentication: {uid}")
+        Returns:
+            list: A sorted list of dates that appear in both the user's mood and stress history.
+        """
+        
+        return self.read_db.get_mood_stress_dates()
+    
+    
+    def get_journal_dates(self):
+        """
+        Retrieves all dates from the user's journal entries, sorted.
 
-            return True, "✅ Account deleted successfully!"
-        except firebase_admin.auth.UserNotFoundError:
-            return False, "❌ User does not exist or has already been deleted!"
-        except Exception as e:
-            print(f"❌ Error deleting account: {e}")
-            return False, f"❌ Error deleting account: {str(e)}"
+        Returns:
+            list: A sorted list of dates from the user's journal entries.
+        """
+        
+        return self.read_db.get_journal_dates()
+

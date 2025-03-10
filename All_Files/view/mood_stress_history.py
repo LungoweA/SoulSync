@@ -4,92 +4,134 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..',
 from PyQt5 import uic
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
+from datetime import datetime
+from controller.AccountLogic import AccountDetails
 
 class MoodStressHistory(QMainWindow):
-    def __init__(self, id_token, parent=None):
+    
+    """
+    A window displaying mood and stress history for a user, allowing them to view past entries.
+
+    Attributes:
+        id_token (str): The ID token for the user's session.
+        uid (str): The user's ID.
+        user_details (AccountDetails): Instance for accessing user details and history.
+        mood_stress_list (QListWidget): List widget to display available mood and stress dates.
+        title_label, description_label, influence_label, rate_label, stress_label (QLabel): Labels for displaying mood and stress details.
+        menu_btn, back_btn (QPushButton): Buttons for navigation.
+        stackedWidget (QStackedWidget): Stack widget for displaying different sections (main menu or history).
+    """
+    
+    def __init__(self, uid, id_token, parent=None):
+        """
+        Initializes the MoodStressHistory window and sets up the UI elements and event handlers.
+
+        Args:
+            uid (str): User ID for the current session.
+            id_token (str): The ID token for the user's session.
+            parent (QWidget, optional): The parent widget. Defaults to None.
+        """
+        
         super().__init__(parent)
         uic.loadUi(os.path.join(os.path.dirname(__file__), "UI files", "mood_stress_history.ui"), self)
     
         self.id_token = id_token
-
-        #Accessing widgets
-        self.MoodStressHistory = self.findChild(QTableWidget, "history_tableWidget")
-      
-        self.btn_menu = self.findChild(QPushButton, "btn_menu")
-
-        #Actions
-        self.btn_menu.clicked.connect(self.menu)
-        self.load_history()
+        self.uid = uid
         
-        # Ensure the table fills the available space in the widget
-        self.MoodStressHistory.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
-        self.MoodStressHistory.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)  
-        self.MoodStressHistory.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)  
-    
+        self.user_details = AccountDetails(self.uid, self.id_token)
+        
+        #Accessing widgets
+        self.mood_stress_list = self.findChild(QListWidget, "listWidget")
+        self.title_label = self.findChild(QLabel, "title_label")
+        self.description_label = self.findChild(QLabel, "description_label")
+        self.influence_label = self.findChild(QLabel, "influence_label")
+        self.rate_label = self.findChild(QLabel, "rate_label")
+        self.stress_label = self.findChild(QLabel, "stress_label")
+        self.menu_btn = self.findChild(QPushButton, "btn_menu")
+        self.back_btn = self.findChild(QPushButton, "back_btn")
+        
+        self.stackedWidget = self.findChild(QStackedWidget, "stackedWidget")
+        self.stackedWidget.setCurrentIndex(1)
+        
+        self.menu_btn.clicked.connect(self.menu)
+        self.back_btn.clicked.connect(self.show_main_menu)
+        self.display_dates()
+        self.mood_stress_list.itemClicked.connect(self.show_history)
+        
+        
+        
+    def show_main_menu(self):
+        """Switches to the main menu view."""
+        
+        self.stackedWidget.setCurrentIndex(1)
+        
+
+    def show_history(self, clicked_item):
+        """Displays the mood and stress history for the selected date."""
+        
+        self.stackedWidget.setCurrentIndex(0)
+        self.display_history(clicked_item)
+        
+        
+    def display_dates(self):
+        """Displays all available mood and stress dates in the list."""
+        
+        self.dates = self.user_details.get_mood_stress_dates()
+        
+        for i in self.dates:
+            self.mood_stress_list.addItem(f'•  {i}')
+            
+    def display_history(self, clicked_item):
+        """Displays detailed history for the selected date."""
+        
+        self.mood_history_dict = self.user_details.read_mood_level()
+        self.stress_history_dict = self.user_details.read_stress_level()
+        string = clicked_item.text()       # Retrieving the date that was clicked
+        self.date = string.split('  ')[1]
+        
+        # display formatted date
+        self.format_date(self.date)
+        
+        # Display mood and stress history
+        self.mood_and_stress(self.date)
+        
+        
+    def format_date(self, date):
+        """Formats the date to a more readable format."""
+        
+        date_obj = datetime.strptime(date, "%Y-%m-%d")
+        formatted_date = date_obj.strftime("%A %d %Y")
+        self.title_label.setText(formatted_date)
+        
+        
+    def mood_and_stress(self, date):
+        """Displays mood and stress history for the selected date."""
+        
+        if date in self.mood_history_dict:
+            self.description_label.setText(self.mood_history_dict[date][0])
+            self.influence_label.setText(self.mood_history_dict[date][1])
+            self.rate_label.setText(self.mood_history_dict[date][2])
+        else:
+            self.influence_label.setText("No mood history available.")
+        
+        if date in self.stress_history_dict:
+            self.stress_label.setText(self.stress_history_dict[date])
+        else:
+            self.stress_label.setText("No stress history available.")
+        
+    def clear(self):
+        """Clears the displayed history information."""
+        self.description_label.setText("")
+        self.influence_label.setText("")
+        self.rate_label.setText("")
+        self.stress_label.setText("")
+        
     def menu(self):
         """
         Returns to the main menu
         """
         from view.menu import MenuWindow
-        self.menu_window = MenuWindow(self.id_token)
+        self.menu_window = MenuWindow(self.uid, self.id_token)
+        self.clear()
         self.menu_window.show()
-        self.close()  
-
-    def load_history(self):
-        """
-        Loads mood and stress history from the database and displays it in the table widget.
-        """
-        from controller.MoodLogic import Mood
-        from controller.StressLogic import Stress
-
-        # Create instances of the controller classes
-        mood = Mood()
-        stress = Stress()
-
-        # Fetch mood and stress data using the id_token
-        mood_data = mood.fetch_mood_history(self.id_token)
-        stress_data = stress.fetch_stress_history(self.id_token)
-
-        # Combine both datasets for display
-        combined_data = []
-        for item in mood_data:
-            combined_data.append({
-                "Created on": item["Created_at"],
-                "Type": "Mood",
-                "Rating": item["Mood Rating"],
-                "Description": item["Description"],
-                "Influence": item["Influence"]
-            })
-        for item in stress_data:
-            combined_data.append({
-                "Created_at": item["Created_at"],
-                "Type": "Stress",
-                "Rating": item["Stress Level"],
-                "Description": "N/A",
-                "Influence": "N/A"
-            })
-
-        # Populate the table widget
-        self.populate_table(self.MoodStressHistory, combined_data)
-
-    def populate_table(self, table_widget, data):
-        """
-        Populates the table widget with data.
-
-        Args:
-            table_widget (QTableWidget): The table widget to populate.
-            data (list): A list of dictionaries containing the data to display.
-        """
-        table_widget.setRowCount(len(data))
-        table_widget.setColumnCount(len(data[0]))
-
-        # Set table headers
-        table_widget.setHorizontalHeaderLabels(data[0].keys())
-
-        for row, record in enumerate(data):
-            for col, (key, value) in enumerate(record.items()):
-                table_widget.setItem(row, col, QTableWidgetItem(str(value)))
-
-        # Automatically resize columns and rows to fit content
-        table_widget.resizeColumnsToContents()
-        table_widget.resizeRowsToContents()
+        self.close()

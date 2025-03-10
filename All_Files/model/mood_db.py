@@ -14,7 +14,7 @@ class Mood_db:
 
     Attributes:
         user_data (dict): A dictionary to store user mood data, including mood rating, description,
-                          influence, and creation timestamp.
+                        influence, and creation timestamp.
         db (Write_db): An instance of the `Write_db` class to interact with the database.
     """
 
@@ -40,7 +40,7 @@ class Mood_db:
 
         Returns:
             dict: A dictionary where keys are mood categories (e.g., "Very Happy", "Calm & Relaxed")
-                  and values are lists of tuples containing quotes and their authors.
+                and values are lists of tuples containing quotes and their authors.
         """
 
         quote = {"Very Happy": [('Dalai Lama', 'Happiness is not something ready-made. It comes from your own actions.'), ('Oprah Winfrey', "The more you praise and celebrate your life, the more there is in life to celebrate.")], 
@@ -69,7 +69,7 @@ class Mood_db:
 
         Returns:
             dict: A dictionary where keys are question identifiers (e.g., '0', '1', '2') and values
-                  are lists of options for each question.
+                are lists of options for each question.
         """
 
         option_dict = {'0': ['Very Bad', 'Bad', 'Normal', 'Good', 'Very Good'],
@@ -83,7 +83,7 @@ class Mood_db:
 
         Returns:
             dict: A dictionary where keys are mood influences (e.g., "School", "Work") and values
-                  are lists of tips for managing stress or improving mood.
+                are lists of tips for managing stress or improving mood.
         """
 
         tip = {"School": ['Prioritize tasks', 'Schedule your programs', 'Practice self-care', 'Avoid negative comparisons', 'Avoid procrastination'], 
@@ -101,7 +101,7 @@ class Mood_db:
 
         Returns:
             dict: A dictionary where keys are mood categories (e.g., "Very Happy", "Stressed") and
-                  values are supportive messages tailored to each mood.
+                values are supportive messages tailored to each mood.
         """
 
         message =  {"Very Happy": "It's great to feel at peace. Take a deep breath and enjoy the moment. Keep nurturing this calm energy!",
@@ -149,27 +149,6 @@ class Mood_db:
         
 
 
-    def fetch_mood_history(self, id_token):
-        try:
-            user_id = self.db.auth.get_account_info(id_token)['users'][0]['localId']
-            mood_data = self.db.database.child("Users").child(user_id).child("Mood").get(id_token).val()
-
-            if mood_data:
-                return [
-                    {
-                        "Created_at": entry["Created_at"],
-                        "Mood Rating": entry["Mood rating"],
-                        "Description": entry["Mood description"],
-                        "Influence": entry["Mood influenced by"]
-                    }
-                    for entry in mood_data.values()
-                ]
-            else:
-                return []
-        except Exception as e:
-            print(f"Error fetching mood history: {e}")
-            return []
-        
 
 
 

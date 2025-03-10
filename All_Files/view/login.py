@@ -3,7 +3,7 @@ import os
 from PyQt5 import uic
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QCheckBox, QPushButton, QLineEdit, QLabel, QGroupBox, QMessageBox
-from .menu import MenuWindow
+from view.menu import MenuWindow
 
 
 
@@ -40,6 +40,7 @@ class LogIn(QMainWindow):
         self.login_btn = self.findChild(QPushButton, "login_btn")
         self.sign_up_btn = self.findChild(QPushButton, "sign_up_btn")
         self.error_label = self.findChild(QLabel, "error_label")
+        
         self.email = self.findChild(QLineEdit, 'email')
         self.password = self.findChild(QLineEdit, 'password')
         self.show_password_checkbox = self.findChild(QCheckBox, 'show_password_checkbox')
@@ -60,20 +61,10 @@ class LogIn(QMainWindow):
         success, message, user = self.account.login(self.email.text(), self.password.text())
         
         if success:
-            id_token = user["idToken"]
-            uid = user["localId"]  # ✅ Extract UID from Firebase Authentication
+            self.id_token = user["idToken"]
+            self.uid = user["localId"]
 
-            # ✅ Step 1: Check if the user exists in Firebase Database
-            from firebase_admin import db  # Import here to avoid circular imports
-            user_data_path = f"Users/{uid}"  # ✅ Match Firebase database structure
-            user_data = db.reference(user_data_path).get()
-
-            if not user_data:  # ✅ If user data is missing, deny login
-                QMessageBox.warning(self, "Login Failed", "❌ Your account does not exist in the database. It may have been deleted.")
-                print("❌ User authenticated but missing from Database. Blocking login.")
-                return
-
-            self.window(id_token)
+            self.window(self.uid, self.id_token)
         else:
             self.group_box.show()
             self.group_box.setStyleSheet(
@@ -90,6 +81,17 @@ class LogIn(QMainWindow):
     
     
     def show_password(self):
+        """
+        Toggles the visibility of the password entered in the password field based on the state 
+        of the 'show_password_checkbox'.
+
+        If the checkbox is checked, the password will be visible in plain text.
+        If the checkbox is unchecked, the password will be hidden (displayed as asterisks).
+
+        Parameters:
+        None
+        """
+        
         checked = self.show_password_checkbox.isChecked()
         if checked:
             self.password.setEchoMode(QtWidgets.QLineEdit.Normal)
@@ -114,10 +116,10 @@ class LogIn(QMainWindow):
         self.close()
         self.sign_up.show()
         
-    def window(self, id_token):
+    def window(self, uid, id_token):
         """Opens the main application window upon successful login."""
         
-        self.home = MenuWindow(id_token)  # Opening Menu window after log in
+        self.home = MenuWindow(uid, id_token)  # Opening Menu window after log in
         self.clear_window()
         self.close()
         self.home.show()

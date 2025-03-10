@@ -3,7 +3,7 @@ import os
 from PyQt5 import uic
 from PyQt5.QtWidgets import (QMainWindow, QPushButton, QLabel)
 from PyQt5.QtCore import *
-from All_Files.controller.MoodLogic import Mood
+from controller.MoodLogic import Mood
 
 
 # Add the parent directory to the system path to allow module imports
@@ -30,7 +30,7 @@ class Tips(QMainWindow):
         message_label (QLabel): Label to display a supportive message.
     """
 
-    def __init__(self, id_token, rate, description, influence, parent=None):
+    def __init__(self, uid, id_token, rate, description, influence, parent=None):
         """
         Initializes the Tips window and sets up the UI elements and event handlers.
 
@@ -46,6 +46,7 @@ class Tips(QMainWindow):
         uic.loadUi(os.path.join(os.path.dirname(__file__), "UI files", "tips.ui"), self)
         
         self.id_token = id_token
+        self.uid = uid
         self.mood = Mood()
         self.rate = rate
         self.description = description
@@ -118,8 +119,8 @@ class Tips(QMainWindow):
         Returns to the main menu and closes the current Tips window.
         """
         
-        from view.menu import MenuWindow
-        self.menu_window = MenuWindow(self.id_token)
+        from All_Files.view.menu import MenuWindow
+        self.menu_window = MenuWindow(self.uid, self.id_token)
         self.clear()
         self.menu_window.show()
         self.close()  # Closes Tips window

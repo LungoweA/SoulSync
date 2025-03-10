@@ -2,9 +2,9 @@ import sys
 import os
 from PyQt5 import uic
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import (QMainWindow, QPushButton, QLabel, QTextEdit, QGroupBox)
+from PyQt5.QtWidgets import (QMainWindow, QPushButton, QLabel, QTextEdit, QGroupBox, QMessageBox)
 from PyQt5.QtCore import *
-from All_Files.controller.JournalLogic import Diary
+from controller.JournalLogic import Diary
 
 
 # Add the parent directory to the system path to allow module imports
@@ -29,7 +29,7 @@ class Journal(QMainWindow):
         group_box (QGroupBox): Group box to display error messages.
     """
 
-    def __init__(self, id_token,parent=None):
+    def __init__(self, uid, id_token,parent=None):
         """
         Initializes the Journal window.
 
@@ -42,6 +42,7 @@ class Journal(QMainWindow):
         uic.loadUi(os.path.join(os.path.dirname(__file__), "UI files", "journal.ui"), self)
         
         self.id_token = id_token
+        self.uid = uid
         self.diary = Diary()
         
         self.clear_btn = self.findChild(QPushButton, "clear_btn")
@@ -77,6 +78,13 @@ class Journal(QMainWindow):
         if entry != "":
             self.diary.save(self.id_token, entry)
             self.group_box.hide()
+            reply = QMessageBox.question(
+            self, "Saved Journal",
+            "Your journal has been saved. Do you want to go back to the main menu?",
+            QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+            if reply == QMessageBox.Yes:
+                self.menu()
         else:
             self.group_box.show()
             self.group_box.setStyleSheet(
@@ -97,7 +105,7 @@ class Journal(QMainWindow):
         """
         
         from .menu import MenuWindow
-        self.menu_window = MenuWindow(self.id_token)
+        self.menu_window = MenuWindow(self.uid, self.id_token)
         self.clear_journal()
         self.menu_window.show()
         self.close()  # Closes Journal window

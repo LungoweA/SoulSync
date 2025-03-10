@@ -1,7 +1,7 @@
 import sys
 import os
 import pyrebase
-import json
+import requests
 from datetime import datetime
 
 # Add the parent directory to the system path to allow module imports
@@ -22,7 +22,7 @@ class Write_db:
         """
         
         # Firebase configuration
-        config = {
+        self.config = {
                     "apiKey": "AIzaSyDfRV2B-BNHDGxNC5aRNWH2441NkPE5xZs",
                     "authDomain": "soul-sync-a4b50.firebaseapp.com",
                     "databaseURL": "https://soul-sync-a4b50-default-rtdb.firebaseio.com",
@@ -35,7 +35,7 @@ class Write_db:
         
         
         # Intializing firebase
-        self.firebase = pyrebase.initialize_app(config)
+        self.firebase = pyrebase.initialize_app(self.config)
         self.auth = self.firebase.auth()
         
         self.database = self.firebase.database()
@@ -69,13 +69,12 @@ class Write_db:
             user_data = {
                     'Name': name,
                     'Email': email,
-                    'Password': password,
                     'Created_at': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
                             
             self.database.child('Users').child(user_id).set(user_data, id_token)
                             
-            return True, 'Account Created'
+            return True, 'Your account has been created.'
         except:
             return False, 'Account already exists!'
             
@@ -115,6 +114,18 @@ class Write_db:
         return correct_length and is_upper and is_digit and is_lower and is_not_alphanum
             
     def validate_email(self, email):
+        """
+        Validates an email address by checking if it contains any forbidden characters.
+
+        Args:
+            email (str): The email address to be validated.
+
+        Returns:
+            bool: Returns True if the email contains any forbidden characters, False otherwise.
+        
+        The forbidden characters are: ':', ';', '"', '<', '>', and '/'.
+        """
+        
         forbidden_characters = [':', ';', '"', '<', '>', '/']
         for char in email:
             if char in forbidden_characters:
@@ -132,10 +143,99 @@ class Write_db:
             tuple: (bool, str) - True if login is successful, False with error message otherwise.
         """
         
-                
         try:
             user = self.auth.sign_in_with_email_and_password(email, password)
+            
             return True, '', user
         except:
             return False, 'Invalid email or Incorrect password!', None
+        
+    def log_out(self):
+        """
+        Logs out the current user by setting the `current_user` attribute to `None`.
+
+        Returns:
+            bool: Returns `True` if the logout process is successful, otherwise returns `False`.
+        
+        This function attempts to log out the user by clearing the `current_user` attribute
+        of the authentication system. If successful, it returns `True`. If an error occurs
+        during the logout process, it catches the exception and returns `False`.
+        """
+        
+        try:
+            self.auth.current_user = None
+            return True
+        except Exception as e:
+            return False
+
+    def change_password(self, uid, id_token, new_password, confirm_password):
+        """
+        Changes the password for a user, ensuring validation and consistency between the new password and confirmation password.
+
+        Args:
+            uid (str): The unique user ID of the user whose password is being changed.
+            id_token (str): The Firebase ID token to authenticate the request.
+            new_password (str): The new password entered by the user.
+            confirm_password (str): The password confirmation entered by the user.
+
+        Returns:
+            tuple: A tuple containing a boolean and a message:
+                - bool: `True` if the password change was successful, `False` otherwise.
+                - str: A message indicating the result of the password change attempt (e.g., success or error message).
+
+        Raises:
+            Exception: If there is an error during the password change request.
+        """
+
+        if new_password == "" or confirm_password == "":
+            return False, "All fields must be filled!"
+        
+        if new_password != confirm_password:
+            return False, "Passwords don't match, please try again!"
+        
+        if not self.validate_password(new_password):
+                return False, 'Invalid Password!'
+            
+        
+        try:
+            
+            url = f"https://identitytoolkit.googleapis.com/v1/accounts:update?key={self.config['apiKey']}"
+            payload = {
+                "idToken": id_token,
+                "password": new_password,
+                "returnSecureToken": True
+            }
+            
+            requests.post(url, json=payload)
+            self.database.child('Users').child(uid).update({'Password': new_password}, id_token)
+            return True, 'Password Changed Successfully'
+        except Exception:
+            return False, 'Unknown Error Occurred'
+        
+        
+    def delete_account(self, uid, id_token):
+        """
+        Deletes a user account from the database and Firebase Authentication system.
+
+        Args:
+            uid (str): The unique user ID of the account to be deleted.
+            id_token (str): The Firebase ID token used to authenticate the request.
+
+        Returns:
+            tuple: A tuple containing a boolean and a message:
+                - bool: `True` if the account deletion was successful, `False` otherwise.
+                - str: A message indicating the result of the account deletion attempt (e.g., success or error message).
+
+        Raises:
+            Exception: If there is an error while attempting to delete the account.
+        """
+        
+        try:
+            self.database.child('Users').child(uid).remove(id_token)
+            self.auth.delete_user_account(id_token)
+            return True, 'Your account has been permanently deleted.'
+        except Exception as e:
+            return False, 'Unknown error occured!'
+
+
 

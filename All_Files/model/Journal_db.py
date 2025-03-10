@@ -41,33 +41,3 @@ class Journal_db:
         
         
         
-    def fetch_journal_history(self, id_token):
-        """
-        Fetches the user's journal history from Firebase.
-
-        Args:
-            id_token (str): The Firebase authentication token of the user.
-
-        Returns:
-            list: A list of dictionaries containing journal entries.
-        """
-
-        try:
-            user_id = self.db.auth.get_account_info(id_token)['users'][0]['localId']
-            journal_data = self.db.database.child("Users").child(user_id).child("Journal").get(id_token).val()
-
-            print(f"Journal data retrieved: {journal_data}")  # Debugging output
-            if journal_data:
-                return sorted(
-                    [
-                        {"Created_at": entry["Created_at"], "Entry": entry["Entry"]}
-                        for entry in journal_data.values()
-                    ],
-                    key=lambda x: x["Created_at"],
-                    reverse=True
-                )
-            else:
-                return []  # Return an empty list if no data is found
-        except Exception as e:
-            print(f"Error fetching journal history: {e}")
-            return 
