@@ -62,10 +62,8 @@ class Read_db:
         
         journal_list = []
         journal_dict = {}
-        user = self.write.auth.sign_in_with_email_and_password('mdominicjude@gmail.com', 'Bananaisland@69')
-        uid = user['localId']
-        id_token = user['idToken']
-        entries = self.write.database.child('Users').child(uid).child('Journal').get(token=id_token)
+        
+        entries = self.write.database.child('Users').child(self.uid).child('Journal').get(token=self.id_token)
         try:
             for i in entries.each():
                 journal_list.append(i.val())
@@ -81,8 +79,8 @@ class Read_db:
                     journal_dict[date] = [(time, i['Entry'])]
                 
             return journal_dict
-        except:
-            return "No journal entries available."
+        except Exception:
+            return {}
         
             
     
@@ -108,8 +106,8 @@ class Read_db:
                 stress_history_dict[date] = i['Stress level']
                 
             return stress_history_dict
-        except Exception as err:
-            return err
+        except Exception:
+            return {}
     
     
     def read_mood_level(self):
@@ -135,8 +133,8 @@ class Read_db:
                 mood_history_dict[date] = [i['Mood description'], i['Mood influenced by'], i['Mood rating']]
             
             return mood_history_dict
-        except Exception as err:
-            return err
+        except Exception:
+            return {}
         
         
     def get_journal_dates(self):
@@ -146,10 +144,42 @@ class Read_db:
         Returns:
             list: A sorted list of dates (in string format) for the journal entries.
         """
+        try:
+            journal_dates = list(self.read_journal().keys())
+            journal_dates.sort()
+            return journal_dates
+        except Exception:
+            return []
         
-        journal_dates = list(self.read_journal().keys())
-        journal_dates.sort()
-        return journal_dates
+        
+    def get_mood_dates(self):
+        """
+        Retrieves all the dates for which the user has mood tracker.
+
+        Returns:
+            list: A sorted list of dates (in string format) for the mood tracker.
+        """
+        try:
+            mood_dates = list(self.read_mood_level().keys())
+            mood_dates.sort()
+            return mood_dates
+        except Exception:
+            return []
+        
+        
+    def get_stress_dates(self):
+        """
+        Retrieves all the dates for which the user has stress tracker.
+
+        Returns:
+            list: A sorted list of dates (in string format) for the stress tracker.
+        """
+        try:
+            stress_dates = list(self.read_stress_level().keys())
+            stress_dates.sort()
+            return stress_dates
+        except Exception:
+            return []
     
     
     def get_mood_stress_dates(self):
@@ -160,14 +190,17 @@ class Read_db:
             list: A sorted list of unique dates for both mood and stress records.
         """
         
-        mood_dates = self.read_mood_level().keys()
-        stress_dates = self.read_stress_level().keys()
-        dates_set = set(stress_dates)
-        dates_set.update(set(mood_dates))
-        dates_list = list(dates_set)
-        dates_list.sort()
+        try:
+            mood_dates = self.read_mood_level().keys()
+            stress_dates = self.read_stress_level().keys()
+            dates_set = set(stress_dates)
+            dates_set.update(set(mood_dates))
+            dates_list = list(dates_set)
+            dates_list.sort()
+            return dates_list
         
-        return dates_list
+        except Exception:
+            return []
 
 
 

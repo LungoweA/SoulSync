@@ -146,7 +146,7 @@ class MoodTrackerWindow(QMainWindow):
         """
         
         today = str(date.today())
-        dates = self.user_details.get_mood_stress_dates()
+        dates = self.user_details.get_mood_dates()
         
         if today in dates:
             self.show_message()
