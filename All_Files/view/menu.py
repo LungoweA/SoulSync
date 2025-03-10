@@ -1,7 +1,7 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QPushButton
 import os
-from controller.AccountLogic import AccountCreation
+from All_Files.controller.AccountLogic import AccountCreation
 
 
 class MenuWindow(QMainWindow):

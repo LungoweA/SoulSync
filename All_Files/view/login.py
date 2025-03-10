@@ -76,7 +76,7 @@ class LogIn(QMainWindow):
                 "color: #990000;"
             )
             self.error_label.setStyleSheet('color: Black;')
-            self.error_label.setText(f"⚠️ {message}")
+            self.error_label.setText(f"⚠️  {message}")
             
     
     
