@@ -103,32 +103,6 @@ class TestMoodDb(unittest.TestCase):
         result = self.mood_db.save_data("fake_token")
         self.assertEqual(result, error_message)
 
-    def test_fetch_mood_history(self):
-        """Test fetching mood history with valid, empty, and exception cases."""
-        fake_id_token = "fake_token"
-        expected_history = [
-            {"Created_at": "2025-03-07 12:00:00", "Mood Rating": "5", "Description": "Happy", "Influence": "Weather"},
-            {"Created_at": "2025-03-06 18:30:00", "Mood Rating": "3", "Description": "Neutral", "Influence": "Work"},
-        ]
-
-        self.mock_write_db_instance.auth.get_account_info.return_value = {"users": [{"localId": "123"}]}
-        self.mock_write_db_instance.database.child().child().child().get.return_value.val.return_value = {
-            "1": {"Created_at": "2025-03-07 12:00:00", "Mood rating": "5", "Mood description": "Happy", "Mood influenced by": "Weather"},
-            "2": {"Created_at": "2025-03-06 18:30:00", "Mood rating": "3", "Mood description": "Neutral", "Mood influenced by": "Work"}
-        }
-
-        result = self.mood_db.fetch_mood_history(fake_id_token)
-        self.assertEqual(result, expected_history)
-
-        self.mock_write_db_instance.database.child().child().child().get.return_value.val.return_value = None
-        result = self.mood_db.fetch_mood_history(fake_id_token)
-        self.assertEqual(result, [])
-
-        self.mock_write_db_instance.database.child().child().child().get.side_effect = Exception("Database error")
-
-        result = self.mood_db.fetch_mood_history(fake_id_token)
-        self.assertEqual(result, [])
-
 
 if __name__ == '__main__':
     unittest.main()

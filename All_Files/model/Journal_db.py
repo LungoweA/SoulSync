@@ -1,6 +1,7 @@
 from model.write_db import Write_db
 from datetime import datetime
 
+
 class Journal_db:
     """
     A class to manage journal-related operations, such as saving journal entries to a database.
@@ -16,8 +17,7 @@ class Journal_db:
         """
 
         self.db = Write_db()
-        
-        
+
     def save(self, id_token, journal):
         """
         Saves the user's journal entry to the database.
@@ -38,6 +38,3 @@ class Journal_db:
             self.db.database.child("Users").child(user_id).child("Journal").push(journal_data, id_token)
         except Exception as err:
             return err
-        
-        
-        

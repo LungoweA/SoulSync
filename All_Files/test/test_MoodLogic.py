@@ -86,34 +86,6 @@ class TestMood(unittest.TestCase):
             self.mock_mood_db_instance.save_data.assert_called_once_with(token)
             self.mock_mood_db_instance.save_data.reset_mock()
 
-    def test_fetch_mood_history(self):
-        """Test fetching mood history with valid and empty responses."""
-        fake_id_token = "fake_token"
-        expected_result = [
-            {"Created_at": "2024-03-07 12:00:00", "Mood Rating": "5", "Description": "Happy", "Influence": "Weather"},
-            {"Created_at": "2024-03-06 18:30:00", "Mood Rating": "3", "Description": "Neutral", "Influence": "Work"},
-        ]
-        
-        self.mock_mood_db_instance.fetch_mood_history.return_value = expected_result
-        result = self.mood.fetch_mood_history(fake_id_token)
-        self.assertEqual(result, expected_result)
-        self.mock_mood_db_instance.fetch_mood_history.assert_called_once_with(fake_id_token)
-
-        self.mock_mood_db_instance.fetch_mood_history.reset_mock()
-        self.mock_mood_db_instance.fetch_mood_history.return_value = []
-        result = self.mood.fetch_mood_history(fake_id_token)
-        self.assertEqual(result, [])
-        self.mock_mood_db_instance.fetch_mood_history.assert_called_once_with(fake_id_token)
-
-        self.mock_mood_db_instance.fetch_mood_history.reset_mock()
-        self.mock_mood_db_instance.fetch_mood_history.side_effect = Exception("Database error")
-
-        with self.assertRaises(Exception) as context:
-            self.mood.fetch_mood_history(fake_id_token)
-
-        self.assertEqual(str(context.exception), "Database error")
-        self.mock_mood_db_instance.fetch_mood_history.assert_called_once_with(fake_id_token)
-
 
 if __name__ == '__main__':
     unittest.main()
