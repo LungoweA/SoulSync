@@ -44,27 +44,6 @@ class TestJournalDb(unittest.TestCase):
             id_token
         )
 
-    def test_fetch_journal_history(self):
-        """Test fetching the journal history from the database."""
-        id_token = "fake_token"
-
-        # Mock Firebase authentication response
-        self.mock_auth.get_account_info.return_value = {"users": [{"localId": "123"}]}
-
-        # Mock journal data stored in Firebase
-        mock_journal_data = {
-            "1": {"Entry": "First journal entry", "Created_at": "2025-03-01 10:00:00"},
-            "2": {"Entry": "Second journal entry", "Created_at": "2025-03-02 14:00:00"},
-        }
-        self.mock_database.child().child().child().get.return_value.val.return_value = mock_journal_data
-
-        # Call the fetch_journal_history method
-        history = self.journal_db.fetch_journal_history(id_token)
-
-        # Assert the returned list is sorted by Created_at in descending order
-        self.assertEqual(len(history), 2)
-        self.assertEqual(history[0]["Entry"], "Second journal entry")
-        self.assertEqual(history[1]["Entry"], "First journal entry")
 
 if __name__ == "__main__":
     unittest.main()

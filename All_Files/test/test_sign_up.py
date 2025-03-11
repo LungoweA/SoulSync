@@ -9,10 +9,6 @@ from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QCheck
 from All_Files.view.sign_up import SignUp
 
 
-
-
-
-
 class TestSignUpUI(unittest.TestCase):
 
     @classmethod
@@ -21,7 +17,7 @@ class TestSignUpUI(unittest.TestCase):
 
     def setUp(self):
         self.window = SignUp()
-        
+
         self.window.register_btn = MagicMock(spec=QPushButton)
         self.window.cancel_btn = MagicMock(spec=QPushButton)
         self.window.error_label = MagicMock(spec=QLabel)
@@ -29,13 +25,13 @@ class TestSignUpUI(unittest.TestCase):
         self.window.password = MagicMock(spec=QLineEdit)
         self.window.fullname = MagicMock(spec=QLineEdit)
         self.window.confirm_password = MagicMock(spec=QLineEdit)
-        
+
         self.window.char_length_checkbox = MagicMock(spec=QCheckBox)
         self.window.uppercase_checkbox = MagicMock(spec=QCheckBox)
         self.window.lowercase_checkbox = MagicMock(spec=QCheckBox)
         self.window.digit_checkbox = MagicMock(spec=QCheckBox)
         self.window.special_char_checkbox = MagicMock(spec=QCheckBox)
-        
+
         self.window.account = MagicMock()
         self.window.account.create_account.return_value = (True, "Account created successfully")
 
@@ -53,7 +49,7 @@ class TestSignUpUI(unittest.TestCase):
             mock_signal.connect = MagicMock()
             self.window.register_btn.clicked.connect(self.window.create_account)
             mock_signal.connect.assert_called_once_with(self.window.create_account)
-    
+
     def test_create_account_successful(self):
         self.window.fullname.text.return_value = "John Doe"
         self.window.email.text.return_value = "test@example.com"
@@ -66,7 +62,7 @@ class TestSignUpUI(unittest.TestCase):
 
     def test_create_account_failure(self):
         self.window.account.create_account.return_value = (False, "Email already in use")
-        
+
         self.window.create_account()
         self.window.error_label.setText.assert_called_once_with("⚠️ Email already in use")
         self.window.error_label.setStyleSheet.assert_called_once_with('color: Black;')
@@ -84,7 +80,7 @@ class TestSignUpUI(unittest.TestCase):
         self.window.error_label.setText = MagicMock()
 
         self.window.clear_window()
-        
+
         self.window.fullname.clear.assert_called_once()
         self.window.email.clear.assert_called_once()
         self.window.password.clear.assert_called_once()

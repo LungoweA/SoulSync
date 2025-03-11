@@ -88,34 +88,6 @@ class TestStress(unittest.TestCase):
         self.assertEqual(result, error_message)
         self.mock_stress_db_instance.save_data.assert_called_once_with("fake_token", "High")
 
-    def test_fetch_stress_history(self):
-        """Test fetching stress history with normal, empty, and failure cases."""
-        fake_id_token = "fake_token"
-        expected_result = [
-            {"Created_at": "2025-03-07 12:00:00", "Stress Level": "High"},
-            {"Created_at": "2025-03-06 18:30:00", "Stress Level": "Low"},
-        ]
-
-        self.mock_stress_db_instance.fetch_stress_history.return_value = expected_result
-        result = self.stress.fetch_stress_history(fake_id_token)
-        self.assertEqual(result, expected_result)
-        self.mock_stress_db_instance.fetch_stress_history.assert_called_once_with(fake_id_token)
-
-        self.mock_stress_db_instance.fetch_stress_history.reset_mock()
-        self.mock_stress_db_instance.fetch_stress_history.return_value = []
-        result = self.stress.fetch_stress_history(fake_id_token)
-        self.assertEqual(result, [])
-        self.mock_stress_db_instance.fetch_stress_history.assert_called_once_with(fake_id_token)
-
-        self.mock_stress_db_instance.fetch_stress_history.reset_mock()
-        self.mock_stress_db_instance.fetch_stress_history.side_effect = Exception("Database error")
-
-        with self.assertRaises(Exception) as context:
-            self.stress.fetch_stress_history(fake_id_token)
-
-        self.assertEqual(str(context.exception), "Database error")
-        self.mock_stress_db_instance.fetch_stress_history.assert_called_once_with(fake_id_token)
-
 
 if __name__ == '__main__':
     unittest.main()

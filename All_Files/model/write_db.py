@@ -14,13 +14,13 @@ class Write_db:
     A class to handle Firebase authentication and database interactions, including user account creation,
     login, and password validation.
     """
-    
+
     def __init__(self):
         """
         Initializes the Firebase application with the provided configuration.
         Sets up authentication and database references.
         """
-        
+
         # Firebase configuration
         self.config = {
                     "apiKey": "AIzaSyDfRV2B-BNHDGxNC5aRNWH2441NkPE5xZs",
@@ -32,14 +32,13 @@ class Write_db:
                     "appId": "1:365391145029:web:d5b3e7bfbc4e74a7b55b2c",
                     "measurementId": "G-N3ZX4ZTR50"
                 }
-        
-        
+
         # Intializing firebase
         self.firebase = pyrebase.initialize_app(self.config)
         self.auth = self.firebase.auth()
-        
+
         self.database = self.firebase.database()
-        
+
     def create_account(self, name, email, password, confirm_password):
         """
         Creates a new user account and stores user details in the Firebase Realtime Database.
@@ -52,16 +51,16 @@ class Write_db:
             tuple: (bool, str) - True with success message if account is created,
             False with error message otherwise.
         """
-        
+
         if not self.validate_password(password):
             return False, "Invalid Password!"
-        
+
         if password != confirm_password:
             return False, "Passwords don't match, please try again!"
-        
+
         if self.validate_email(email):
             return False, "Email is not allowed!"
-        
+
         try:
             user = self.auth.create_user_with_email_and_password(email, password)
             user_id = user['localId']
@@ -71,13 +70,13 @@ class Write_db:
                     'Email': email,
                     'Created_at': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
-                            
+
             self.database.child('Users').child(user_id).set(user_data, id_token)
-                            
+
             return True, 'Your account has been created.'
         except:
             return False, 'Account already exists!'
-            
+
     def validate_password(self, password):
         """
         Validates the strength of the password based on the following criteria:
@@ -91,13 +90,13 @@ class Write_db:
         Returns:
             bool: True if password meets all criteria, False otherwise.
         """
-        
+
         correct_length = False
         is_upper = False
         is_digit = False
         is_lower = False
         is_not_alphanum = False
-        
+
         if len(password) >= 7:
             correct_length = True
             for char in password:
@@ -109,10 +108,9 @@ class Write_db:
                     is_lower = True
                 if (not char.isalnum()):
                     is_not_alphanum = True
-                
-                    
+
         return correct_length and is_upper and is_digit and is_lower and is_not_alphanum
-            
+
     def validate_email(self, email):
         """
         Validates an email address by checking if it contains any forbidden characters.
@@ -122,17 +120,15 @@ class Write_db:
 
         Returns:
             bool: Returns True if the email contains any forbidden characters, False otherwise.
-        
+
         The forbidden characters are: ':', ';', '"', '<', '>', and '/'.
         """
-        
+
         forbidden_characters = [':', ';', '"', '<', '>', '/']
         for char in email:
             if char in forbidden_characters:
                 return True
-                
-        
-    
+
     def login(self, email, password):
         """
         Logs in a user by verifying credentials with Firebase Authentication.
@@ -142,26 +138,26 @@ class Write_db:
         Returns:
             tuple: (bool, str) - True if login is successful, False with error message otherwise.
         """
-        
+
         try:
             user = self.auth.sign_in_with_email_and_password(email, password)
-            
+
             return True, '', user
         except:
             return False, 'Invalid email or Incorrect password!', None
-        
+
     def log_out(self):
         """
         Logs out the current user by setting the `current_user` attribute to `None`.
 
         Returns:
             bool: Returns `True` if the logout process is successful, otherwise returns `False`.
-        
+
         This function attempts to log out the user by clearing the `current_user` attribute
         of the authentication system. If successful, it returns `True`. If an error occurs
         during the logout process, it catches the exception and returns `False`.
         """
-        
+
         try:
             self.auth.current_user = None
             return True
@@ -189,30 +185,28 @@ class Write_db:
 
         if new_password == "" or confirm_password == "":
             return False, "All fields must be filled!"
-        
+
         if new_password != confirm_password:
             return False, "Passwords don't match, please try again!"
-        
+
         if not self.validate_password(new_password):
                 return False, 'Invalid Password!'
-            
-        
+
         try:
-            
+
             url = f"https://identitytoolkit.googleapis.com/v1/accounts:update?key={self.config['apiKey']}"
             payload = {
                 "idToken": id_token,
                 "password": new_password,
                 "returnSecureToken": True
             }
-            
+
             requests.post(url, json=payload)
             self.database.child('Users').child(uid).update({'Password': new_password}, id_token)
             return True, 'Password Changed Successfully'
         except Exception:
             return False, 'Unknown Error Occurred'
-        
-        
+
     def delete_account(self, uid, id_token):
         """
         Deletes a user account from the database and Firebase Authentication system.
@@ -229,13 +223,10 @@ class Write_db:
         Raises:
             Exception: If there is an error while attempting to delete the account.
         """
-        
+
         try:
             self.database.child('Users').child(uid).remove(id_token)
             self.auth.delete_user_account(id_token)
             return True, 'Your account has been permanently deleted.'
         except Exception as e:
             return False, 'Unknown error occured!'
-
-
-

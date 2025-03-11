@@ -1,7 +1,7 @@
 import sys
 import os
-from model.write_db import Write_db
-from model.read_db import Read_db
+from All_Files.model.write_db import Write_db
+from All_Files.model.read_db import Read_db
 
 
 # Add the parent directory to the system path to allow module imports
