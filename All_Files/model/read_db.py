@@ -1,4 +1,5 @@
-from model.write_db import Write_db
+from All_Files.model.write_db import Write_db
+
 
 class Read_db:
     """
@@ -19,8 +20,7 @@ class Read_db:
         get_journal_dates: Returns a sorted list of dates for which the user has journal entries.
         get_mood_stress_dates: Returns a sorted list of unique dates for mood and stress records.
     """
-    
-    
+
     def __init__(self, uid=0, id_token=0):
         """
         Initializes the Read_db instance with user ID and authentication token.
@@ -29,12 +29,11 @@ class Read_db:
             uid (str): The unique user ID.
             id_token (str): The authentication token for the user.
         """
-        
+
         self.write = Write_db()
         self.uid = uid
         self.id_token = id_token
-        
-        
+
     def read_user_details(self):
         """
         Retrieves user details (name, password, email) from the Firebase Realtime Database.
@@ -42,14 +41,13 @@ class Read_db:
         Returns:
             tuple: A tuple containing the user's name, password, and email.
         """
-        
+
         name = self.write.database.child('Users').child(self.uid).child('Name').get(token=self.id_token)
         password = self.write.database.child('Users').child(self.uid).child('Password').get(token=self.id_token)
         email = self.write.database.child('Users').child(self.uid).child('Email').get(token=self.id_token)
-        
+
         return name.val(), password.val(), email.val()
-        
-        
+
     def read_journal(self):
         """
         Retrieves the user's journal entries from the Firebase Realtime Database.
@@ -59,31 +57,28 @@ class Read_db:
                 tuples where each tuple contains the time and journal entry text.
             str: A message indicating that there are no journal entries if an error occurs.
         """
-        
+
         journal_list = []
         journal_dict = {}
-        
+
         entries = self.write.database.child('Users').child(self.uid).child('Journal').get(token=self.id_token)
         try:
             for i in entries.each():
                 journal_list.append(i.val())
-                
+
             for i in journal_list:
                 date = i['Created_at'].split(' ')[0]
                 time = i['Created_at'].split(' ')[1]
-                
-                
+
                 if date in journal_dict and (time, i['Entry']) not in journal_dict[date]:
                     journal_dict[date].append((time, i['Entry']))
                 else:
                     journal_dict[date] = [(time, i['Entry'])]
-                
+
             return journal_dict
         except Exception:
             return {}
-        
-            
-    
+
     def read_stress_level(self):
         """
         Retrieves the user's stress levels from the Firebase Realtime Database.
@@ -92,24 +87,23 @@ class Read_db:
             dict: A dictionary containing stress levels organized by date. Each date maps to the stress level.
             Exception: If an error occurs during the retrieval process, the error is returned.
         """
-        
+
         stress_level_list = []
         stress_history_dict = {}
-        
+
         stress_levels = self.write.database.child('Users').child(self.uid).child('Stress').get(token=self.id_token)
         try:
             for i in stress_levels.each():
                 stress_level_list.append(i.val())
-            
+
             for i in stress_level_list:
                 date = i['Created_at'].split(' ')[0]
                 stress_history_dict[date] = i['Stress level']
-                
+
             return stress_history_dict
         except Exception:
             return {}
-    
-    
+
     def read_mood_level(self):
         """
         Retrieves the user's mood levels from the Firebase Realtime Database.
@@ -119,24 +113,23 @@ class Read_db:
                 the mood description, mood influence, and mood rating.
             Exception: If an error occurs during the retrieval process, the error is returned.
         """
-        
+
         mood_level_list = []
         mood_history_dict = {}
-        
+
         mood_levels = self.write.database.child('Users').child(self.uid).child('Mood').get(token=self.id_token)
         try:
             for i in mood_levels.each():
                 mood_level_list.append(i.val())
-            
+
             for i in mood_level_list:
                 date = i['Created_at'].split(' ')[0]
                 mood_history_dict[date] = [i['Mood description'], i['Mood influenced by'], i['Mood rating']]
-            
+
             return mood_history_dict
         except Exception:
             return {}
-        
-        
+
     def get_journal_dates(self):
         """
         Retrieves all the dates for which the user has journal entries.
@@ -150,8 +143,7 @@ class Read_db:
             return journal_dates
         except Exception:
             return []
-        
-        
+
     def get_mood_dates(self):
         """
         Retrieves all the dates for which the user has mood tracker.
@@ -165,8 +157,7 @@ class Read_db:
             return mood_dates
         except Exception:
             return []
-        
-        
+
     def get_stress_dates(self):
         """
         Retrieves all the dates for which the user has stress tracker.
@@ -180,8 +171,7 @@ class Read_db:
             return stress_dates
         except Exception:
             return []
-    
-    
+
     def get_mood_stress_dates(self):
         """
         Retrieves all unique dates for mood and stress records.
@@ -189,7 +179,7 @@ class Read_db:
         Returns:
             list: A sorted list of unique dates for both mood and stress records.
         """
-        
+
         try:
             mood_dates = self.read_mood_level().keys()
             stress_dates = self.read_stress_level().keys()
@@ -198,9 +188,6 @@ class Read_db:
             dates_list = list(dates_set)
             dates_list.sort()
             return dates_list
-        
+
         except Exception:
             return []
-
-
-
