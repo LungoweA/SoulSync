@@ -235,3 +235,46 @@ class AccountDetails:
         """
         
         return self.read_db.get_stress_dates()
+    
+    
+    def delete_stress_level(self, date):
+        """
+        Deletes a stress level entry for a given date by delegating the request 
+        to the `delete_stress_level` method of the `read_stress_level` object.
+
+        Args:
+            date (str): The date of the stress level entry to be deleted.
+
+        Returns:
+            tuple: A boolean indicating success (True) or failure (False), along with a message.
+        """
+    
+        return self.read_db.delete_stress_level(date)
+    
+    
+    def delete_mood_level(self, date):
+        """
+        Deletes a mood level entry for a given date.
+
+        Args:
+            date (str): The date of the mood entry to be deleted.
+
+        Returns:
+            tuple: A boolean indicating success (True) or failure (False), along with a message.
+        """
+        return self.read_db.delete_mood_level(date)
+    
+    
+    def delete_journal_entry(self, date):
+        """
+        Deletes a journal entry for a given date.
+
+        Args:
+            date (str): The date of the journal entry to delete.
+
+        Returns:
+            tuple: (bool, str) where the boolean indicates success or failure, 
+            and the string provides a message about the operation.
+        """
+    
+        return self.read_db.delete_journal_entry(date)

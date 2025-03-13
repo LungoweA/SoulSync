@@ -58,7 +58,7 @@ class TestSignUpUI(unittest.TestCase):
 
         self.window.create_account()
         self.window.account.create_account.assert_called_once_with("John Doe", "test@example.com", "Password123!", "Password123!")
-        self.window.error_label.setText.assert_called_once_with("Account created successfully")
+        self.window.error_label.setText.assert_called_once_with("")
 
     def test_create_account_failure(self):
         self.window.account.create_account.return_value = (False, "Email already in use")
@@ -69,7 +69,7 @@ class TestSignUpUI(unittest.TestCase):
 
     def test_cancel_function(self):
         with patch.object(self.window, "close") as mock_close:
-            self.window.cancel()
+            self.window.show_login()
             mock_close.assert_called_once()
 
     def test_clear_window(self):

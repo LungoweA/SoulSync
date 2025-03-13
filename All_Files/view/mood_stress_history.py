@@ -49,12 +49,14 @@ class MoodStressHistory(QMainWindow):
         self.stress_label = self.findChild(QLabel, "stress_label")
         self.menu_btn = self.findChild(QPushButton, "btn_menu")
         self.back_btn = self.findChild(QPushButton, "back_btn")
+        self.delete_btn = self.findChild(QPushButton, "delete_btn")
         
         self.stackedWidget = self.findChild(QStackedWidget, "stackedWidget")
         self.stackedWidget.setCurrentIndex(1)
         
         self.menu_btn.clicked.connect(self.menu)
         self.back_btn.clicked.connect(self.show_main_menu)
+        self.delete_btn.clicked.connect(self.delete_history)
         self.display_dates()
         self.mood_stress_list.itemClicked.connect(self.show_history)
         
@@ -121,7 +123,44 @@ class MoodStressHistory(QMainWindow):
             self.stress_label.setText(self.stress_history_dict[date])
         else:
             self.stress_label.setText("No stress history available.")
+            
+            
+    def delete_history(self):
+        """
+        Deletes the selected mood and stress history.
+
+        Prompts the user for confirmation before deleting mood and stress data for the 
+        selected date. If successful, it displays a confirmation message, refreshes 
+        the journal list, and returns to the main menu. If an error occurs, an 
+        error message is shown.
+        """
         
+        reply = QMessageBox.question(
+            self, "Delete History",
+            "Are you sure you want to delete this mood and stress history?",
+            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+        )
+
+        if reply == QMessageBox.Yes:
+            stress_success, message = self.user_details.delete_stress_level(self.date)
+            mood_success, message = self.user_details.delete_mood_level(self.date)
+            
+            if stress_success or mood_success:
+                result = QMessageBox.information(self, "Delete History", "Mood and stress history deleted", QMessageBox.Ok)
+
+                if result == QMessageBox.Ok:
+                    self.mood_stress_list.clear()
+                    self.display_dates()
+                    self.show_main_menu()
+            else:
+                result = QMessageBox.information(self, "Delete History", "Unknown error occurred", QMessageBox.Ok)
+
+                if result == QMessageBox.Ok:
+                    self.mood_stress_list.clear()
+                    self.display_dates()
+                    self.show_main_menu()
+                    
+                    
     def clear(self):
         """Clears the displayed history information."""
         self.description_label.setText("")

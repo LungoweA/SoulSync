@@ -17,16 +17,14 @@ class TestReadDb(unittest.TestCase):
         self.db.write.database = MagicMock()
 
     def test_read_user_details(self):
-        mock_data = {"Name": "John Doe", "Password": "12345", "Email": "john@example.com"}
+        mock_data = {"Name": "John Doe", "Email": "john@example.com"}
         self.db.write.database.child.return_value.child.return_value.child.return_value.get.side_effect = [
             MagicMock(val=MagicMock(return_value=mock_data["Name"])),
-            MagicMock(val=MagicMock(return_value=mock_data["Password"])),
             MagicMock(val=MagicMock(return_value=mock_data["Email"]))
         ]
 
-        name, password, email = self.db.read_user_details()
+        name, email = self.db.read_user_details()
         self.assertEqual(name, "John Doe")
-        self.assertEqual(password, "12345")
         self.assertEqual(email, "john@example.com")
 
     def test_read_journal(self):

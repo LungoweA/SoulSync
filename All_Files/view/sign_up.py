@@ -59,7 +59,7 @@ class SignUp(QMainWindow):
 
         self.register_btn.clicked.connect(self.create_account)
 
-        self.cancel_btn.clicked.connect(self.show_login)
+        self.login_btn.clicked.connect(self.show_login)
 
         self.show()
 

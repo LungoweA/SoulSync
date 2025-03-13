@@ -134,13 +134,13 @@
     <property name="geometry">
      <rect>
       <x>374</x>
-      <y>350</y>
+      <y>320</y>
       <width>561</width>
-      <height>551</height>
+      <height>601</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QGroupBox" name="groupBox">
@@ -227,7 +227,7 @@ QGroupBox:focus {
 </string>
        </property>
        <property name="text">
-        <string>TextLabel</string>
+        <string/>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -353,6 +353,41 @@ QPushButton:pressed {
       </property>
       <property name="text">
        <string>Next</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="delete_btn">
+      <property name="geometry">
+       <rect>
+        <x>212</x>
+        <y>550</y>
+        <width>140</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-color: rgb(255, 0, 0);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px; 
+    padding: 10px 20px;
+    min-width: 100px;
+    transition: background-color 0.3s ease-in-out, transform 0.1s;
+}
+QPushButton:hover {
+    background-color: rgb(255, 0, 0);
+}
+
+QPushButton:pressed {
+    background-color: #36648B;
+    transform: scale(0.98); 
+}
+</string>
+      </property>
+      <property name="text">
+       <string>Delete</string>
       </property>
      </widget>
     </widget>
@@ -491,7 +526,7 @@ QPushButton:pressed {
      <x>0</x>
      <y>0</y>
      <width>1304</width>
-     <height>22</height>
+     <height>8</height>
     </rect>
    </property>
   </widget>

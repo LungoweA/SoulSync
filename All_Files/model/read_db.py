@@ -21,7 +21,7 @@ class Read_db:
         get_mood_stress_dates: Returns a sorted list of unique dates for mood and stress records.
     """
 
-    def __init__(self, uid=0, id_token=0):
+    def __init__(self, uid, id_token):
         """
         Initializes the Read_db instance with user ID and authentication token.
 
@@ -43,10 +43,9 @@ class Read_db:
         """
 
         name = self.write.database.child('Users').child(self.uid).child('Name').get(token=self.id_token)
-        password = self.write.database.child('Users').child(self.uid).child('Password').get(token=self.id_token)
         email = self.write.database.child('Users').child(self.uid).child('Email').get(token=self.id_token)
 
-        return name.val(), password.val(), email.val()
+        return name.val(), email.val()
 
     def read_journal(self):
         """
@@ -57,16 +56,19 @@ class Read_db:
                 tuples where each tuple contains the time and journal entry text.
             str: A message indicating that there are no journal entries if an error occurs.
         """
-
-        journal_list = []
+        
+        self.journal_list = []
         journal_dict = {}
+        self.entry_keys = []
 
         entries = self.write.database.child('Users').child(self.uid).child('Journal').get(token=self.id_token)
+        self.journal_entries = entries.val()
         try:
             for i in entries.each():
-                journal_list.append(i.val())
+                self.journal_list.append(i.val())
+                self.entry_keys.append(i.key())
 
-            for i in journal_list:
+            for i in self.journal_list:
                 date = i['Created_at'].split(' ')[0]
                 time = i['Created_at'].split(' ')[1]
 
@@ -90,16 +92,22 @@ class Read_db:
 
         stress_level_list = []
         stress_history_dict = {}
-
-        stress_levels = self.write.database.child('Users').child(self.uid).child('Stress').get(token=self.id_token)
+        self.stress_key = []
+        self.stress_date = []
+        stress_level = self.write.database.child('Users').child(self.uid).child('Stress').get(token=self.id_token)
+        self.stress_result = stress_level.val()
+        
         try:
-            for i in stress_levels.each():
+            for i in stress_level.each():
                 stress_level_list.append(i.val())
-
+                self.stress_key.append(i.key())
+            
+            
             for i in stress_level_list:
                 date = i['Created_at'].split(' ')[0]
                 stress_history_dict[date] = i['Stress level']
-
+                self.stress_date.append(i['Created_at'])
+                
             return stress_history_dict
         except Exception:
             return {}
@@ -116,15 +124,19 @@ class Read_db:
 
         mood_level_list = []
         mood_history_dict = {}
-
-        mood_levels = self.write.database.child('Users').child(self.uid).child('Mood').get(token=self.id_token)
+        self.mood_key = []
+        self.mood_date = []
+        mood_level = self.write.database.child('Users').child(self.uid).child('Mood').get(token=self.id_token)
+        self.mood_result = mood_level.val()
         try:
-            for i in mood_levels.each():
+            for i in mood_level.each():
                 mood_level_list.append(i.val())
+                self.mood_key.append(i.key())
 
             for i in mood_level_list:
                 date = i['Created_at'].split(' ')[0]
                 mood_history_dict[date] = [i['Mood description'], i['Mood influenced by'], i['Mood rating']]
+                self.mood_date.append(i['Created_at'])
 
             return mood_history_dict
         except Exception:
@@ -152,9 +164,9 @@ class Read_db:
             list: A sorted list of dates (in string format) for the mood tracker.
         """
         try:
-            mood_dates = list(self.read_mood_level().keys())
-            mood_dates.sort()
-            return mood_dates
+            self.mood_dates_list = list(self.read_mood_level().keys())
+            self.mood_dates_list.sort()
+            return self.mood_dates_list
         except Exception:
             return []
 
@@ -166,9 +178,9 @@ class Read_db:
             list: A sorted list of dates (in string format) for the stress tracker.
         """
         try:
-            stress_dates = list(self.read_stress_level().keys())
-            stress_dates.sort()
-            return stress_dates
+            self.stress_dates_list = list(self.read_stress_level().keys())
+            self.stress_dates_list.sort()
+            return self.stress_dates_list
         except Exception:
             return []
 
@@ -191,3 +203,115 @@ class Read_db:
 
         except Exception:
             return []
+        
+        
+    def delete_journal_entry(self, date):
+        """
+        Deletes a specific journal entry for the given date.
+
+        This method retrieves the user's journal entries, identifies the entry 
+        associated with the given date, and removes it from the Firebase database.
+
+        Args:
+            date (str): The date of the journal entry to be deleted.
+
+        Returns:
+            tuple: A boolean indicating success (True) or failure (False) along 
+            with a corresponding message.
+        """
+    
+        value = ''
+        self.read_journal()
+        for i in self.entry_keys:
+            if self.journal_entries[i]['Created_at'] == date:
+                value = i
+        
+        try:
+            self.write.database.child('Users').child(self.uid).child('Journal').child(value).remove(self.id_token)
+            return True, 'Journal entry has been deleted.'
+            
+        except Exception:
+            return False, 'Unknown error occured!'
+        
+        
+    def delete_stress_level(self, date):
+        """
+        Deletes the stress level entry for a given date.
+
+        This method reads the user's stored stress levels, identifies the entry 
+        for the specified date, and removes it from the Firebase database.
+
+        Args:
+            date (str): The date of the stress entry to be deleted.
+
+        Returns:
+            tuple: A boolean indicating success (True) or failure (False), 
+            and a message string describing the result.
+        """
+    
+        stress_date_time = ''
+        stress_value = ''
+        self.read_stress_level()
+        self.get_stress_dates()
+        
+        if date not in self.stress_dates_list:
+            return False, 'No stress history available!'
+        
+        for i in self.stress_date:
+            if date in i:
+                stress_date_time = i
+        
+        for i in self.stress_key:
+            if self.stress_result[i]['Created_at'] == stress_date_time:
+                stress_value = i
+                
+        try:
+            self.write.database.child('Users').child(self.uid).child('Stress').child(stress_value).remove(self.id_token)
+            return True, 'Stress level has been deleted.'
+            
+        except Exception:
+            return False, 'Unknown error occurred!'
+        
+            
+            
+    def delete_mood_level(self, date):
+        """
+        Deletes a mood level entry for a given date.
+
+        This method looks up the mood entry associated with the provided date and 
+        removes it from the Firebase database.
+
+        Args:
+            date (str): The date of the mood entry to be deleted.
+
+        Returns:
+            tuple: A boolean indicating success (True) or failure (False), along with
+            a corresponding message.
+        """
+    
+        mood_date_time = ''
+        mood_value = ''
+        self.read_mood_level()
+        self.get_mood_dates()
+        
+        if date not in self.mood_dates_list:
+            return False, 'No mood history available!'
+        
+        for i in self.mood_date:
+            if date in i:
+                mood_date_time = i
+                
+        
+        for i in self.mood_key:
+            if self.mood_result[i]['Created_at'] == mood_date_time:
+                mood_value = i
+                
+        try:
+            self.write.database.child('Users').child(self.uid).child('Mood').child(mood_value).remove(self.id_token)
+            return True, 'Mood level has been deleted.'
+            
+        except Exception:
+            return False, 'Unknown error occurred!'
+        
+        
+        

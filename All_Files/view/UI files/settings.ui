@@ -186,7 +186,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="page_3">
      <widget class="QPushButton" name="new_password_btn">
@@ -650,9 +650,9 @@ QPushButton:pressed {
      <widget class="QLabel" name="label_14">
       <property name="geometry">
        <rect>
-        <x>40</x>
+        <x>10</x>
         <y>90</y>
-        <width>351</width>
+        <width>400</width>
         <height>50</height>
        </rect>
       </property>

@@ -47,9 +47,11 @@ class JournalHistory(QMainWindow):
         self.prev_btn = self.findChild(QPushButton, "prev_btn")
         self.next_btn = self.findChild(QPushButton, "next_btn")
         self.menu_btn = self.findChild(QPushButton, "menu_btn")
+        self.delete_btn = self.findChild(QPushButton, "delete_btn")
         self.journal_list = self.findChild(QListWidget, "journal_list")
         self.title_label = self.findChild(QLabel, "title_label")
         self.journal_view = self.findChild(QLabel, "journal_view")
+        
         
         self.stackedWidget = self.findChild(QStackedWidget, "stackedWidget")
         self.stackedWidget.setCurrentIndex(1)
@@ -58,10 +60,12 @@ class JournalHistory(QMainWindow):
         self.back_btn.clicked.connect(self.show_main_menu)
         self.prev_btn.clicked.connect(self.previous)
         self.next_btn.clicked.connect(self.next)
+        self.delete_btn.clicked.connect(self.delete_history)
         
         self.display_dates()
         self.journal_list.itemClicked.connect(self.show_history)
-    
+        
+        
 
 
     def show_main_menu(self):
@@ -120,15 +124,17 @@ class JournalHistory(QMainWindow):
         """
         
         self.entry_list = self.journal_dict[self.date]
-        time, entry = self.entry_list[0]
+        time, entry = self.entry_list[self.num]
         formatted_date = self.format_date(self.date)
         formatted_time = self.format_time(time)
         self.title_label.setText(f'{formatted_date}\n{formatted_time}')
         
         self.journal_view.setText(entry)
         self.prev_btn.hide()
-        self.next_btn.show()
-        
+        if len(self.entry_list) > 1:
+            self.next_btn.show()
+        else:
+            self.next_btn.hide()
         
     def format_date(self, date):
         """
@@ -197,6 +203,48 @@ class JournalHistory(QMainWindow):
                 self.next_btn.hide()
     
     
+    def delete_history(self):
+        """
+        Deletes the selected journal entry.
+
+        Prompts the user for confirmation before deleting the selected journal entry.
+        If confirmed, it attempts to delete the journal entry from the user's data.
+        If the deletion is successful, the journal list is refreshed, and the user
+        is redirected to the main menu. Otherwise, an error message is displayed.
+        """
+        
+        time, entry = self.entry_list[self.num]
+        date_time = self.date + ' ' + time
+        
+        reply = QMessageBox.question(
+            self, "Delete History",
+            "Are you sure you want to delete this journal history?",
+            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+        )
+
+        if reply == QMessageBox.Yes:
+            success, message = self.user_details.delete_journal_entry(date_time)
+            if success:
+                result = QMessageBox.information(self, "Delete History", message, QMessageBox.Ok)
+
+                if result == QMessageBox.Ok:
+                    self.journal_list.clear()
+                    self.display_dates()
+                    self.show_main_menu()
+                    
+                    
+                    
+            else:
+                result = QMessageBox.information(self, "Delete History", message, QMessageBox.Ok)
+
+                if result == QMessageBox.Ok:
+                    self.journal_list.clear()
+                    self.display_dates()
+                    self.show_main_menu()
+                    
+                    
+                    
+        
     def menu(self):
         """
         Opens the main menu window and closes the current journal history window.
