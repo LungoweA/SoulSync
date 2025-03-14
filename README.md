@@ -34,6 +34,25 @@ This allows the user to write down how they are feeling, reflect on their emotio
 This allows the user to be able to change password and delete account. They are also able to view their journal history.
 
 
+
+💻 <b>Technologies</b>
+
+Our app is built using:
+
+Python (Object-Oriented Programming)
+
+PyQt5 for GUI
+
+Firebase for database management
+
+
+<b>Disclaimer of medical advice</b>
+
+Soul Sync App does not provide medical advice. The contents of the App are for informational
+purposes only. The scientifically backed Content is not intended to be a substitute
+for professional medical advice, diagnosis, or treatment.
+
+
 <html>
 <h3>✍️ Authors</h3>
 <a href="https://github.com/aklimson">Anastasia</a> - Idea & Initial work<br>
