@@ -135,7 +135,7 @@ class Read_db:
 
             for i in mood_level_list:
                 date = i['Created_at'].split(' ')[0]
-                mood_history_dict[date] = [i['Mood description'], i['Mood influenced by'], i['Mood rating']]
+                mood_history_dict[date] = [i['Mood description'], i['Mood influenced by'], i['Mood state']]
                 self.mood_date.append(i['Created_at'])
 
             return mood_history_dict

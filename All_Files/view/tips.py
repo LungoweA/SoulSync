@@ -30,7 +30,7 @@ class Tips(QMainWindow):
         message_label (QLabel): Label to display a supportive message.
     """
 
-    def __init__(self, uid, id_token, rate, description, influence, parent=None):
+    def __init__(self, uid, id_token, state, description, influence, parent=None):
         """
         Initializes the Tips window and sets up the UI elements and event handlers.
 
@@ -48,7 +48,7 @@ class Tips(QMainWindow):
         self.id_token = id_token
         self.uid = uid
         self.mood = Mood()
-        self.rate = rate
+        self.state = state
         self.description = description
         self.influence = influence
         self.menu_btn = self.findChild(QPushButton, "menu_btn")
@@ -100,7 +100,7 @@ class Tips(QMainWindow):
         Saves the user's mood data to the database.
         """
 
-        self.mood.mood_score(self.rate, self.description, self.influence)
+        self.mood.mood_score(self.state, self.description, self.influence)
         self.mood.save_data(self.id_token)
         
     def clear(self):

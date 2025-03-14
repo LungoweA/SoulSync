@@ -68,7 +68,7 @@ class MoodTrackerWindow(QMainWindow):
         
         self.dict = {"1":0, "2":0, "3":0}
         
-        self.rate = None
+        self.state = None
         self.description = None
         self.influence = None
         
@@ -235,13 +235,13 @@ class MoodTrackerWindow(QMainWindow):
             self.error_label.setStyleSheet('color: Black;')
             self.error_label.setText(f"⚠️ Please select an option before continuing.")
     
-    def mood_rate(self):
+    def mood_state(self):
         """
         Determines the user's mood rating based on their response to the first question.
         """
 
         num = self.dict['1']
-        self.rate = self.option['0'][num-1]
+        self.state = self.option['0'][num-1]
         
         
     def mood_description(self):
@@ -270,7 +270,7 @@ class MoodTrackerWindow(QMainWindow):
         if self.num == 3 and self.check_button():
             self.next_btn.hide()
             self.tips_btn.show()
-            self.mood_rate()
+            self.mood_state()
             self.mood_description()
             self.mood_influence()
             
@@ -380,7 +380,7 @@ class MoodTrackerWindow(QMainWindow):
         Opens the tips window and closes the current mood tracker window.
         """
 
-        self.tips_window = Tips(self.uid, self.id_token, self.rate, self.description, self.influence)
+        self.tips_window = Tips(self.uid, self.id_token, self.state, self.description, self.influence)
         self.clear_window()
         self.reset_checked()
         self.tips_window.show()

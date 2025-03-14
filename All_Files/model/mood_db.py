@@ -27,7 +27,7 @@ class Mood_db:
 
         # Saving data to Firebase
         self.user_data = {
-            "Mood rating": None,
+            "Mood state": None,
             "Mood description": None,
             "Mood influenced by": None,
             'Created_at': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -113,7 +113,7 @@ class Mood_db:
                     }
         return message
     
-    def mood_score(self, rating, description, influence):
+    def mood_score(self, state, description, influence):
         """
         Updates the user's mood data with the provided rating, description, and influence.
 
@@ -123,7 +123,7 @@ class Mood_db:
             influence (str): The factor influencing the user's mood.
         """
 
-        self.user_data["Mood rating"] = rating
+        self.user_data["Mood state"] = state
         
         self.user_data["Mood description"] = description
     

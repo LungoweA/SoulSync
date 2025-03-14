@@ -138,7 +138,7 @@ QPushButton:pressed {
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QGroupBox" name="groupBox">
@@ -294,7 +294,7 @@ QGroupBox:focus {
 }</string>
         </property>
         <property name="text">
-         <string>Mood Rating: </string>
+         <string>Mood State: </string>
         </property>
        </widget>
        <widget class="QLabel" name="label_7">
