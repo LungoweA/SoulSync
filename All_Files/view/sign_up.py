@@ -1,8 +1,10 @@
 import sys
 import os
+from .user_agreement import UserAgreementDialog
 from PyQt5 import uic
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import (QMainWindow, QPushButton, QLineEdit, QCheckBox, QLabel, QGroupBox, QMessageBox)
+from PyQt5.QtWidgets import (QMainWindow, QDialog, QPushButton, QLineEdit, QCheckBox, 
+                            QLabel, QGroupBox, QMessageBox)
 from PyQt5.QtCore import *
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
@@ -68,27 +70,35 @@ class SignUp(QMainWindow):
         Attempts to create a new user account using the provided input.
         Displays an error message if the account creation fails.
         """
-
-        success, message = self.account.create_account(self.fullname.text(), self.email.text(),
+        
+        dialog = UserAgreementDialog()
+        if dialog.exec_() == QDialog.Accepted:
+            success, message = self.account.create_account(self.fullname.text(), self.email.text(),
                                                         self.password.text(), self.confirm_password.text())
+            if success:
+                result = QMessageBox.information(self, "Account Creation", message, QMessageBox.Ok)
 
-        if success:
-            result = QMessageBox.information(self, "Account Creation", message, QMessageBox.Ok)
-
-            if result == QMessageBox.Ok:
-                self.show_login()
+                if result == QMessageBox.Ok:
+                    self.show_login()
+            else:
+                self.group_box.show()
+                self.group_box.setStyleSheet(
+                    "background-color: #FFB3B3;"
+                    "border: 2px solid #FF4D4D;"
+                    "border-radius: 8px;"
+                    "padding: 10px;"
+                    "font-weight: bold;"
+                    "color: #990000;"
+                )
+                self.error_label.setStyleSheet('color: Black;')
+                self.error_label.setText(f"⚠️ {message}")
         else:
-            self.group_box.show()
-            self.group_box.setStyleSheet(
-                "background-color: #FFB3B3;"
-                "border: 2px solid #FF4D4D;"
-                "border-radius: 8px;"
-                "padding: 10px;"
-                "font-weight: bold;"
-                "color: #990000;"
-            )
-            self.error_label.setStyleSheet('color: Black;')
-            self.error_label.setText(f"⚠️ {message}")
+            reaction = QMessageBox.information(self, "Account Creation", "Your account was not created due to the fact that you did not accept the user agreement. Please if you want to be able to use this app accept the user agreement.", QMessageBox.Ok)
+
+            if reaction == QMessageBox.Ok:
+                self.show()
+
+        
 
     def show_password(self):
         checked = self.show_password_checkbox.isChecked()

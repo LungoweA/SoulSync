@@ -85,20 +85,23 @@ class MoodStressHistory(QMainWindow):
         else:
             self.mood_stress_list.addItem('No mood and stress history available')
         
-            
+        
     def display_history(self, clicked_item):
         """Displays detailed history for the selected date."""
-        
+        msg = 'No mood and stress history available'
         self.mood_history_dict = self.user_details.read_mood_level()
         self.stress_history_dict = self.user_details.read_stress_level()
-        string = clicked_item.text()       # Retrieving the date that was clicked
-        self.date = string.split('  ')[1]
+        string = clicked_item.text() # Retrieving the date that was clicked
+        if string != msg:
+            self.date = string.split('  ')[1]
         
         # display formatted date
-        self.format_date(self.date)
+            self.format_date(self.date)
         
         # Display mood and stress history
-        self.mood_and_stress(self.date)
+            self.mood_and_stress(self.date)
+        else:
+            self.show_main_menu()
         
         
     def format_date(self, date):

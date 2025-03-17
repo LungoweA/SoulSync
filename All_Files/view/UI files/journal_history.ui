@@ -442,8 +442,7 @@ QScrollBar::handle:vertical:hover {
 
 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
     background: none;
-}
-</string>
+}</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_4">

@@ -2,7 +2,7 @@ import sys
 import os
 from PyQt5 import uic
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QCheckBox, QPushButton, QLineEdit, QLabel, QGroupBox, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QCheckBox, QPushButton, QLineEdit, QLabel, QGroupBox
 
 # Add the parent directory to the system path to allow module imports
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))

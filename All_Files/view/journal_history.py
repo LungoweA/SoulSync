@@ -108,12 +108,15 @@ class JournalHistory(QMainWindow):
         Args:
             clicked_item (QListWidgetItem): The item clicked in the journal date list.
         """
-        
+        msg = 'No journal history available'
         self.journal_dict = self.user_details.read_journal()
         string = clicked_item.text()       # Retrieving the date that was clicked
-        self.date = string.split('  ')[1]
-        self.num = 0
-        self.journal()
+        if string != msg:
+            self.date = string.split('  ')[1]
+            self.num = 0
+            self.journal()
+        else:
+            self.show_main_menu()
         
     
     
