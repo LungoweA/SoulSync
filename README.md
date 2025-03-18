@@ -71,11 +71,18 @@ source .venv/bin/activate - macOS/Linux
 
 <b>Install dependencies:</b>
 
-pip install -r requirements.txt
+pip install -r SoulSync\requirements.txt - Windows
+
+
+pip install -r SoulSync/requirements.txt - macOS/Linux
+
 
 <b>Run the application:</b>
 
-python All_Files/main.py
+python SoulSync\All_Files\main.py - Windows
+
+
+python SoulSync/All_Files/main.py - macOS/Linux
 
 
 <b>Disclaimer of medical advice</b>
