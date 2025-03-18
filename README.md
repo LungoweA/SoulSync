@@ -53,6 +53,7 @@ Firebase for database management
 
 git clone https://github.com/LungoweA/SoulSync.git
 
+
 <b>Create a virtual environment:</b>
 
 python -m venv .venv
@@ -66,7 +67,7 @@ pip install setuptools
 .venv\Scripts\activate - Windows (Command prompt)
 
 
-..venv\Scripts\Activate - Windows (Powershell)
+.\.venv\Scripts\Activate - Windows (Powershell)
 
 
 source .venv/bin/activate - macOS/Linux
