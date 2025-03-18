@@ -75,7 +75,7 @@ pip install -r requirements.txt
 
 <b>Run the application:</b>
 
-python main.py
+python All_Files/main.py
 
 
 <b>Disclaimer of medical advice</b>
