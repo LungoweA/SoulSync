@@ -58,6 +58,9 @@ git clone https://github.com/LungoweA/SoulSync.git
 python -m venv .venv
 
 
+pip install setuptools
+
+
 <b>Activate the virtual environment:</b>
 
 .venv\Scripts\activate - Windows (Command prompt)
