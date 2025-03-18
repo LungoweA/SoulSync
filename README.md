@@ -67,7 +67,7 @@ pip install setuptools
 .venv\Scripts\activate - Windows (Command prompt)
 
 
-.\.venv\Scripts\Activate - Windows (Powershell)
+.\\.venv\Scripts\Activate - Windows (Powershell)
 
 
 source .venv/bin/activate - macOS/Linux
