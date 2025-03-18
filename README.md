@@ -46,6 +46,38 @@ PyQt5 for GUI
 Firebase for database management
 
 
+
+<b>Installation</b>
+
+<b>Clone the repository:</b>
+
+git clone https://github.com/LungoweA/SoulSync.git
+
+<b>Create a virtual environment:</b>
+
+python -m venv .venv
+
+
+<b>Activate the virtual environment:</b>
+
+.venv\Scripts\activate - Windows (Command prompt)
+
+
+..venv\Scripts\Activate - Windows (Powershell)
+
+
+source .venv/bin/activate - macOS/Linux
+
+
+<b>Install dependencies:</b>
+
+pip install -r requirements.txt
+
+<b>Run the application:</b>
+
+python main.py
+
+
 <b>Disclaimer of medical advice</b>
 
 Soul Sync App does not provide medical advice. The contents of the App are for informational
