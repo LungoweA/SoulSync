@@ -45,6 +45,8 @@ PyQt5 for GUI
 
 Firebase for database management
 
+Jira for project management
+
 
 
 <b>Installation</b>
