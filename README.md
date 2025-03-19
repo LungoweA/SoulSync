@@ -26,12 +26,12 @@ This asks the user a series of questions based on areas of life affected by stre
 
 📖 <b> Journal System</b>
 
-This allows the user to write down how they are feeling, reflect on their emotions, and document their thoughts or experiences for future reference.
+This allows the user to write down how they are feeling, reflect on their emotions, and document their thoughts or experiences for future reference. They are also able to view their journal history.
 
 
 ⚙️ <b> Settings System</b>
 
-This allows the user to be able to change password and delete account. They are also able to view their journal history.
+This allows the user to be able to change password and delete account.
 
 
 
